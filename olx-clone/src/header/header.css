@@ -1,0 +1,54 @@
+header {
+    background-color: var(--dark-green);
+}
+
+header .header-wrapper {
+    background-color: var(--dark-green);
+    height: 72px;
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    width: 1200px;
+    box-sizing: unset;
+    margin: auto;
+}
+
+header::before {
+    background-color: red;
+}
+
+header img {
+    cursor: pointer;
+}
+
+header .buttons {
+    display: flex;
+    align-items: center;
+}
+
+header button {
+    background-color: unset;
+    border: unset;
+    color: white;
+    float: right;
+    margin-left: 40px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+header button:hover {
+    color: #60797c;
+}
+
+header button iconify-icon {
+    margin-right: 10px;
+    font-size: 25px;
+}
+
+header .btn-fav iconify-icon {
+    margin-right: 0;
+}
+

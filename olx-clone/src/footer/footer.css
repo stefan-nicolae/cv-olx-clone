@@ -1,0 +1,142 @@
+/* advert */
+
+    /* top section */
+    .advert section:first-of-type{
+        height: 130px;
+        background-color: var(--dark-green);
+        padding: 10px;
+    }
+
+    .advert section:first-of-type .wrapper {
+        margin: auto;
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        width: 1200px;
+        align-items: center;
+    }
+    .advert section:first-of-type .wrapper > div {
+        margin: 0 100px;
+        color: white;
+        font-weight: normal;
+    }
+
+    .advert section:first-of-type h2 {
+        color: gray;
+        font-size: 20px;
+    }
+
+    .advert section:first-of-type img {
+        height: 100%;
+    }
+
+    /* bottom section */
+
+    .advert section:last-of-type {
+        height: 456px;
+        background-color: #cbf7ee;
+        color: var(--dark-green);
+    }
+
+    .advert section:last-of-type .wrapper {
+        width:  800px;
+        margin: auto;
+        text-align: center;
+    }
+
+    .advert section:last-of-type img {
+        margin-top: 70px;
+        margin-bottom: 30px;
+    }
+
+
+    .advert section:last-of-type h3 {
+        margin-top: 20px;
+        font-weight: normal;
+        font-size: small;
+        margin-bottom: 10px;
+    }
+
+    .advert section:last-of-type button.twitter {
+        border: none;
+        background-color: #1DA1F2;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 12px;
+        cursor: pointer;
+    }
+
+    .advert section:last-of-type button.twitter:hover {
+        background-color: #0f5079;
+    }
+
+/* end advert */
+
+/* footer */
+    /* section one */
+    footer section:first-of-type {
+        height: 316px;
+        width: 1200px;
+        margin: auto;
+        margin-top: 50px;
+        color: var(--dark-green);
+
+    }
+
+    footer section:first-of-type img {
+        margin-bottom: 10px;
+    }
+
+    footer section:first-of-type .wrapper span {
+        font-weight: bold;
+    }
+
+    footer section:first-of-type .wrapper a {
+        text-decoration: none;
+        color: var(--dark-green);
+        text-transform: capitalize;
+    }
+
+    footer section:first-of-type .wrapper a:last-of-type .comma{
+        display: none;
+    }
+    /* section two */
+
+    footer section:last-of-type {
+        border-top: 1px solid var(--dark-green);
+        display: flex;
+        height: 510px;
+        flex-direction: column;
+        width: 1200px;
+        margin: auto;
+    }
+
+    footer section:last-of-type .links {
+        display: flex;
+        flex-direction: column;
+        margin-top: 50px;
+        flex-wrap: wrap-reverse;
+        height: 400px;
+        width: 700px;
+    }
+
+    footer section:last-of-type .links a {
+        height: 30px;
+        color: var(--dark-green);
+        text-decoration: none;
+        font-weight: bold;
+        font-size: larger;
+        margin-top: 6px;
+    }
+
+    footer section:last-of-type .bottom-links a {
+        color: var(--dark-green);
+        text-decoration: none;
+        margin-right: 10px;
+    }
+
+    footer section:last-of-type .bottom-links {
+        margin-top: 20px;
+    }
+
+/* end footer */

@@ -1,0 +1,40 @@
+:root {
+    --light-gray: rgb(242, 244, 245);
+    --dark-green: #002f34;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Times New Roman';
+}
+
+.container {
+    background-color: var(--light-gray);
+    width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+}
+
+.green-button {
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px;
+    font-size: large;
+}
+.green-button span {
+    display: block;
+    padding: 10px 20px;
+    color: var(--dark-green);
+    font-weight: bold;
+}
+
+.green-button span:hover {
+    background-color: var(--dark-green);
+    transition-duration: 500ms;
+    color: white;
+}
+
