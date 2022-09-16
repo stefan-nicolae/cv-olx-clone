@@ -2,8 +2,58 @@
 
     .search-form {
         display: flex;
-        justify-content: center;
+        align-items: center;
+        flex-direction: column;
         color: var(--dark-green);
+    }
+
+    .search-form .banner {
+        width: calc(100% - 10px);
+        background-color: rgb(206, 221, 255);
+        display: flex;
+        align-items: center;
+        height: 54px;
+        margin-top: 15px;
+        border-radius: 5px;
+    }
+
+    .search-form .banner h1 {
+        font-size: 16px;
+        font-weight: unset;
+        margin-left: 20px;
+    }
+
+    .search-form .banner button {
+        margin-right: 20px;
+        background-color: unset;
+        border: unset;
+        color: var(--dark-green);
+        cursor: pointer;
+    }
+    
+    .search-form .banner button:first-of-type {
+        font-size: large;
+        font-weight: bold;
+    }
+    
+    .search-form .banner button:first-of-type div {
+        height: 3px;
+        background-color: var(--dark-green);
+        margin: auto;
+        margin-top: 5px;
+        transition: transform 0.15s;
+    }
+    
+    .search-form .banner button:first-of-type:hover div {
+        transform: scaleX(0.5);
+    }
+
+    .search-form .banner button:last-of-type {
+        font-size: larger;
+    }
+
+    .search-form .banner > div {
+        flex: 1;
     }
 
     .search-form .form-wrapper {
@@ -16,32 +66,32 @@
     }
 
     /* inputs */
-    .search-form input {
+    .search-form .form-wrapper input {
         border: none;
         height: 100%;
         font-size: 16px
     }
 
-    .search-form input::placeholder {
+    .search-form .form-wrapper input::placeholder {
         opacity: 0.7;
         color: var(--dark-green);
 
     }
 
-    .search-form input:focus {
+    .search-form .form-wrapper input:focus {
         outline: none;
     }
 
-    .search-form .input-location {
+    .search-form .form-wrapper .input-location {
         flex: 1;
     }
 
-    .search-form .input-search {
+    .search-form .form-wrapper .input-search {
         width: 60%;
     }
     
     /* button */
-    .search-form button {
+    .search-form .form-wrapper button {
         background-color: unset;
         border: unset;
         border-left: 1px solid var(--light-gray);
@@ -54,20 +104,20 @@
         color: var(--dark-green);
     }
 
-    .search-form button:hover {
+    .search-form .form-wrapper button:hover {
         background-color: var(--dark-green);
         transition-duration: 500ms;
         color: white;
     }
 
     /* span */
-    .search-form span {
+    .search-form .form-wrapper span {
         height: 100%;
         border-left: 1px solid var(--light-gray);
     }
 
     /* icons */
-    .search-form iconify-icon {
+    .search-form .form-wrapper iconify-icon {
         font-size: 25px;
         margin-left: 20px;
         margin-right: 20px;

@@ -1,5 +1,7 @@
 import "./footer.css"
-import SVG from "./svg.svg"
+import DOCUMENT from "./document.svg"
+import APP_STORE from "./app-store.svg"
+import GOOGLE_PLAY from "./google-play.svg"
 
 export default function Footer (props) {
     const footerLinks = [
@@ -90,11 +92,12 @@ export default function Footer (props) {
     ]
 
     let key = 0 
+    let key2 = 0
     return(
         <footer>
             <section>
                 <div className="wrapper">
-                    <img src={SVG}></img>
+                    <img src={DOCUMENT}></img>
                     <p><span>Categorii principale: </span>
                         {
                             Object.keys(props.categories).map(category => {
@@ -107,19 +110,31 @@ export default function Footer (props) {
             <section>
                 <div className="links">
                     {footerLinks.map(link => {
-                        return(<a href={link.url}>{link.title}</a>)
+                        return(<a key={key2++} href={link.url}>{link.title}</a>)
                     })}
                 </div>
                 <div className="bottom-links">
-                    <a href="#">OLX.bg</a>
-                    <a href="#">OLX.pl</a>
-                    <a href="#">OLX.ua</a>
-                    <a href="#">OLX.pt</a>
-                    <a href="#">Autovit.ro</a>
-                    <a href="#">Storia.ro</a>
-                    <a href="#">OLX Business</a>
+                    <a href="#"><iconify-icon icon="openmoji:flag-bulgaria"></iconify-icon>OLX.bg</a>
+                    <a href="#"><iconify-icon icon="openmoji:flag-poland"></iconify-icon>OLX.pl</a>
+                    <a href="#"><iconify-icon icon="openmoji:flag-ukraine"></iconify-icon>OLX.ua</a>
+                    <a href="#"><iconify-icon icon="openmoji:flag-portugal"></iconify-icon>OLX.pt</a>
+                    <a href="#"><iconify-icon icon="openmoji:flag-romania"></iconify-icon>Autovit.ro</a>
+                    <a href="#"><iconify-icon icon="openmoji:flag-romania"></iconify-icon>Storia.ro</a>
+                    <a href="#"><iconify-icon icon="openmoji:flag-romania"></iconify-icon>OLX Business</a>
                 </div>
-                <div className="aside"></div>
+                <div className="aside">
+                    <div className="follow">
+                        Urmareste-ne pe
+                        <a href="#"><iconify-icon icon="akar-icons:facebook-fill"></iconify-icon></a>
+                        <a href="#"><iconify-icon icon="akar-icons:instagram-fill"></iconify-icon></a>
+                        <a href="#"><iconify-icon icon="akar-icons:youtube-fill"></iconify-icon></a>
+                    </div>
+                    <div className="download">
+                        Descarca aplicatia pentru telefon din 
+                        <a href="#"><img src={APP_STORE}></img></a>
+                        <a href="#"><img src={GOOGLE_PLAY}></img></a>
+                    </div>
+                </div>
             </section>
         </footer>
     )

@@ -106,9 +106,10 @@
         border-top: 1px solid var(--dark-green);
         display: flex;
         height: 510px;
-        flex-direction: column;
         width: 1200px;
         margin: auto;
+        flex-wrap: wrap;
+        flex-direction: column;
     }
 
     footer section:last-of-type .links {
@@ -130,13 +131,66 @@
     }
 
     footer section:last-of-type .bottom-links a {
-        color: var(--dark-green);
+        color: gray;
         text-decoration: none;
-        margin-right: 10px;
+        margin-right: 15px;
+        filter: grayscale(1)
     }
 
     footer section:last-of-type .bottom-links {
         margin-top: 20px;
+    }
+
+    footer section:last-of-type .bottom-links a:hover {
+        filter: unset;
+        color: var(--dark-green);
+    }
+
+    footer section:last-of-type .bottom-links iconify-icon {
+        margin-right: 5px;
+        font-size: 20px;
+    }
+
+
+    footer section:last-of-type .aside {
+        margin-top: 50px;
+        margin-left: -200px;
+        color: var(--dark-green);
+    }
+
+    
+    footer section:last-of-type .aside .follow {
+        font-size: larger;
+        margin-bottom: 50px;
+        display: flex;
+        flex-wrap: wrap;
+        width: 170px;
+    }
+
+    footer section:last-of-type .aside .follow a {
+        color: unset;
+    }
+
+    footer section:last-of-type .aside .follow iconify-icon {
+        font-size: 40px;
+        margin-top: 10px;
+        margin-right: 15px;
+        cursor: pointer;
+
+    }
+
+    footer section:last-of-type .aside .download {
+        display: flex; 
+        font-size: larger;
+        flex-wrap: wrap;
+        width: 400px;
+    }
+
+    footer section:last-of-type .aside .download img {
+        width: 140px;
+        margin-right: 15px;
+        margin-top: 15px;
+        cursor: pointer;
     }
 
 /* end footer */
