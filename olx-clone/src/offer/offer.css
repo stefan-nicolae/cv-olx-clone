@@ -1,0 +1,27 @@
+.offer {
+    width: 1200px;
+    margin: auto;
+}
+
+.offer nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: var(--dark-green );
+}
+
+.offer nav button {
+    border: none;
+    background-color: unset;
+    font-size: larger;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.offer nav a {
+    color: var(--dark-green );
+    font-size: small;
+    text-transform: capitalize;
+}
+

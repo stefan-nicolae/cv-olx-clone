@@ -5,10 +5,11 @@ export default function Header () {
     return(
         <header>
             <div className="header-wrapper">
-                <img src={Logo}/>
+                <img onClick={() => {window.location = "/"}} src={Logo}/>
                 <div className="buttons">
-                    <button className="btn-messages"><iconify-icon icon="bx:message-rounded"></iconify-icon>Mesaje</button>
-                    <button className="btn-fav"><iconify-icon icon="akar-icons:heart"></iconify-icon></button>
+                    {/* TODO ALL NEED LOGIN EXCEPT BTN-FAV WHICH IS A NEW PAGE*/}
+                    <button className="btn-messages"><iconify-icon icon="bx:message-rounded"></iconify-icon>Mesaje</button> 
+                    <button className="btn-fav"><iconify-icon icon="akar-icons:heart"></iconify-icon></button> 
                     <button className="btn-profile"><iconify-icon icon="bi:person"></iconify-icon>Contul tau</button>
                     <button className="btn-new-announcement green-button"><span>Adauga Anunt Nou</span></button>
                 </div>

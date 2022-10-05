@@ -1,0 +1,87 @@
+import { useState } from "react"
+
+export default function InputLocationDropdownArray(props) {
+    const [chosenCounty, setChosenCounty] = useState()
+
+    let columns = [] 
+
+    if(!chosenCounty) {
+        const countyArr = Object.keys(props.data.counties)
+        countyArr.push("Bucuresti - Ilfov")
+        countyArr.sort()
+    
+        let index = 0
+        for(let i = 0; i < 4; i++) {
+            const column = []
+            for(let j = 0; j < 11; j++) {
+                let pushed = false
+                while(!pushed) {
+                    const county = countyArr[index++]
+                    if(county !== "Ilfov" && county !== "Bucuresti") {
+                        column.push(county)
+                        pushed = true
+                    } 
+                }
+            }
+            columns.push(column)
+        }
+    }
+    else if(chosenCounty === "Bucuresti - Ilfov") {
+        columns = [
+            ["Bucuresti"],
+            ["Ilfov"],
+            [],
+            []
+        ]
+    }
+    else {
+        const chosenCountyArray = props.data.counties[chosenCounty]
+        console.log(chosenCountyArray[0])
+        let index = 0
+        for(let i=0; i<4; i++) {
+            const column = []
+            for(let j=0; j<chosenCountyArray.length/4;j++) {
+                if(chosenCountyArray[index]) column.push(chosenCountyArray[index++].City.replaceAll("*", "")) 
+            }
+            columns.push(column)
+        }
+    }
+
+    let key_column = 0
+    let key_county = 0
+    return (
+        <div className={"counties-wrapper" + (chosenCounty ? " city-menu" : "")}>
+            <div className="counties-title">
+                {
+                    chosenCounty ? <>
+                        <span onClick={() => {setChosenCounty(undefined)}}>Alege alt judet</span>
+                        <span>Toate anunturile din judet »</span>
+                    </> :
+                    <span>Toata Romania</span>
+                }
+                </div>
+            <div className="counties">
+                {
+                    columns.map(column => {
+                        return (<div key={key_column++} className="counties-column">
+                            {
+                                column.map(county => {
+                                    return (
+                                        <div 
+                                            style={!county ? {"display": "none"} : undefined} 
+                                            onClick={() => !chosenCounty ? setChosenCounty(county) : {}} 
+                                            key={key_county++} 
+                                            className={"county" + (county === "Bucuresti - Ilfov" ? " bucuresti" : "") } 
+                                        >
+                                            <span>{county}</span>
+                                            {!chosenCounty ? <iconify-icon icon="akar-icons:chevron-right"></iconify-icon> : <></>}
+                                        </div>)
+                                })
+                            }
+                        </div>)
+                    })
+                }
+            </div>
+        </div>
+    ) 
+}

@@ -1,3 +1,5 @@
+// import { replaceAll } from "../container/container"
+
 export default function Categories (props) {
     let key = 0
     return(
@@ -8,10 +10,11 @@ export default function Categories (props) {
                 Object.keys(props.categories).map(category => {
                     return(<div key={key++} className="category">
                         <div className="category-img"><img src={props.categories[category][0].images[0]}></img></div>
-                        <div className="category-name">{category.replace("-", " ")}</div>
+                        <div className="category-name">{category.replaceAll("-", " ")}</div>
                     </div>)
-                })
+                }) 
             }
+    
             </div>
         </main>
     )
