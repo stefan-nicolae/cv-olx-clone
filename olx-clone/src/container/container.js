@@ -13,15 +13,6 @@ export function randomNumber (min, max) {
 	return Math.floor(Math.random() * (max+1 - min) + min)
 } 
 
-// export function replaceAll (string="", oldValue="", newValue="") {
-// 	if(oldValue === newValue) return
-// 	if(string === undefined || string === null) return ""
-// 	let newString = string
-// 	while(newString.includes(oldValue)) newString = newString.replace(oldValue, newValue)
-// 	console.log(oldValue)
-// 	console.log(string)
-// 	return newString
-// }
 
 function nth_ocurrence(str, needle, nth) {
 	for (let i=0;i<str.length;i++) {
@@ -39,6 +30,8 @@ export default function Container (props) {
 	const URL_HISTORY = useRef([])
 	const [data, setData] = useState()
 	const promotedProducts = useRef([])
+	const [warningVisible, setWarningVisible] = useState(true)
+
 	console.log(data)
     
 	const URL = window.location.href
@@ -88,20 +81,28 @@ export default function Container (props) {
 			)	
 		}	
 
+		const gotoSearch=(parametersObj) => {
+			console.log(parametersObj)
+		}
+
+		const gotoOffer = (id) => {
+			console.log("go to " + id)
+		}
+
 		return data ? 
 				<div className="container">
 						{/* header element */}
 						<Header/>
 						{/* section search + warning div */}
-						<SearchForm data={data}/>
+						<SearchForm data={data} gotoOffer={gotoOffer} gotoSearch={gotoSearch} warningVisible={warningVisible} setWarningVisible={setWarningVisible}/>
 						{/* section categorii priniciple */}
-						<Categories categories={data.categories}/>
+						<Categories data={data} categories={data.categories} gotoOffer={gotoOffer} gotoSearch={gotoSearch}/>
 						{/* section anunturi promovate */}
-						<Announcements promotedProducts={promotedProducts.current}/>
+						<Announcements promotedProducts={promotedProducts.current} gotoOffer={gotoOffer} gotoSearch={gotoSearch}/>
 						{/* section advert verde */}
 						<Advert/>
 						{/* footer */}
-						<Footer categories={data.categories}/>
+						<Footer categories={data.categories} gotoOffer={gotoOffer} gotoSearch={gotoSearch}/>
 				</div> : 
 
 				<div className="container">

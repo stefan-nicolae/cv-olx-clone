@@ -101,7 +101,7 @@ export default function Footer (props) {
                     <p><span>Categorii principale: </span>
                         {
                             Object.keys(props.categories).map(category => {
-                                return <a key={key++} href="#">{category.replaceAll("-", " ")}<span className="comma">, </span></a>
+                                return <a onClick={() => {props.gotoSearch({"category": category})}} key={key++} href="#">{category.replaceAll("-", " ")}<span className="comma">, </span></a>
                             })
                         }
                     </p>

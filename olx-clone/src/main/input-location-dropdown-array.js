@@ -1,8 +1,9 @@
 import { useState } from "react"
 
 export default function InputLocationDropdownArray(props) {
+    // const chosenCounty = props.chosenLocation ? props.chosenLocation.split(";")[0] : undefined
+    // const setChosenCounty = props.setChosenLocation
     const [chosenCounty, setChosenCounty] = useState()
-
     let columns = [] 
 
     if(!chosenCounty) {
@@ -36,7 +37,6 @@ export default function InputLocationDropdownArray(props) {
     }
     else {
         const chosenCountyArray = props.data.counties[chosenCounty]
-        console.log(chosenCountyArray[0])
         let index = 0
         for(let i=0; i<4; i++) {
             const column = []
@@ -55,9 +55,9 @@ export default function InputLocationDropdownArray(props) {
                 {
                     chosenCounty ? <>
                         <span onClick={() => {setChosenCounty(undefined)}}>Alege alt judet</span>
-                        <span>Toate anunturile din judet »</span>
+                        <span onClick={() => props.setChosenLocation(chosenCounty)}>Toate anunturile din judet »</span>
                     </> :
-                    <span>Toata Romania</span>
+                    <span onClick={() => props.setChosenLocation("Toata Romania" + Math.random())}>Toata Romania</span>
                 }
                 </div>
             <div className="counties">
@@ -69,7 +69,7 @@ export default function InputLocationDropdownArray(props) {
                                     return (
                                         <div 
                                             style={!county ? {"display": "none"} : undefined} 
-                                            onClick={() => !chosenCounty ? setChosenCounty(county) : {}} 
+                                            onClick={() => !chosenCounty ? setChosenCounty(county) : props.setChosenLocation(chosenCounty + ";" + county)} 
                                             key={key_county++} 
                                             className={"county" + (county === "Bucuresti - Ilfov" ? " bucuresti" : "") } 
                                         >

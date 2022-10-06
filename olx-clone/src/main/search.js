@@ -1,13 +1,27 @@
 import "./main.css"
-import {useState} from "react"
+import {useEffect, useState, useRef } from "react"
 import InputLocationDropdownArray from "./input-location-dropdown-array"
 
 export default function SearchForm (props) {
     const [searchSuggestions, setSearchSuggestions] = useState([[], []])
+    const [countiesVisible, setCountiesVisible] = useState(false)
+    const [chosenLocation, setChosenLocation] = useState() //<county>;<city>
+    const lastChosenLocation = useRef()
 
+    if(chosenLocation !== lastChosenLocation.current) {
+        lastChosenLocation.current = chosenLocation
+        setCountiesVisible(false)
+    }
+
+    if(chosenLocation) {
+        if(!chosenLocation.startsWith("Toata Romania")) {
+            document.querySelector(".input-location").classList.add("bold-placeholder")
+        } else {
+            document.querySelector(".input-location").classList.remove("bold-placeholder")
+        }
+    }
 
     const handleSearch = event => {
-
         const value = event.currentTarget.value.toLowerCase()
         if(value.length < 3) {
             setSearchSuggestions([[],[]])
@@ -49,7 +63,8 @@ export default function SearchForm (props) {
             const title = product.title
             const description = product.description
             const category = product.category
-            const productSuggestion = [title, category]
+            const id = product.id
+            const productSuggestion = [title, category, id]
             let pushed = false
             
             categorySuggestions.forEach(category => {
@@ -83,30 +98,81 @@ export default function SearchForm (props) {
         setSearchSuggestions(suggestions)
     }
 
+    
+    const getLocationPlaceholder = () => {
+        if(chosenLocation) {
+            if(chosenLocation.startsWith("Toata Romania")) return "Toata Romania"
+            if(chosenLocation.includes(";"))
+            {
+                const arr = chosenLocation.split(";")
+                return(arr[1] + ", Judet " + arr[0])
+            } else {
+                return chosenLocation
+            }
+        } else {
+            if(countiesVisible) return ""
+            else return "Toata Romania"
+        }
+    }
+    
+    useEffect(() => {
+        window.addEventListener('click', function(e){  
+            if(e.target === document.getElementsByClassName("input-location")[0])  {
+                setCountiesVisible(true)
+            } else {
+                const position = document.getElementsByClassName("input-location-dropdown")[0].getBoundingClientRect()
+                if(e.clientX >= position.left && e.clientX <= position.right && e.clientY >= position.top && e.clientY <= position.bottom) {
+        
+                } else {
+                    setCountiesVisible(false)
+                }
+            }
+        });
+    }, [])
+    
+    useEffect(() => {
+        document.querySelector(".input-location").placeholder = getLocationPlaceholder()
+    })
+
+    const submitForm = (e) => {
+        e.preventDefault()
+        if(e.nativeEvent.submitter.id !== "search") return
+        let searchValue = e.target[2].value
+        if(searchValue.length < 3) searchValue = undefined
+        const location = chosenLocation ? (chosenLocation.startsWith("Toata Romania") ? "undefined" : chosenLocation) : undefined
+        props.gotoSearch({
+            "search": searchValue,
+            "location": location
+        })
+    }
+
     let key = 0;
     return(
-        <form className="search-form">
-            <div className="banner">
+        <form className="search-form" onSubmit={submitForm}>
+            <div style={!props.warningVisible ? {"display" :"none"} : {}} className="banner">
                 <h1>Cum să recunoști escrocheriile de tip phishing în OLX și cum să le eviți?</h1>
                 <div></div>
                 <button>Afla mai multe<div></div></button>
-                <button><iconify-icon icon="bi:x-lg"></iconify-icon></button>
+                <button onClick={() => {props.setWarningVisible(false)}}><iconify-icon icon="bi:x-lg"></iconify-icon></button>
             </div>
             <div className="form-wrapper">
                 <iconify-icon className="search-icon-1" icon="bi:search"></iconify-icon>
-                <input onKeyUp={handleSearch} className="input-search" type="text" placeholder={`${Object.keys(props.data.products.products).length} anunturi din apropierea ta`}></input>
+                <input onKeyUp={handleSearch} className="input-search" type="text" 
+                        placeholder={`${Object.keys(props.data.products.products).length} anunturi din apropierea ta`}></input>
                 <div className="input-search-dropdown">
                     <div className="category-suggestions">
                         {
                                 searchSuggestions[0].map(suggestion => {
-                                    return(<div className="suggestion" key={key++}>{suggestion}</div>) 
+                                    return(<div onClick={() => {props.gotoSearch({category: suggestion})}} className="suggestion" key={key++}>{suggestion}</div>) 
                                 }) 
                         }
                     </div>
                     <div className="product-suggestions">             
                         {
                             searchSuggestions[1].map(suggestion => {
-                                return (<div className="suggestion" key={key++}>{suggestion[0]}<span>in categoria <span>{suggestion[1].replace("-", " ")}</span></span></div>) 
+                                return (<div onClick={() => {props.gotoOffer(suggestion[2])}} className="suggestion" 
+                                    key={key++}>{suggestion[0]}<span>in categoria <span>
+                                    {suggestion[1].replace("-", " ")}</span></span></div>) 
                             })
                         }
                     </div>
@@ -114,11 +180,11 @@ export default function SearchForm (props) {
                   
                 <span></span>
                 <iconify-icon className="location-icon" icon="akar-icons:location"></iconify-icon>
-                <input className="input-location" type="text" placeholder="Toata Romania"></input>
-                <div className="input-location-dropdown">
-                    <InputLocationDropdownArray data={props.data}/>
+                <input className="input-location" type="text"></input>
+                <div className="input-location-dropdown" style={countiesVisible ? {"display": "unset"} : {}}>
+                    <InputLocationDropdownArray chosenLocation={chosenLocation} setChosenLocation={setChosenLocation} data={props.data}/>
                 </div>
-                <button>Cauta acum <iconify-icon className="search-icon-2" icon="bi:search"></iconify-icon></button>
+                <button id="search">Cauta acum <iconify-icon className="search-icon-2" icon="bi:search"></iconify-icon></button>
                
             </div>
         </form>

@@ -87,6 +87,11 @@
         flex: 1;
     }
 
+    .search-form .form-wrapper .input-location.bold-placeholder::placeholder {
+        font-weight: bold;
+        color: var(--dark-green);
+    }
+
     .search-form .form-wrapper .input-search {
         width: 60%;
     }
@@ -96,17 +101,18 @@
         /* input search dropdown */
         
     .search-form .form-wrapper .input-search-dropdown {
-        display: none;
+        /* display: none; */
         position: absolute;
         width: 785px;
         background-color: white;
         box-shadow: 1px 1px 12px rgb(207, 207, 207);
         top: 75px;
+        z-index: 3;
     }
     
-    .search-form .form-wrapper .input-search:focus ~ .input-search-dropdown {
-        display: flex;
-    }
+    /* .search-form .form-wrapper .input-search:focus ~ .input-search-dropdown {
+        display: unset;
+    } */
     .search-form .form-wrapper .input-search-dropdown .suggestion {
         margin: 0px 15px;
         padding: 15px 0px;
@@ -153,11 +159,7 @@
         margin-top: 15px;
     }
 
-        /* input location dropdown */
-    .search-form .form-wrapper .input-location:focus ~ .input-location-dropdown {
-        display: flex;
-    }
-
+    /* input location dropdown */
     .search-form .form-wrapper .input-location-dropdown {
         display: none;
         max-height: 421px;
@@ -166,18 +168,18 @@
         background-color: white;
         position: absolute;
         top: 75px;
+        left: 0;
         box-shadow: 1px 1px 12px rgb(207, 207, 207);
         color: gray;
         flex-direction: column;
+        z-index: 3;
     }    
     
     .search-form .form-wrapper .input-location-dropdown .counties-wrapper {
-        /* flex: 1; */
         display: flex;
         flex-direction: column;
         justify-content: space-between;
     }
-
         /* title */
     .search-form .form-wrapper .input-location-dropdown .counties-title {
         border-bottom: gray 1px solid;
@@ -185,10 +187,10 @@
         margin: 12px;
         margin-bottom: 0px;
         font-size: large;
-        cursor: pointer;
     }
-
+    
     .search-form .form-wrapper .input-location-dropdown .counties-title > span:hover {
+        cursor: pointer;
         color: var(--dark-green);
     }
 
@@ -224,7 +226,7 @@
     }
     
     .search-form .form-wrapper .input-location-dropdown .county > span {
-        border-bottom: 1px solid var(--light-gray);
+        border-bottom: 1px solid rgb(202, 202, 202);
         position: relative;
     }
 
@@ -328,6 +330,8 @@
         align-items: center;
         padding: 30px;
         color: var(--dark-green);
+        position: relative;
+        z-index: 1;
     }
 
     .categories-wrapper h1 {
@@ -341,9 +345,9 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-start;
+        /* position: relative; */
 
         width: 1233px;
-
     }
 
     .category {
@@ -382,8 +386,61 @@
         background-color: var(--dark-green);
         color: white;
     }
-    
 
+    /* category-dropdown */
+    .categories .category-dropdown {
+        display: none;
+        width: 1200px;
+        min-height: 200px;
+        position: absolute;
+        border: 1px solid var(--light-gray);
+        padding: 15px;
+    }
+
+    .categories .category-dropdown iconify-icon {
+        cursor: pointer;
+        color: var(--dark-green);
+    }
+
+    .categories .category-dropdown .brands {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .categories .category-dropdown .brands > div {
+        width: 25%;
+        padding: 10px; 
+        padding-left: 0;     
+        display: flex;
+        align-items: center;
+    }
+    
+    .categories .category-dropdown .brands > div:hover span {
+        cursor: pointer;  
+        background-color: var(--dark-green);
+        color: white;
+    }
+
+    .categories .category-dropdown .title {
+        border-bottom: 1px solid var(--light-gray);
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        color: rgb(161, 161, 161)
+    }
+
+    .categories .category-dropdown .title span {
+        margin-right: 5px;
+        cursor: pointer;
+        color: var(--dark-green);
+        font-weight: bold;
+    }
+
+    .categories .category-dropdown .title span:hover {
+        background-color: var(--dark-green);
+        color: white;
+    }
 /* CATEGORIES END */
 /* ANNOUNCEMENTS */
     .announcements {
@@ -438,20 +495,16 @@
     }
 
     .announcements .title {
-        align-self: flex-start;
         margin-top: 15px;
         font-size: large;
         text-align: left;
-        cursor: pointer;
-        text-overflow: ellipsis;
-        display: inline-block;
-        white-space: nowrap;
-        overflow: hidden;
-        width: 100%;
-        text-transform: capitalize;
+        text-transform: capitalize; 
     }
-
-    .announcements .title:hover {
+    .announcements .title span {
+        padding: 3px 0;
+    }
+    .announcements .title span:hover {
+        cursor: pointer;
         background-color: var(--dark-green);
         color: white;
     }
