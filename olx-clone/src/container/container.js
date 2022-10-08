@@ -7,107 +7,119 @@ import Categories from "../main/categories";
 import Announcements from "../main/announcements";
 import Advert from "../footer/advert";
 import Footer from "../footer/footer";
-import Offer from "../offer/offer";
+import Offer from "../offer/offer"
 
 export function randomNumber (min, max) { 
 	return Math.floor(Math.random() * (max+1 - min) + min)
 } 
 
-
-function nth_ocurrence(str, needle, nth) {
-	for (let i=0;i<str.length;i++) {
-	  if (str.charAt(i) == needle) {
-		  if (!--nth) {
-			 return i;    
-		  }
-	  }
-	}
-	return false;
+function getNewTitle(title) {
+	return title.replaceAll(" ", "-")
+	.replaceAll("/", "")
+	.replaceAll("_", "-")
+	.toLowerCase()
 }
 
-
-export default function Container (props) {
-	const URL_HISTORY = useRef([])
-	const [data, setData] = useState()
-	const promotedProducts = useRef([])
+export default function Container () {
+	let storedData = window.localStorage.getItem("data")
+	const [data, setData] = useState(storedData ? JSON.parse(storedData) : undefined) 
 	const [warningVisible, setWarningVisible] = useState(true)
+	const promotedProducts = useRef([])
+	const pathname = window.location.pathname
 
-	console.log(data)
-    
-	const URL = window.location.href
-	const URL_TARGET = URL.slice(nth_ocurrence(URL, "/", 3)+1, URL.length)
+	//update URL_HISTORY
+	const URL_HISTORY = window.sessionStorage.getItem("URL_HISTORY")
+	console.log(URL_HISTORY)
+	if(!URL_HISTORY) window.sessionStorage.setItem("URL_HISTORY", JSON.stringify([pathname]))
+	else {
+		const newURL_HISTORY = JSON.parse(URL_HISTORY).concat([pathname])
+		window.sessionStorage.setItem("URL_HISTORY", JSON.stringify(newURL_HISTORY))
+	}
 
-	URL_HISTORY.current.push(URL)
-
+	//data will be updated through the setData still
+	if(data && (!storedData || (storedData && JSON.parse(storedData) !== data))) {
+		window.localStorage.setItem("data", JSON.stringify(data))
+	}
+	
 	useEffect(() => {
-			const script = document.createElement('script');
-			script.src = "https://code.iconify.design/iconify-icon/1.0.0-beta.3/iconify-icon.min.js";
-			script.async = true;
-			document.body.appendChild(script);
-			return () => {
-				document.body.removeChild(script);
-			}
-		}, []);
-		
-		if(data && !promotedProducts.current.length) {
-            const len = data.products.products.length 
-            for(let i = 0; i < 16; i++) {
-                promotedProducts.current.push(
-                    data.products.products[randomNumber(0, len-1)]
+		const script = document.createElement('script');
+		script.src = "https://code.iconify.design/iconify-icon/1.0.0-beta.3/iconify-icon.min.js";
+		script.async = true;
+		document.body.appendChild(script);
+		return () => {
+			document.body.removeChild(script);
+		}
+	}, []);
+	
+	if(data && !promotedProducts.current.length) {
+		const len = data.products.products.length 
+		for(let i = 0; i < 16; i++) {
+			promotedProducts.current.push(
+				data.products.products[randomNumber(0, len-1)]
                 )
             }
-		}
-
-		if(data && URL_TARGET.startsWith("oferta")) {
-			const productName = URL_TARGET.slice(URL_TARGET.indexOf("/")+1, URL_TARGET.length)
-			let productObjectFound
-
-			data.products.products.forEach(productObject => {
-				// console.log(productObject["title"])
-				if(productObject["title"].toLowerCase().replaceAll("/\s/g", '') === productName.toLowerCase().replaceAll("/\s/g", '')) {
-					productObjectFound = productObject
+	}
+		
+	const gotoSearch=(parametersObj) => {
+		console.log(parametersObj)
+		return "#"
+	}
+		
+	const gotoOffer = (id) => {
+		console.log("go to " + id)
+		let url = "/404"
+		data.products.products.forEach((product => 
+			{
+				if(product.id === id) {
+					const newTitle = getNewTitle(product.title)
+					url = "/oferta/" + newTitle + "_ID=" + product.id
 					return
 				}
-			})
+			}
+		))
+		return url
+	}
 
-			return (
-			<div className="container">
-				{/* header element */}
-				<Header/>
-				{/* section search + warning div */}
-				<SearchForm/>
-				<Offer productObject={productObjectFound} URL_HISTORY={URL_HISTORY}/>
-			</div>
-			)	
-		}	
-
-		const gotoSearch=(parametersObj) => {
-			console.log(parametersObj)
-		}
-
-		const gotoOffer = (id) => {
-			console.log("go to " + id)
-		}
-
-		return data ? 
-				<div className="container">
-						{/* header element */}
-						<Header/>
-						{/* section search + warning div */}
-						<SearchForm data={data} gotoOffer={gotoOffer} gotoSearch={gotoSearch} warningVisible={warningVisible} setWarningVisible={setWarningVisible}/>
-						{/* section categorii priniciple */}
-						<Categories data={data} categories={data.categories} gotoOffer={gotoOffer} gotoSearch={gotoSearch}/>
-						{/* section anunturi promovate */}
-						<Announcements promotedProducts={promotedProducts.current} gotoOffer={gotoOffer} gotoSearch={gotoSearch}/>
-						{/* section advert verde */}
-						<Advert/>
-						{/* footer */}
-						<Footer categories={data.categories} gotoOffer={gotoOffer} gotoSearch={gotoSearch}/>
-				</div> : 
-
-				<div className="container">
-					<Data setData={setData}/>
-					Loading...
-				</div>   
-
+	//should run just once, as storedData doesn't update instantly 
+	if(!storedData && data) {
+		storedData = JSON.stringify(data)
+	}
+	if(storedData && pathname.startsWith("/oferta")) {
+		const targetID = pathname.slice(pathname.lastIndexOf("ID")+3)
+		const targetTitle = pathname.slice(pathname.lastIndexOf("/")+1, pathname.lastIndexOf("_"))
+		let foundProduct
+		data.products.products.forEach(product => {
+			if(product.id == targetID) {
+				foundProduct = product
+				return
+			}
+		})
+		if(foundProduct && getNewTitle(foundProduct.title) !== targetTitle) foundProduct = undefined
+		console.log(foundProduct)
+		if(foundProduct) return (<div className="container">
+			<Header />
+			<Offer data={data} product={foundProduct}/>
+		</div>)
+		else window.location.pathname = "/404"
+	}
+	return data ? 
+		<div className="container">
+			{/* header element */}
+			<Header/>
+			{/* section search + warning div */}
+			<SearchForm data={data} gotoOffer={gotoOffer} gotoSearch={gotoSearch} warningVisible={warningVisible} setWarningVisible={setWarningVisible}/>
+			{/* section categorii priniciple */}
+			<Categories data={data} categories={data.categories} gotoOffer={gotoOffer} gotoSearch={gotoSearch}/>
+			{/* section anunturi promovate */}
+			<Announcements promotedProducts={promotedProducts.current} gotoOffer={gotoOffer} gotoSearch={gotoSearch}/>
+			{/* section advert verde */}
+			<Advert/>
+			{/* footer */}
+			<Footer categories={data.categories} gotoOffer={gotoOffer} gotoSearch={gotoSearch}/>
+		</div> 
+		: 
+		<div className="container">
+			<Data setData={setData}/>
+			Loading...
+		</div>   
 }

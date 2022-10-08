@@ -1,0 +1,45 @@
+FUNCTIONALITATE
+
+    x Whenever you load the page, scan window.location.href. 
+        x /oferta/""
+        - /search?categorie=""?firma=""?...
+            category, location (<county>,<optional city>), 
+
+    x TO EACH PRODUCT ASSIGN USER, TO EACH USER ASSIGN COUNTY, CITY
+    x TO EACH PRODUCT ASSIGN A FAKE DATE UPLOADED 
+
+
+PAGINA PRINCIPALA 
+
+    - Header
+        - Heart leads to FAV PAGE
+        - Everything else requires login (any email and pass works)
+
+    - Search input:
+        x Main input: dropdown matching by category, title (max 10, newest, goto oferta/"")
+        x Toata Romania: dropdown search by county, city
+        x /search?categorie=""?judet=""?oras=""
+        - DO NOT FORGET THE CLOSE 
+        
+
+    - Categorii principale: each item should open a dropdown sorted by brand, which should then go to /search ? categorie="" ( ? firma="")
+
+    - Anunturi promovate: just go to /oferta/""
+
+    - Categorii principale (down): go to /search ? categorie=""
+
+
+SEARCH PAGE
+
+    - Search page:
+        - Inputs: Categorie, brand, localitate
+        - Sort by: Price, rating (default at search page), discount, date uploaded (default at start page)
+
+FAV PAGE
+
+    - TODO
+
+OFFER PAGE 
+
+    - TODO
+    - NAVBAR: category in same country; category in same city

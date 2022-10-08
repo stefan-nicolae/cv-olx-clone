@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react"
 import * as container_func from "./container"
+import { ORASE } from "./orase";
 
 function randomDate(start, end, startHour, endHour) {
     var date = new Date(+start + Math.random() * (end - start));
@@ -15,19 +16,19 @@ async function fetchData (data, limit) {
     if(response.ok) {
         const json = await response.json()
         return json
-    }
+    } 
 }
 
 async function addPropertiesToUsersAndProducts(fetchedUsers, fetchedProducts) {
     //user: locations dates user_ratings
     //products: dates
-    return fetch("./ORASE.json").then(res => res.json()).then(json => {
         const counties = {}
         const users = []
         const products = {}
         products.products = []
 
-        json.forEach(cityObj => {
+        
+        ORASE.forEach(cityObj => {
             if(cityObj["County"] === "—") { 
                 counties["Bucuresti"] = [cityObj]
             }
@@ -56,7 +57,7 @@ async function addPropertiesToUsersAndProducts(fetchedUsers, fetchedProducts) {
             const product = fetchedProduct
             const userIndex = randomNumber(0, users.length-1)
             const user = users[userIndex]
-            product.user = user
+            product.userID = user.id
             product.county = user.address.county
             product.city = user.address.city
             product.dateAdded = randomDate(user.dateJoined, new Date(), 0, 23)
@@ -72,8 +73,8 @@ async function addPropertiesToUsersAndProducts(fetchedUsers, fetchedProducts) {
         })
 
         return [products, counties, users]
-    })
 }
+
 
 function indexProductsByCategories(products) {
     const categories = {}
@@ -86,7 +87,7 @@ function indexProductsByCategories(products) {
 }
 
 
-export default function Data (props) {    
+export default function Data (props) {  
     const products = useRef()
     const counties = useRef()
     const users = useRef()
@@ -101,7 +102,7 @@ export default function Data (props) {
                     users.current = res[2]
                     categories.current = indexProductsByCategories(products.current)
                     products.current.products.sort((a, b) => -(a.dateAdded.getTime() - b.dateAdded.getTime()))
-                    props.setData({products: products.current, categories:categories.current, counties:counties.current, users:users.current})
+                    props.setData({products:products.current, categories:categories.current, counties:counties.current, users:users.current})
                 })
             })
         })

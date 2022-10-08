@@ -163,16 +163,16 @@ export default function SearchForm (props) {
                     <div className="category-suggestions">
                         {
                                 searchSuggestions[0].map(suggestion => {
-                                    return(<div onClick={() => {props.gotoSearch({category: suggestion})}} className="suggestion" key={key++}>{suggestion}</div>) 
+                                    return(<a href={props.gotoSearch({category: suggestion})} className="suggestion" key={key++}>{suggestion}</a>) 
                                 }) 
                         }
                     </div>
                     <div className="product-suggestions">             
                         {
                             searchSuggestions[1].map(suggestion => {
-                                return (<div onClick={() => {props.gotoOffer(suggestion[2])}} className="suggestion" 
+                                return (<a href={props.gotoOffer(suggestion[2])} className="suggestion" 
                                     key={key++}>{suggestion[0]}<span>in categoria <span>
-                                    {suggestion[1].replace("-", " ")}</span></span></div>) 
+                                    {suggestion[1].replace("-", " ")}</span></span></a>) 
                             })
                         }
                     </div>

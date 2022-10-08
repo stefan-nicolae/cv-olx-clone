@@ -3,11 +3,100 @@
     margin: auto;
 }
 
+/* FORM */
+.offer form {
+    width: 1200px;
+    margin:auto;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 100px;
+    margin-bottom: 50px;
+}
+
+.offer form > * {
+    height: 72px;
+    color: var(--dark-green);
+}
+
+.offer form > div {
+    flex: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.offer form input {
+    border: none;
+    height: calc(100% - 10px);
+    width: 100%;
+    text-indent: 45px;
+    position: relative;
+}
+
+.offer form input:focus{
+    outline: none;
+}
+
+.offer form input::after {
+    background-color: var(--dark-green);
+    
+    width: 100px;
+    height: 200px;
+}
+.offer form input::placeholder {
+    color: gray;
+}
+
+.offer form > div > iconify-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 25px;
+    background-color: white;
+    position: absolute;
+    padding-left: 10px;
+    z-index: 3;
+}
+
+.offer form button {
+    width: 152px;
+    background-color: var(--dark-green);
+}
+
+
+.offer form button span {
+    display: flex;
+    height: 100%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.offer form button span:hover {
+    color: var(--dark-green);
+}
+
+.offer form button span:hover {
+    background-color: white;
+}
+
+.offer form button iconify-icon {
+    margin-left: 5px;
+}
+
+/* END FORM */
+
+/* NAV */
 .offer nav {
     display: flex;
-    justify-content: space-around;
     align-items: center;
     color: var(--dark-green );
+}
+
+.offer nav > * {
+    margin-right: 5px;
 }
 
 .offer nav button {
@@ -17,11 +106,13 @@
     display: flex;
     align-items: center;
     cursor: pointer;
+    margin-right: 20px;
 }
 
 .offer nav a {
     color: var(--dark-green );
     font-size: small;
     text-transform: capitalize;
+    position: relative;
 }
-
+/* END NAV */

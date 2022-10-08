@@ -40,16 +40,21 @@ export default function Categories (props) {
     //set margin bottom to selected category
     //set coordinates of the dropdown 
 
+    const openCategory = (event, category) => {
+        event.preventDefault()
+        category === selectedCategory ? setSelectedCategory(undefined) : setSelectedCategory(category)
+    }
+
     return(
         <main className="categories-wrapper" ref={categoriesWrapper}>
             <h1>Categorii Principale</h1>
             <div className="categories">
             { 
                 Object.keys(props.categories).map(category => {
-                    return(<div data-category={category} onClick={() => category === selectedCategory ? setSelectedCategory(undefined) : setSelectedCategory(category) } key={key++} className="category">
+                    return(<a href={props.gotoSearch({category: category})} data-category={category} onClick={(event) => openCategory(event, category) } key={key++} className="category">
                         <div className="category-img"><img src={props.categories[category][0].images[0]}></img></div>
                         <div className="category-name">{category.replaceAll("-", " ")}</div>
-                    </div>)
+                    </a>)
                 }) 
             }
             <CategoryDropdown categoryDropdownStyle={categoryDropdownStyle} selectedCategory={selectedCategory} data={props.data} gotoSearch={props.gotoSearch}/>
