@@ -1,8 +1,8 @@
-header {
+.container > header {
     background-color: var(--dark-green);
 }
 
-header .header-wrapper {
+.container > header .header-wrapper {
     background-color: var(--dark-green);
     height: 72px;
     display: flex;
@@ -13,20 +13,20 @@ header .header-wrapper {
     margin: auto;
 }
 
-header::before {
+.container > header::before {
     background-color: red;
 }
 
-header img {
+.container > header img {
     cursor: pointer;
 }
 
-header .buttons {
+.container > header .buttons {
     display: flex;
     align-items: center;
 }
 
-header button {
+.container > header button {
     background-color: unset;
     border: unset;
     color: white;
@@ -39,16 +39,16 @@ header button {
     align-items: center;
 }
 
-header button:hover {
+.container > header button:hover {
     color: #60797c;
 }
 
-header button iconify-icon {
+.container > header button iconify-icon {
     margin-right: 10px;
     font-size: 25px;
 }
 
-header .btn-fav iconify-icon {
+.container > header .btn-fav iconify-icon {
     margin-right: 0;
 }
 

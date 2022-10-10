@@ -1,9 +1,25 @@
+import { randomNumber } from "../container/container"
+
 export default function Announcements (props) {
+    const promotedProducts = []
+    props.promotedProductsArray.forEach(item => {
+        promotedProducts.push(item)
+    })
+    const promotedProductsArray16 = []
+    for(let i = 0; i < 16; i++) {
+        let index = randomNumber(0, promotedProducts.length-1)
+        while(promotedProductsArray16[index] === true) {
+            index = randomNumber(0, promotedProducts.length-1)
+        }
+        promotedProductsArray16[index] = true
+    }   
+
     let key = 0
     return(<div className="announcements">
         <h1>Anunturi Promovate</h1>
         <div className="wrapper">
-            {props.promotedProducts.map(product => {
+            {props.data.products.products.map(product => {
+                if(promotedProductsArray16[product.id] === true)
                 return(<div key={key++} className="announcement">
                     <a href= {props.gotoOffer(product.id)} className="img-wrapper">                  
                         <img alt="no image available" src={product.images[1]}></img>

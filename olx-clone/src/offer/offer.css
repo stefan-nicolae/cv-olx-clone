@@ -3,91 +3,6 @@
     margin: auto;
 }
 
-/* FORM */
-.offer form {
-    width: 1200px;
-    margin:auto;
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 100px;
-    margin-bottom: 50px;
-}
-
-.offer form > * {
-    height: 72px;
-    color: var(--dark-green);
-}
-
-.offer form > div {
-    flex: 1;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.offer form input {
-    border: none;
-    height: calc(100% - 10px);
-    width: 100%;
-    text-indent: 45px;
-    position: relative;
-}
-
-.offer form input:focus{
-    outline: none;
-}
-
-.offer form input::after {
-    background-color: var(--dark-green);
-    
-    width: 100px;
-    height: 200px;
-}
-.offer form input::placeholder {
-    color: gray;
-}
-
-.offer form > div > iconify-icon {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-size: 25px;
-    background-color: white;
-    position: absolute;
-    padding-left: 10px;
-    z-index: 3;
-}
-
-.offer form button {
-    width: 152px;
-    background-color: var(--dark-green);
-}
-
-
-.offer form button span {
-    display: flex;
-    height: 100%;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.offer form button span:hover {
-    color: var(--dark-green);
-}
-
-.offer form button span:hover {
-    background-color: white;
-}
-
-.offer form button iconify-icon {
-    margin-left: 5px;
-}
-
-/* END FORM */
-
 /* NAV */
 .offer nav {
     display: flex;
@@ -116,3 +31,417 @@
     position: relative;
 }
 /* END NAV */
+
+/* main */
+
+/* .main */
+.main {
+    width: 1200px;
+    display: flex;
+    margin: auto;
+    margin-top: 50px;
+}
+
+    /* presentation */
+.main .presentation{
+    margin-right: 20px;
+    max-width: 740px;;
+}
+
+.main .presentation .images {
+    background-color: white;
+    padding: 20px;
+}
+
+.main .presentation .images .swiper {
+    width: 700px;
+    height: 700px;
+}
+
+.main .presentation .images .swiper-slide {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.main .presentation .images .swiper-slide img.tall{
+    height: 100%;
+    margin: auto;
+}
+
+.main .presentation .images .swiper-slide img.wide {
+    width: 100%;
+    align-self: center;
+}
+
+.main .presentation .images .swiper-pagination-bullet {
+    height: 15px;
+    width: 15px;
+    border: 3px solid gray;
+    opacity: 1;
+    background-color: unset;
+}
+
+.main .presentation .images .swiper-pagination-bullet-active {
+    border: 6px solid white;
+}
+
+.main .presentation .images .swiper-button-next,
+.main .presentation .images .swiper-button-prev  {
+    color: gray;
+    background-color: var(--light-gray);
+    padding: 0;
+    height: 35px;
+    width: 35px;
+    border-radius: 5px;
+}
+
+.main .presentation .images .swiper-button-next::after,
+.main .presentation .images .swiper-button-prev::after {
+    font-size: 25px;
+}
+
+.main .presentation .description {
+    padding: 20px;
+    margin-top: 20px;
+    background-color: white;
+}
+
+/* postat */
+.main .presentation .description > span:first-of-type {
+    font-size: small;
+}
+
+/* titlu */
+.main .presentation .description > h1 {
+    font-weight: normal;
+    font-size: 30px;
+    margin-top: 15px;
+}
+
+/* pret */
+.main .presentation .description > span:nth-of-type(2) {
+    margin-top: 15px;
+    font-size: 50px;
+}
+
+/* promoveaza/reactualizeaza */
+.main .presentation .description > div:first-of-type {
+    font-size: large;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.main .presentation .description > div:first-of-type span {
+    margin-right: 10px;
+    text-transform: uppercase;
+}
+
+.main .presentation .description > div:first-of-type iconify-icon {
+    margin-right: 5px;
+}
+
+/* DESCRIERE */
+.main .presentation .description > h2 {
+    margin-top: 15px;
+    font-size: 30px;
+}
+
+.main .presentation .description > p {
+    margin-top: 15px;
+    font-size: larger;
+}
+
+.main .presentation .description > hr {
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.main .presentation .description > footer {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.main .presentation .description > footer span:nth-of-type(2) {
+    margin-left: -100px;
+}
+
+.main .presentation .description > footer span:nth-of-type(3) {
+    text-decoration: underline;
+    color: red;
+    cursor: pointer;
+    display:flex;
+    align-items: center;
+} 
+
+        /* messaging */
+.main section.messaging {
+    background-color: white;
+    margin-top: 20px;
+    padding: 20px;
+    color: var(--dark-green)
+}
+
+.main section.messaging header {
+    background-color:  white;
+    display: flex;
+    justify-content: space-between;
+}
+
+.main section.messaging header > div:last-of-type {
+    display: flex;
+    align-items: center;
+}
+
+.main section.messaging header > div:last-of-type h1 {
+    text-align: center;
+    margin: 0 10px;
+}
+
+.main section.messaging header > div:last-of-type > span {
+    background-color: rgb(35, 229, 219);
+    height: 40px;
+    width: 40px;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+}
+
+.main section.messaging header > div:last-of-type > button {
+    border: 5px solid var(--dark-green);
+    height: 50px;
+}
+
+.main section.messaging header > div:last-of-type > button span {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.main section.messaging textarea {
+    background-color: var(--light-gray);
+    resize: none;
+    width: 100%;
+    height: 260px;
+    padding: 20px;
+}
+
+.main section.messaging footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.main section.messaging footer div > span {
+    font-size: 25px;
+}
+
+.main section.messaging footer div {
+    display: flex;
+    flex-direction: column;
+}
+
+.main section.messaging footer button {
+    border: 5px solid var(--dark-green);
+    height: 50px;
+
+}
+
+
+.main section.messaging footer button  >span {
+    width:  100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+
+
+    /* presentation end*/
+
+.main aside {
+    flex: 1;
+}
+
+.main aside .user {
+    background-color: white;
+    padding: 20px;
+}
+
+
+.main .profile {
+    display: flex;
+    height:  100px;
+    align-items: center;
+    color: gray;
+}
+
+.main .profile iconify-icon {
+    font-size: 70px;
+    margin-right: 15px;
+}
+
+.main .profile h1 {
+    font-size: 30px;
+    color: var(--dark-green)
+}
+
+.main aside .user .rating {
+    background-color: var(--light-gray);
+    padding: 20px;
+}
+
+.main aside .user .rating > div:first-of-type {
+    display: flex;
+    align-items: center;
+}
+
+.main aside .user .rating > div:first-of-type span:first-of-type{
+    margin-left: 5px;
+    font-weight: bold;
+    font-size: large;
+}
+
+.main aside .user .rating > span {
+    display: block;
+    color: var(--dark-green);
+    opacity: 0.7;
+}
+
+.main aside .user .rating a {
+    display: block;
+    margin-top: 10px;
+    color: var(--dark-green);
+    margin-bottom: 10px;
+}
+
+.main aside .user .buttons {
+    display: flex;
+    margin: 20px 0;
+}
+
+.main aside .user .buttons button {
+    border: 1px solid var(--dark-green);
+    height: 60px;
+    flex: 1;
+    font-size: larger;
+}
+
+.main aside .user .buttons button:last-of-type {
+    background-color: var(--dark-green);
+}
+
+.main aside .user .buttons button:last-of-type span {
+    color: white;
+}
+
+.main aside .user .buttons button:last-of-type span:hover {
+    color: var(--dark-green);
+    background-color: white;
+}
+
+.main aside .user .buttons button span {
+    height: 100%;
+}
+
+.main aside .user .buttons button:first-of-type {
+    margin-right:5px;
+}
+
+.main aside .more {
+    text-align: center;
+    text-decoration: none;
+    color: var(--dark-green);
+    font-size: large;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+section.bottom-div {
+    margin: 40px 0;
+    width: 1200px;
+    color:var(--dark-green);
+    font-size: 20px;
+    position: relative;
+}
+
+section.bottom-div > h1{
+    margin-bottom: 20px;
+}
+
+section.bottom-div .swiper-slide .wrapper { 
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    width: 100%;
+    background-color: WHITE;
+}
+
+section.bottom-div .swiper-slide div.text{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+section.bottom-div .swiper-slide div.text > *{
+    margin-bottom: 5px;
+}
+
+section.bottom-div .swiper-slide .img-div {
+    height: 200px;
+    overflow: hidden;
+    background-color: white;
+    position: relative;
+}
+
+section.bottom-div .swiper-slide .img-div > span{
+    background-color: rgb(35, 229, 219);
+    display: block;
+    position: absolute;
+    bottom: 0;
+}
+
+section.bottom-div .swiper-slide .wrapper h1{
+    display: block;
+    font-weight: normal;
+    font-size: 20px;
+    flex: 1;
+}
+
+section.bottom-div .swiper-slide span:first-of-type{
+    display:block;
+    font-weight: bold;
+}
+
+section.bottom-div .swiper {
+    position: unset;
+}
+
+section.bottom-div .swiper-slide img {
+    width: 100%;
+}
+
+section.bottom-div .swiper-button-prev {
+    position: absolute;
+    top: 0;
+    left: 1100px;
+}
+
+section.bottom-div .swiper-button-next {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+section.bottom-div .swiper-button-prev, section.bottom-div .swiper-button-next {
+    color: black;
+}
+
+
+/* end main */

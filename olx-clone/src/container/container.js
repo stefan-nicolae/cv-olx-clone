@@ -24,12 +24,12 @@ export default function Container () {
 	let storedData = window.localStorage.getItem("data")
 	const [data, setData] = useState(storedData ? JSON.parse(storedData) : undefined) 
 	const [warningVisible, setWarningVisible] = useState(true)
-	const promotedProducts = useRef([])
 	const pathname = window.location.pathname
 
+	console.log(data)
 	//update URL_HISTORY
 	const URL_HISTORY = window.sessionStorage.getItem("URL_HISTORY")
-	console.log(URL_HISTORY)
+	// console.log(URL_HISTORY)
 	if(!URL_HISTORY) window.sessionStorage.setItem("URL_HISTORY", JSON.stringify([pathname]))
 	else {
 		const newURL_HISTORY = JSON.parse(URL_HISTORY).concat([pathname])
@@ -51,22 +51,28 @@ export default function Container () {
 		}
 	}, []);
 	
-	if(data && !promotedProducts.current.length) {
+	let promotedProductsArray = []
+	if(window.localStorage.getItem("promotedProductsArray")) {
+		promotedProductsArray = JSON.parse(window.localStorage.getItem("promotedProductsArray"))
+	}
+	if(data && !promotedProductsArray.length) {
 		const len = data.products.products.length 
-		for(let i = 0; i < 16; i++) {
-			promotedProducts.current.push(
-				data.products.products[randomNumber(0, len-1)]
-                )
-            }
+		for(let i = 0; i < 32; i++) {
+			let index = randomNumber(0, len-1)
+			while(promotedProductsArray[index] === true) {
+				index = randomNumber(0, len-1)
+			}
+			promotedProductsArray[index] = true
+        }
+		window.localStorage.setItem("promotedProductsArray", JSON.stringify(promotedProductsArray))
 	}
 		
 	const gotoSearch=(parametersObj) => {
-		console.log(parametersObj)
 		return "#"
 	}
 		
 	const gotoOffer = (id) => {
-		console.log("go to " + id)
+		// console.log("go to " + id)
 		let url = "/404"
 		data.products.products.forEach((product => 
 			{
@@ -95,11 +101,17 @@ export default function Container () {
 			}
 		})
 		if(foundProduct && getNewTitle(foundProduct.title) !== targetTitle) foundProduct = undefined
-		console.log(foundProduct)
-		if(foundProduct) return (<div className="container">
-			<Header />
-			<Offer data={data} product={foundProduct}/>
-		</div>)
+		if(foundProduct) {
+
+			return (<div className="container">
+
+				<Header />
+				<SearchForm data={data} gotoSearch={gotoSearch} gotoOffer={gotoOffer}/>
+				<Offer data={data} product={foundProduct} gotoSearch={gotoSearch} gotoOffer={gotoOffer} promotedProductsArray={promotedProductsArray}/>
+				<Footer categories={data.categories} gotoOffer={gotoOffer} gotoSearch={gotoSearch}/>
+
+			</div>)
+		} 
 		else window.location.pathname = "/404"
 	}
 	return data ? 
@@ -111,7 +123,7 @@ export default function Container () {
 			{/* section categorii priniciple */}
 			<Categories data={data} categories={data.categories} gotoOffer={gotoOffer} gotoSearch={gotoSearch}/>
 			{/* section anunturi promovate */}
-			<Announcements promotedProducts={promotedProducts.current} gotoOffer={gotoOffer} gotoSearch={gotoSearch}/>
+			<Announcements promotedProductsArray={promotedProductsArray} gotoOffer={gotoOffer} gotoSearch={gotoSearch} data={data}/>
 			{/* section advert verde */}
 			<Advert/>
 			{/* footer */}

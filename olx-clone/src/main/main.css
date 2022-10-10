@@ -342,6 +342,8 @@
         color: var(--dark-green);
         position: relative;
         z-index: 1;
+        width: 100%;
+        overflow: hidden;
     }
 
     .categories-wrapper h1 {
@@ -351,7 +353,7 @@
 
     .categories {
         background-color: white;
-
+        
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-start;
