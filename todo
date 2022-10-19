@@ -20,7 +20,7 @@ PAGINA PRINCIPALA
             - FIX THE LINKS ON IT 
         x Toata Romania: dropdown search by county, city
         x /search?categorie=""?judet=""?oras=""
-        - DO NOT FORGET THE CLOSE 
+        - DO NOT FORGET THE CLOSE and the click away 
         
 
     x Categorii principale: each item should open a dropdown sorted by brand, which should then go to /search ? categorie="" ( ? firma="")

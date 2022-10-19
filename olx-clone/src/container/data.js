@@ -102,7 +102,8 @@ export default function Data (props) {
                     users.current = res[2]
                     categories.current = indexProductsByCategories(products.current)
                     products.current.products.sort((a, b) => -(a.dateAdded.getTime() - b.dateAdded.getTime()))
-                    props.setData({products:products.current, categories:categories.current, counties:counties.current, users:users.current})
+                    props.setData({products:products.current, categories:categories.current, 
+                        counties:counties.current, users:users.current})
                 })
             })
         })

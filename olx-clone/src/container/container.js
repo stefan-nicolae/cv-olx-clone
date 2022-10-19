@@ -71,7 +71,8 @@ export default function Container () {
 	const gotoSearch=(parametersObj) => {
 		let paramList = ""
 		Object.keys(parametersObj).forEach(key => {
-			paramList += key + "=" + `${parametersObj[key]}`.replaceAll(" ", "_").toLowerCase() + "&"
+			if(parametersObj[key] === undefined || parametersObj[key] === "undefined") return
+			paramList += key + "=" + `${parametersObj[key]}`.replaceAll(" ", "_") + "&"
 		})
 		const newPath = "search?" + paramList
 		return newPath.slice(0, newPath.length-1)
@@ -142,11 +143,13 @@ export default function Container () {
 			{/* header element */}
 			<Header/>
 			{/* section search + warning div */}
-			<SearchForm filteredSearch={() => {}} data={data} gotoOffer={gotoOffer} gotoSearch={gotoSearch} warningVisible={warningVisible} setWarningVisible={setWarningVisible}/>
+			<SearchForm filteredSearch={() => {}} data={data} gotoOffer={gotoOffer} gotoSearch={gotoSearch} 
+				warningVisible={warningVisible} setWarningVisible={setWarningVisible}/>
 			{/* section categorii priniciple */}
 			<Categories data={data} categories={data.categories} gotoOffer={gotoOffer} gotoSearch={gotoSearch}/>
 			{/* section anunturi promovate */}
-			<Announcements promotedProductsArray={promotedProductsArray} gotoOffer={gotoOffer} gotoSearch={gotoSearch} data={data}/>
+			<Announcements promotedProductsArray={promotedProductsArray} gotoOffer={gotoOffer} gotoSearch={gotoSearch} 
+				data={data}/>
 			{/* section advert verde */}
 			<Advert/>
 			{/* footer */}

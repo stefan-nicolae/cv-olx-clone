@@ -51,13 +51,15 @@ export default function Categories (props) {
             <div className="categories">
             { 
                 Object.keys(props.categories).map(category => {
-                    return(<a href={props.gotoSearch({category: category})} data-category={category} onClick={(event) => openCategory(event, category) } key={key++} className="category">
+                    return(<a href={props.gotoSearch({category: category})} data-category={category} 
+                        onClick={(event) => openCategory(event, category) } key={key++} className="category">
                         <div className="category-img"><img src={props.categories[category][0].images[0]}></img></div>
                         <div className="category-name">{category.replaceAll("-", " ")}</div>
                     </a>)
                 }) 
             }
-            <CategoryDropdown categoryDropdownStyle={categoryDropdownStyle} selectedCategory={selectedCategory} data={props.data} gotoSearch={props.gotoSearch}/>
+            <CategoryDropdown categoryDropdownStyle={categoryDropdownStyle} selectedCategory={selectedCategory} 
+                data={props.data} gotoSearch={props.gotoSearch}/>
     
             </div>
         </main>

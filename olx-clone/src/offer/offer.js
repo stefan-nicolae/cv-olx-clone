@@ -47,7 +47,8 @@ export default function Offer (props) {
                 {productObject.category} - {productObject.county}
             </a><span>/</span>
 
-            <a href={props.gotoSearch({category: productObject.category, location: productObject.county + ";" + productObject.city.City})}>
+            <a href={props.gotoSearch({category: productObject.category, location: productObject.county + ";" + 
+                productObject.city.City})}>
                 {productObject.category} - {productObject.city.City.replaceAll("*", "")}
             </a><span>/</span>
 
@@ -59,7 +60,8 @@ export default function Offer (props) {
                 {productObject.brand} - {productObject.county}
             </a><span>/</span>       
 
-            <a href={props.gotoSearch({brand: productObject.brand, location: productObject.county+ ";" + productObject.city.City})}>
+            <a href={props.gotoSearch({brand: productObject.brand, location: productObject.county+ ";" + 
+                productObject.city.City})}>
                 {productObject.brand} - {productObject.city.City.replaceAll("*", "")}
             </a>
 
@@ -118,7 +120,8 @@ export default function Offer (props) {
                     <div>
                         <span><iconify-icon icon="akar-icons:phone"></iconify-icon></span>
                         <h1>{phoneState ? user.phone : "XXX XXX XXX"}</h1>
-                        <button style={phoneState ? {display: "none"}: {}}onClick={() => {setPhoneState(true)}} className="green-button"><span>Arata</span></button>
+                        <button style={phoneState ? {display: "none"}: {}}onClick={() => {setPhoneState(true)}} 
+                            className="green-button"><span>Arata</span></button>
                     </div>
                 </header>
 
@@ -134,12 +137,15 @@ export default function Offer (props) {
 
             <section style={user.products.length === 1 ? {display: "none"} : {}} className="bottom-div more">
                 <h1>Mai multe anunturi de la acest vanzator</h1>
-                <SwiperBottom openedID={productObject.id} gotoOffer={props.gotoOffer} promotedProductsArray={props.promotedProductsArray} products={user.products}/>
+                <SwiperBottom openedID={productObject.id} gotoOffer={props.gotoOffer} 
+                    promotedProductsArray={props.promotedProductsArray} products={user.products}/>
             </section>
 
             <section className="bottom-div similar">
                 <h1>Anunturi Similare</h1>
-                <SwiperBottom openedID={productObject.id} gotoOffer={props.gotoOffer} promotedProductsArray={props.promotedProductsArray} products={props.data.categories[productObject.category]}/>
+                <SwiperBottom openedID={productObject.id} gotoOffer={props.gotoOffer} 
+                    promotedProductsArray={props.promotedProductsArray} 
+                    products={props.data.categories[productObject.category]}/>
             </section>
 
         </div>
@@ -163,7 +169,8 @@ export default function Offer (props) {
                     <div>
                         {
                             stars.map(star => {
-                                return star ? <iconify-icon key={starkey++}icon="bi:star-fill"></iconify-icon> : <iconify-icon key={starkey++} icon="bi:star"></iconify-icon>
+                                return star ? <iconify-icon key={starkey++}icon="bi:star-fill"></iconify-icon> : 
+                                    <iconify-icon key={starkey++} icon="bi:star"></iconify-icon>
                             })  
                         }
                         <span>
@@ -183,7 +190,8 @@ export default function Offer (props) {
                 </div>
 
 
-                <a className="more" href={props.gotoSearch({userId: user.id})}>Mai multe anunturi ale acestui vanzator<iconify-icon icon="akar-icons:chevron-right"></iconify-icon></a>
+                <a className="more" href={props.gotoSearch({userId: user.id})}>Mai 
+                    multe anunturi ale acestui vanzator<iconify-icon icon="akar-icons:chevron-right"></iconify-icon></a>
 
 
             </section>
@@ -194,7 +202,7 @@ export default function Offer (props) {
                     <div className="location-name">
                         <iconify-icon icon="akar-icons:location"></iconify-icon>
                         <div>
-                            <span>{user.address.city.City},</span>
+                            <span>{user.address.city.City.replaceAll("*", "")},</span>
                             <br></br>
                             {user.address.county}
                         </div>
@@ -248,7 +256,8 @@ export default function Offer (props) {
 
 
         <div style={!mapVisible ? {display: "none"} : {}} className="MAP">
-            <header><iconify-icon onClick={() => {setMapVisible(false)}} icon="akar-icons:chevron-left"></iconify-icon>{productObject.title}</header>
+            <header><iconify-icon onClick={() => {setMapVisible(false)}} icon="akar-icons:chevron-left">
+                </iconify-icon>{productObject.title}</header>
             <iframe
                 width="100%"
                 height="94%"

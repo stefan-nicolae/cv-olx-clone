@@ -1,6 +1,6 @@
 export const ORASE = [
     {
-      "City": "*Bucharest*",
+      "City": "*Bucuresti*",
       "County": "—",
       "Population (2011)[2]": "1,883,425",
       "Population (2002)": "1,926,334",

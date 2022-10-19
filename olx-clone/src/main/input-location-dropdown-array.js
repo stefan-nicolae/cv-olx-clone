@@ -69,12 +69,14 @@ export default function InputLocationDropdownArray(props) {
                                     return (
                                         <div 
                                             style={!county ? {"display": "none"} : undefined} 
-                                            onClick={() => !chosenCounty ? setChosenCounty(county) : props.setChosenLocation(chosenCounty + ";" + county)} 
+                                            onClick={() => !chosenCounty ? setChosenCounty(county) : 
+                                                props.setChosenLocation(chosenCounty + ";" + county)} 
                                             key={key_county++} 
                                             className={"county" + (county === "Bucuresti - Ilfov" ? " bucuresti" : "") } 
                                         >
                                             <span>{county}</span>
-                                            {!chosenCounty ? <iconify-icon icon="akar-icons:chevron-right"></iconify-icon> : <></>}
+                                            {!chosenCounty ? <iconify-icon icon="akar-icons:chevron-right"></iconify-icon> 
+                                                : <></>}
                                         </div>)
                                 })
                             }
