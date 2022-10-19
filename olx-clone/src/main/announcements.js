@@ -7,12 +7,14 @@ export default function Announcements (props) {
     })
     const promotedProductsArray16 = []
     for(let i = 0; i < 16; i++) {
-        let index = randomNumber(0, promotedProducts.length-1)
+        let index = randomNumber(1, promotedProducts.length)
         while(promotedProductsArray16[index] === true) {
-            index = randomNumber(0, promotedProducts.length-1)
+            index = randomNumber(1, promotedProducts.length)
         }
         promotedProductsArray16[index] = true
     }   
+
+    console.log(promotedProductsArray16)
 
     let key = 0
     return(<div className="announcements">
@@ -22,7 +24,7 @@ export default function Announcements (props) {
                 if(promotedProductsArray16[product.id] === true)
                 return(<div key={key++} className="announcement">
                     <a href= {props.gotoOffer(product.id)} className="img-wrapper">                  
-                        <img alt="no image available" src={product.images[1]}></img>
+                        <img alt="no image available" src={product.images[0]}></img>
                     </a>
                     <a href={props.gotoOffer(product.id)} title={product.title} className="title"><span>{product.title.length <= 50 ? product.title : product.title.slice(0, 50) + "..."}</span></a>
                     <div title={product.description} className="description"><span>{product.description}</span></div>
