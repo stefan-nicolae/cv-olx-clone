@@ -1,14 +1,17 @@
 import "./offer.css"
+import "./map.css"
 import SwiperElement from "./swiper"
 import * as container from "../container/container"
 import { useState } from "react"
 import SwiperBottom from "./swiper-bottom"
 
 export default function Offer (props) {
+    const MapsKey = "AIzaSyAIfwB5a40jpDuAnWFffeuE7GWa9F_KS30"
     const productObject = props.product
     const URL_HISTORY = window.sessionStorage.getItem("URL_HISTORY")
     const user = props.data.users[productObject.userID-1]
     const [phoneState, setPhoneState] = useState(false)
+    const [mapVisible, setMapVisible] = useState(false)
 
     const stars = [];
     for(let i = 0; i<user.rating; i++) {
@@ -29,7 +32,8 @@ export default function Offer (props) {
                     window.sessionStorage.setItem("URL_HISTORY", JSON.stringify(arrayWithoutLastURL))
                     console.log(lastURL)
                     window.location.pathname = lastURL
-                }
+                    if(lastURL === undefined) window.location.pathname = "/"
+                } 
             }}><iconify-icon icon="akar-icons:chevron-left"></iconify-icon>Inapoi</button>
             
             <a href="/">Pagina principala       
@@ -44,7 +48,7 @@ export default function Offer (props) {
             </a><span>/</span>
 
             <a href={props.gotoSearch({category: productObject.category, location: productObject.county + ";" + productObject.city.City})}>
-                {productObject.category} - {productObject.city.City}
+                {productObject.category} - {productObject.city.City.replaceAll("*", "")}
             </a><span>/</span>
 
             <a href={props.gotoSearch({brand: productObject.brand})}>
@@ -56,7 +60,7 @@ export default function Offer (props) {
             </a><span>/</span>       
 
             <a href={props.gotoSearch({brand: productObject.brand, location: productObject.county+ ";" + productObject.city.City})}>
-                {productObject.brand} - {productObject.city.City}
+                {productObject.brand} - {productObject.city.City.replaceAll("*", "")}
             </a>
 
         </nav>
@@ -85,7 +89,8 @@ export default function Offer (props) {
                 <h1>{productObject.title} </h1>
                 <span>{productObject.price}€ </span>
                 <div>
-                    <span><iconify-icon icon="bytesize:bookmark"></iconify-icon>Promoveaza</span><span onClick={() => window.location.reload()}><iconify-icon icon="carbon:reset"></iconify-icon>Reactualizeaza</span>
+                    <span>
+                        <iconify-icon icon="bytesize:bookmark"></iconify-icon>Promoveaza</span><span onClick={() => window.location.reload()}><iconify-icon icon="carbon:reset"></iconify-icon>Reactualizeaza</span>
                 </div>
 
                 <h2>DESCRIERE</h2>
@@ -129,24 +134,15 @@ export default function Offer (props) {
 
             <section style={user.products.length === 1 ? {display: "none"} : {}} className="bottom-div more">
                 <h1>Mai multe anunturi de la acest vanzator</h1>
-                <SwiperBottom promotedProductsArray={props.promotedProductsArray} products={user.products}/>
+                <SwiperBottom openedID={productObject.id} gotoOffer={props.gotoOffer} promotedProductsArray={props.promotedProductsArray} products={user.products}/>
             </section>
 
             <section className="bottom-div similar">
                 <h1>Anunturi Similare</h1>
-                <SwiperBottom promotedProductsArray={props.promotedProductsArray} products={props.data.categories[productObject.category]}/>
+                <SwiperBottom openedID={productObject.id} gotoOffer={props.gotoOffer} promotedProductsArray={props.promotedProductsArray} products={props.data.categories[productObject.category]}/>
             </section>
 
         </div>
-
-
-
-
-
-
-
-
-
 
 
 
@@ -192,14 +188,80 @@ export default function Offer (props) {
 
             </section>
 
-            <section className="location"></section>
+            <section className="location">
+                <span>LOCALIZARE</span>
+                <div className="info">
+                    <div className="location-name">
+                        <iconify-icon icon="akar-icons:location"></iconify-icon>
+                        <div>
+                            <span>{user.address.city.City},</span>
+                            <br></br>
+                            {user.address.county}
+                        </div>
+                    </div>
+                    <div onClick={() => {setMapVisible(true)}} className="image">
+                        <img src={
+                            
+                            `https://maps.googleapis.com/maps/api/staticmap?` + 
+                            `size=144x104&` +
+                            `key=${MapsKey}&` + 
+                            `center=${user.address.city.City}+${user.address.county}+Romania&` +
+                            `maptype=terrain&` + 
+                            `style=element:labels|visibility:off` 
+                            
+                        }></img>
+                        <div><div></div></div>
+                        {/* 145x105 */}
+                    </div>
+                </div>
+            </section>
 
-            <section className="details"></section>
+            <section className="details">
+                <span style={{"color": "black"}}>DREPTURILE CONSUMATORILOR</span>
+                <br></br>                
+                <br></br>
+                Acest anunț a fost publicat de către un vânzător privat.
+                <br></br>
+                <br></br>
+
+                <details>
+                        <summary><span>Ca urmare...</span></summary>
+                        <p>
+                            legile privind drepturile consumatorilor nu se aplică în cazul achizițiilor pe care le faci de la acest vânzător. Este deosebit de important să <a href="#"> respecți sfaturile noastre </a>cu privire la siguranță în interacțiunile cu vânzători privați.
+                            <br></br>
+                            <br></br>
+                            Există mai multe entități implicate atunci când cumperi un produs sau un serviciu de pe OLX. Fiecare dintre acestea au următoarele responsabilități:
+                            <br></br>
+                            <br></br>
+                            1. <span>OLX este responsabil pentru</span> furnizarea serviciilor online, precum un cont OLX, publicarea și promovarea anunțurilor, posibilitatea de a cumpăra produse cu Livrare prin OLX și alte servicii descrise în Condițiile noastre de utilizare.<br></br>
+                            2. <span>Vânzătorii privați sunt responsabili pentru</span> vânzarea și trimiterea produsului sau prestarea serviciului exact așa cum a fost descris în anunț. Dacă ai întrebări legate de achiziția ta, îți recomandăm să contactezi direct vânzătorul privat.<br></br>
+                            3. <span>Partenerii noștri de livrare sunt responsabili pentru</span> livrarea produselor către tine, conform descrierii din Condițiile de utilizare ale acestora.<br></br>
+                            <br></br>
+                            <br></br>
+                            <a href="#">Mergi la centrul nostru de ajutor</a> pentru informații detaliate cu privire la drepturile consumatorilor pe OLX.
+                        </p>
+                </details>
+                
+            </section>
         </aside>
 
 
 
-
+        <div style={!mapVisible ? {display: "none"} : {}} className="MAP">
+            <header><iconify-icon onClick={() => {setMapVisible(false)}} icon="akar-icons:chevron-left"></iconify-icon>{productObject.title}</header>
+            <iframe
+                width="100%"
+                height="94%"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                src={
+                    `https://www.google.com/maps/embed/v1/place?` +
+                    `key=${MapsKey}&` +
+                    `q=${user.address.city.City}+${user.address.county}+Romania&` +
+                    `language=RO&` 
+                }> 
+            </iframe>
+        </div>
 
 
 

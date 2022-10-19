@@ -83,7 +83,7 @@
 }
 
 .main .presentation .images .swiper-pagination-bullet-active {
-    border: 6px solid white;
+    border: 6px solid red;
 }
 
 .main .presentation .images .swiper-button-next,
@@ -238,6 +238,7 @@
 
 .main section.messaging footer div > span {
     font-size: 25px;
+    cursor: pointer;
 }
 
 .main section.messaging footer div {
@@ -278,6 +279,7 @@
     height:  100px;
     align-items: center;
     color: gray;
+    cursor: pointer;
 }
 
 .main .profile iconify-icon {
@@ -363,6 +365,74 @@
     justify-content: center;
 }
 
+.main aside .details {
+    background-color: white;
+    margin-top: 20px;
+    padding: 20px;
+    color: var(--dark-green);
+}
+
+.main aside .details span {
+    font-weight: bold;
+}
+
+.main aside .location {
+    background-color: white;
+    margin-top: 20px;
+    padding: 20px;
+    color: var(--dark-green)
+}
+
+.main aside .location span {
+    font-weight: bold;
+}
+
+.main aside .location > span {
+    display: block;
+    margin-bottom: 30px;
+}
+
+.main aside .location .info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.main aside .location .info  .location-name {
+    display: flex;
+}
+
+.main aside .location .info  .location-name iconify-icon {
+    font-size: 25px;
+    margin-right: 10px;;
+}
+
+.main aside .location .info .image {
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+}
+
+.main aside .location .info .image > div{
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    right: 47px; 
+    top: 27px;
+    border-radius: 100px;
+    border: 5px solid #4A89F3;
+    overflow: hidden;
+}
+
+
+.main aside .location .info .image > div > div {
+    background-color: red;
+    height: 100%;
+    width: 100%;
+    background-color: #4A89F3;
+    opacity: 0.3;
+}
+
 section.bottom-div {
     margin: 40px 0;
     width: 1200px;
@@ -381,6 +451,7 @@ section.bottom-div .swiper-slide .wrapper {
     height: 400px;
     width: 100%;
     background-color: WHITE;
+    cursor: pointer;
 }
 
 section.bottom-div .swiper-slide div.text{

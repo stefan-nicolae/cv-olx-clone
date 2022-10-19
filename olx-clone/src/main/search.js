@@ -11,6 +11,9 @@ export default function SearchForm (props) {
     if(chosenLocation !== lastChosenLocation.current) {
         lastChosenLocation.current = chosenLocation
         setCountiesVisible(false)
+        setTimeout(() => {
+            props.filteredSearch({location: chosenLocation})
+        }, 100) 
     }
 
     if(chosenLocation) {
@@ -22,6 +25,8 @@ export default function SearchForm (props) {
     }
 
     const handleSearch = event => {
+        const typedValue = event.currentTarget.value
+        if(props.filters) window.sessionStorage.setItem("filteredSearchInputValue", typedValue)
         const value = event.currentTarget.value.toLowerCase()
         if(value.length < 3) {
             setSearchSuggestions([[],[]])
@@ -140,10 +145,17 @@ export default function SearchForm (props) {
         let searchValue = e.target[2].value
         if(searchValue.length < 3) searchValue = undefined
         const location = chosenLocation ? (chosenLocation.startsWith("Toata Romania") ? "undefined" : chosenLocation) : undefined
-        props.gotoSearch({
-            "search": searchValue,
-            "location": location
-        })
+        if(props.filters === true) {
+            props.filteredSearch ({
+                "search": searchValue,
+                "location": location
+            })
+        } else {
+            props.gotoSearch ({
+                "search": searchValue,
+                "location": location
+            })
+        }
     }
 
     let key = 0;
@@ -157,23 +169,23 @@ export default function SearchForm (props) {
             </div>
             <div className="form-wrapper">
                 <iconify-icon className="search-icon-1" icon="bi:search"></iconify-icon>
-                <input onKeyUp={handleSearch} className="input-search" type="text" 
+                <input onKeyUp={handleSearch} className="input-search" type="text" defaultValue={props.filters ? window.sessionStorage.getItem("filteredSearchInputValue") : ""}
                         placeholder={`${Object.keys(props.data.products.products).length} anunturi din apropierea ta`}></input>
                 <div className="input-search-dropdown">
                     <div className="category-suggestions">
                         {
                                 searchSuggestions[0].map(suggestion => {
-                                    return(<a href={props.gotoSearch({category: suggestion})} className="suggestion" key={key++}>{suggestion}</a>) 
+                                    return(<a href={props.gotoSearch({category: suggestion})} onClick={() => {props.filters === true ? props.filteredSearch({category: suggestion}, true): {}}} className="suggestion" key={key++}>{suggestion}</a>) 
                                 }) 
                         }
                     </div>
                     <div className="product-suggestions">             
                         {
-                            searchSuggestions[1].map(suggestion => {
-                                return (<a href={props.gotoOffer(suggestion[2])} className="suggestion" 
-                                    key={key++}>{suggestion[0]}<span>in categoria <span>
-                                    {suggestion[1].replace("-", " ")}</span></span></a>) 
-                            })
+                                searchSuggestions[1].map(suggestion => {
+                                    return (<a href={props.gotoOffer(suggestion[2])} className="suggestion" 
+                                        key={key++}>{suggestion[0]}<span>in categoria <span>
+                                        {suggestion[1].replace("-", " ")}</span></span></a>) 
+                                })
                         }
                     </div>
                 </div>  

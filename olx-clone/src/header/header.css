@@ -52,3 +52,6 @@
     margin-right: 0;
 }
 
+.container > header .btn-new-announcement {
+    background-color: white;
+}

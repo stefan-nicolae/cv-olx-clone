@@ -1,0 +1,25 @@
+.MAP {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background-color:white;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    color: var(--dark-green);
+    display: flex;
+    flex-direction: column;
+}
+
+.MAP header {
+    text-align: center;
+    padding: 5px;
+    border-bottom: 15px solid var(--dark-green);
+    font-size: 25px;
+    flex: 1;
+}
+
+.MAP header iconify-icon {
+    float: left;
+    cursor: pointer;
+}

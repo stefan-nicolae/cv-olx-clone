@@ -8,6 +8,7 @@ import Announcements from "../main/announcements";
 import Advert from "../footer/advert";
 import Footer from "../footer/footer";
 import Offer from "../offer/offer"
+import SearchPage from "../search-page/search-page";
 
 export function randomNumber (min, max) { 
 	return Math.floor(Math.random() * (max+1 - min) + min)
@@ -68,7 +69,12 @@ export default function Container () {
 	}
 		
 	const gotoSearch=(parametersObj) => {
-		return "#"
+		let paramList = ""
+		Object.keys(parametersObj).forEach(key => {
+			paramList += key + "=" + `${parametersObj[key]}`.replaceAll(" ", "_").toLowerCase() + "&"
+		})
+		const newPath = "search?" + paramList
+		return newPath.slice(0, newPath.length-1)
 	}
 		
 	const gotoOffer = (id) => {
@@ -114,12 +120,29 @@ export default function Container () {
 		} 
 		else window.location.pathname = "/404"
 	}
+	if(storedData && pathname.startsWith("/search")) {
+			let URL = window.location.href
+			const paramObj = {}
+			URL = URL.slice(URL.indexOf("?")+1, URL.length)
+			
+			URL.split("&").forEach(param => {
+				const arr = param.split("=")
+				paramObj[arr[0]] = arr[1]
+			})
+
+			return(
+			<div className="container">
+				<Header/>
+				<SearchPage paramObj={paramObj} data={data} gotoSearch={gotoSearch} gotoOffer={gotoOffer}/>
+			</div>
+		)
+	}
 	return data ? 
 		<div className="container">
 			{/* header element */}
 			<Header/>
 			{/* section search + warning div */}
-			<SearchForm data={data} gotoOffer={gotoOffer} gotoSearch={gotoSearch} warningVisible={warningVisible} setWarningVisible={setWarningVisible}/>
+			<SearchForm filteredSearch={() => {}} data={data} gotoOffer={gotoOffer} gotoSearch={gotoSearch} warningVisible={warningVisible} setWarningVisible={setWarningVisible}/>
 			{/* section categorii priniciple */}
 			<Categories data={data} categories={data.categories} gotoOffer={gotoOffer} gotoSearch={gotoSearch}/>
 			{/* section anunturi promovate */}

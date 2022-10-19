@@ -30,21 +30,17 @@ PAGINA PRINCIPALA
     x Categorii principale (down): go to /search ? categorie=""
 
 
-SEARCH PAGE
+SEARCH PAGE - TODO
 
-    - Search page:
-        - Inputs: Categorie, brand, localitate
-        - Sort by: Price, rating (default at search page), discount, date uploaded (default at start page)
-    - dont 4get anunturi promovate
 
-FAV PAGE
+FAV PAGE - TODO
 
-    - TODO
+OFFER PAGE - TODO 
 
-OFFER PAGE 
-
-    - dont 4get anunturi promovate
-    - TODO
+    x dont 4get anunturi promovate
     x NAVBAR: category in same country; category in same city
+    - MAP
 
-LOGIN PAGE, ADD PRODUCT PAGE (maybe)
+LOGIN PAGE, ADD PRODUCT PAGE, PROFILE PAGE (maybe)
+
+/404 - TODO
