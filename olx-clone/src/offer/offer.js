@@ -39,28 +39,28 @@ export default function Offer (props) {
             <a href="/">Pagina principala       
             </a><span>/</span>
 
-            <a href={props.gotoSearch({category: productObject.category})}>
-                {productObject.category}
+            <a href={props.gotoSearch({categorie: productObject.category})}>
+                {productObject.category.replaceAll("-", " ")}
             </a><span>/</span>
 
-            <a href={props.gotoSearch({category: productObject.category, location: productObject.county})}>
-                {productObject.category} - {productObject.county}
+            <a href={props.gotoSearch({categorie: productObject.category, locatie: productObject.county})}>
+                {productObject.category.replaceAll("-", " ")} - {productObject.county}
             </a><span>/</span>
 
-            <a href={props.gotoSearch({category: productObject.category, location: productObject.county + ";" + 
+            <a href={props.gotoSearch({categorie: productObject.category, locatie: productObject.county + ";" + 
                 productObject.city.City})}>
-                {productObject.category} - {productObject.city.City.replaceAll("*", "")}
+                {productObject.category.replaceAll("-", " ")} - {productObject.city.City.replaceAll("*", "")}
             </a><span>/</span>
 
-            <a href={props.gotoSearch({brand: productObject.brand})}>
+            <a href={props.gotoSearch({firma: productObject.brand})}>
                 {productObject.brand}
             </a><span>/</span>
 
-            <a href={props.gotoSearch({brand: productObject.brand, location: productObject.county})}>
+            <a href={props.gotoSearch({firma: productObject.brand, locatie: productObject.county})}>
                 {productObject.brand} - {productObject.county}
             </a><span>/</span>       
 
-            <a href={props.gotoSearch({brand: productObject.brand, location: productObject.county+ ";" + 
+            <a href={props.gotoSearch({firma: productObject.brand, locatie: productObject.county+ ";" + 
                 productObject.city.City})}>
                 {productObject.brand} - {productObject.city.City.replaceAll("*", "")}
             </a>

@@ -1,6 +1,7 @@
 import "./main.css"
 import {useEffect, useState, useRef } from "react"
 import InputLocationDropdownArray from "./input-location-dropdown-array"
+import { capitalize } from "../container/container"
 
 export default function SearchForm (props) {
     const [searchSuggestions, setSearchSuggestions] = useState([[], []])
@@ -23,7 +24,7 @@ export default function SearchForm (props) {
         lastChosenLocation.current = chosenLocation
         setCountiesVisible(false)
         setTimeout(() => {
-            if(props.filters === true) props.filteredSearch({location: chosenLocation})
+            if(props.filters === true) props.filteredSearch({locatie: chosenLocation})
         }, 100) 
     }
 
@@ -160,13 +161,13 @@ export default function SearchForm (props) {
         if(props.filters === true) {
             if(!location && props.locationDefaultValue) location = props.locationDefaultValue
             props.filteredSearch ({
-                "search": searchValue,
-                "location": location
+                "cautare": searchValue,
+                "locatie": location
             })
         } else {
             window.location.href = props.gotoSearch ({
-                "search": searchValue,
-                "location": location
+                "cautare": searchValue,
+                "locatie": location
             })
         }
     }
@@ -190,11 +191,13 @@ export default function SearchForm (props) {
                     <div className="category-suggestions">
                         {
                                 searchSuggestions[0].map(suggestion => {
-                                    return(<a href={props.filters !== true ? props.gotoSearch({category: suggestion, 
+                                    return(<a onClick={() => {
+                                        window.sessionStorage.setItem("searchFormInputValue", capitalize(suggestion.replaceAll("-", " ")))
+                                    }} href={props.filters !== true ? props.gotoSearch({categorie: suggestion, 
                                         location: (chosenLocation ? (chosenLocation.startsWith("Toata Romania") ? 
                                         "undefined" : chosenLocation) : undefined) }) : 
-                                        props.filteredSearch({category: suggestion, source: "search-form-input"}, false)} 
-                                    className="suggestion" key={key++}>{suggestion}</a>) 
+                                        props.filteredSearch({categorie: suggestion, cautare: undefined}, false)} 
+                                    className="suggestion" key={key++} >{suggestion.replaceAll("-"," ")}</a>) 
                                 }) 
                         }
                     </div>
@@ -203,7 +206,7 @@ export default function SearchForm (props) {
                                 searchSuggestions[1].map(suggestion => {
                                     return (<a href={props.gotoOffer(suggestion[2])} className="suggestion" 
                                         key={key++}>{suggestion[0]}<span>in categoria <span>
-                                        {suggestion[1].replace("-", " ")}</span></span></a>) 
+                                        {suggestion[1].replaceAll("-", " ")}</span></span></a>) 
                                 })
                         }
                     </div>

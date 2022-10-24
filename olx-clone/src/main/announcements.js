@@ -14,8 +14,6 @@ export default function Announcements (props) {
         promotedProductsArray16[index] = true
     }   
 
-    console.log(promotedProductsArray16)
-
     let key = 0
     return(<div className="announcements">
         <h1>Anunturi Promovate</h1>

@@ -14,6 +14,16 @@ export function randomNumber (min, max) {
 	return Math.floor(Math.random() * (max+1 - min) + min)
 } 
 
+export function capitalize (string) {
+	let newString = ""
+	string.split(" ").forEach((word) => {
+		word = word[0].toUpperCase() + word.slice(1)
+		newString += word + " "
+	})
+	return newString
+}
+
+
 function getNewTitle(title) {
 	return title.replaceAll(" ", "-")
 	.replaceAll("/", "")

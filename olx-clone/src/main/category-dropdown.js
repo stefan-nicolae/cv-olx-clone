@@ -10,13 +10,13 @@ export default function CategoryDropdown (props) {
     let key = 0
     return (<div style={props.categoryDropdownStyle} className="category-dropdown">
         <div className="title"><iconify-icon icon="akar-icons:chevron-right"></iconify-icon>
-            <a href={props.gotoSearch({"category": props.selectedCategory})} >
-                Vezi toate anunturile</a>in {props.selectedCategory}
+            <a href={props.gotoSearch({"categorie": props.selectedCategory})} >
+                Vezi toate anunturile</a>in <span style={{textTransform: "capitalize", marginLeft: "5px"}}>{props.selectedCategory.replaceAll("-", " ")}</span>
         </div>
         <div className="brands">
             {brands.map(brand => {
-                return (<a href={props.gotoSearch({"category": props.selectedCategory, "brand": brand})} key={key++}>
-                    <iconify-icon icon="akar-icons:chevron-right"></iconify-icon><span>{brand}</span></a>)
+                return (<a href={props.gotoSearch({"categorie": props.selectedCategory, "firma": brand})} key={key++}>
+                    <iconify-icon icon="akar-icons:chevron-right"></iconify-icon><span>{brand.replaceAll("_", " ")}</span></a>)
             })}
         </div>
     </div>)

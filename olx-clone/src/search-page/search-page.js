@@ -6,10 +6,12 @@ export default function SearchPage (props) {
     const storedFormInputValue = window.sessionStorage.getItem("searchFormInputValue")
 
     //this is for the values/placeholders
-    let value_input = props.paramObj.search ? props.paramObj.search : storedFormInputValue
-    let value_location = props.paramObj.location ? props.paramObj.location.replace("_", " ") : ""
+    let value_input = props.paramObj.cautare ? props.paramObj.cautare.replaceAll("_", " ") : storedFormInputValue
+    let value_location = props.paramObj.locatie ? props.paramObj.locatie.replaceAll("_", " ") : ""
     if(value_location === "") value_location = window.sessionStorage.getItem("location")
-    window.sessionStorage.setItem("location", props.paramObj.location)
+    window.sessionStorage.setItem("location", props.paramObj.locatie)
+
+
 
 
     console.log(searchParams)
@@ -18,29 +20,13 @@ export default function SearchPage (props) {
     const filteredSearch = (newParams, open=true) => {
         // console.log(newParams.search)   
 
-        if(newParams.source) {
-            const source = newParams.source
-            newParams.source = undefined
-            switch(source) {
-                //It is a category set by the search-input, thus it needs to be locally remembered as the input's value
-                case "search-form-input": 
-                    if(newParams.category) {
-                        const category = newParams.category 
-                        window.sessionStorage.setItem("searchFormInputValue", category[0].toUpperCase() +
-                         category.substring(1))
-                        newParams.search = undefined
-                    }
-            }
-        }
-
-
-        if(newParams.location && newParams.location.startsWith("Toata Romania"))  {
-            newParams.location = ""
+        if(newParams.locatie && newParams.locatie.startsWith("Toata Romania"))  {
+            newParams.locatie = ""
             window.sessionStorage.setItem("location", "")
         }
-        if(searchParams.category && newParams.search && searchParams.category.toLowerCase() === newParams.search.toLowerCase()) {
-            newParams.search = undefined
-        }
+
+        if(searchParams.categorie && newParams.cautare && searchParams.categorie.toLowerCase().replaceAll("-", "").replaceAll("_","").replaceAll(" ", "") ==
+        newParams.cautare.toLowerCase().replaceAll("-", "").replaceAll("_","").replaceAll(" ", "")) newParams.cautare = undefined
 
         if(open) { 
             window.location.href = props.gotoSearch({...searchParams, ...newParams})
@@ -51,7 +37,6 @@ export default function SearchPage (props) {
     }
 
     if(value_location === undefined || value_location === "undefined") value_location = ""
-    console.log(value_location)
     return(<div className="search-page">
         <SearchForm locationDefaultValue={value_location} inputDefaultValue={value_input} data={props.data} 
             filters={true} gotoSearch={() => "#"} filteredSearch={filteredSearch} gotoOffer={props.gotoOffer}/>

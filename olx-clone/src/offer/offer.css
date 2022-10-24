@@ -27,8 +27,8 @@
 .offer nav a {
     color: var(--dark-green );
     font-size: small;
-    text-transform: capitalize;
     position: relative;
+    text-transform: capitalize;
 }
 /* END NAV */
 

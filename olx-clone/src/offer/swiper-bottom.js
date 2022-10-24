@@ -38,7 +38,7 @@ export default function SwiperBottom (props) {
                 <div className='text'>
                     <h1>{product.title}</h1>
                     <span>{product.price}€</span>
-                    <span>{product.city.City}</span>
+                    <span>{product.city.City.replaceAll("*", "")}</span>
                     <span>Postat {product.dateAdded.slice(0,10)}</span>
                 </div>
 
