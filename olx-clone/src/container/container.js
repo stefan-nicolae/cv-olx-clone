@@ -17,6 +17,7 @@ export function randomNumber (min, max) {
 export function capitalize (string) {
 	let newString = ""
 	string.split(" ").forEach((word) => {
+		if(!word) return
 		word = word[0].toUpperCase() + word.slice(1)
 		newString += word + " "
 	})
@@ -50,6 +51,12 @@ export default function Container () {
 	//data will be updated through the setData still
 	if(data && (!storedData || (storedData && JSON.parse(storedData) !== data))) {
 		window.localStorage.setItem("data", JSON.stringify(data))
+		const brandsArr = []
+		data.products.products.forEach(product => {
+			brandsArr.push(product.brand.toLowerCase())
+		})
+		const allBrands = [...new Set(brandsArr)]
+		window.localStorage.setItem("allBrands", JSON.stringify(allBrands))
 	}
 	
 	useEffect(() => {

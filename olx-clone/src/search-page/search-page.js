@@ -1,5 +1,6 @@
 import "./search-page.css"
 import SearchForm from "../main/search"
+import Filters from "./filters"
 
 export default function SearchPage (props) {
     const searchParams = props.paramObj
@@ -11,8 +12,9 @@ export default function SearchPage (props) {
     if(value_location === "") value_location = window.sessionStorage.getItem("location")
     window.sessionStorage.setItem("location", props.paramObj.locatie)
 
-
-
+    Object.keys(searchParams).forEach(param => {
+        if(searchParams[param] === "placeholder") searchParams[param] = undefined
+    })
 
     console.log(searchParams)
 
@@ -32,7 +34,6 @@ export default function SearchPage (props) {
             window.location.href = props.gotoSearch({...searchParams, ...newParams})
             return -1
         }
-        
         return props.gotoSearch({...searchParams, ...newParams})
     }
 
@@ -40,5 +41,7 @@ export default function SearchPage (props) {
     return(<div className="search-page">
         <SearchForm locationDefaultValue={value_location} inputDefaultValue={value_input} data={props.data} 
             filters={true} gotoSearch={() => "#"} filteredSearch={filteredSearch} gotoOffer={props.gotoOffer}/>
+        <Filters data={props.data} searchParams={searchParams} filteredSearch={filteredSearch}/>
+        {/* load after 500ms */}
     </div>)
 }

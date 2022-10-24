@@ -1,3 +1,5 @@
+import { capitalize } from "../container/container"
+
 export default function CategoryDropdown (props) {
     const categoryArray = props.data.categories[props.selectedCategory]
     if(!categoryArray) return (<></>)
@@ -16,7 +18,7 @@ export default function CategoryDropdown (props) {
         <div className="brands">
             {brands.map(brand => {
                 return (<a href={props.gotoSearch({"categorie": props.selectedCategory, "firma": brand})} key={key++}>
-                    <iconify-icon icon="akar-icons:chevron-right"></iconify-icon><span>{brand.replaceAll("_", " ")}</span></a>)
+                    <iconify-icon icon="akar-icons:chevron-right"></iconify-icon><span>{capitalize(brand.replaceAll("_", " "))}</span></a>)
             })}
         </div>
     </div>)

@@ -2,7 +2,7 @@ FUNCTIONALITATE
 
     x Whenever you load the page, scan window.location.href. 
         x /oferta/""
-        - /search?categorie=""?firma=""?...
+        x /search?categorie=""?firma=""?...
             category, location (<county>,<optional city>), userId, brand
 
     x TO EACH PRODUCT ASSIGN USER, TO EACH USER ASSIGN COUNTY, CITY
@@ -17,10 +17,11 @@ PAGINA PRINCIPALA
 
     - Search input:
         x Main input: dropdown matching by category, title (max 10, newest, goto oferta/"")
-            - FIX THE LINKS ON IT 
+            x FIX THE LINKS ON IT 
         x Toata Romania: dropdown search by county, city
         x /search?categorie=""?judet=""?oras=""
         - DO NOT FORGET THE CLOSE and the click away 
+        - Location dropdown
         
 
     x Categorii principale: each item should open a dropdown sorted by brand, which should then go to /search ? categorie="" ( ? firma="")
@@ -32,15 +33,14 @@ PAGINA PRINCIPALA
 
 SEARCH PAGE - TODO
 
-
 FAV PAGE - TODO
 
 OFFER PAGE - TODO 
 
     x dont 4get anunturi promovate
     x NAVBAR: category in same country; category in same city
-    - MAP
-
-LOGIN PAGE, ADD PRODUCT PAGE, PROFILE PAGE (maybe)
+    x MAP
 
 /404 - TODO
+
+LOGIN PAGE, ADD PRODUCT PAGE, PROFILE PAGE (maybe)
