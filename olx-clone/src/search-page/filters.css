@@ -11,24 +11,27 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    height: 60px;
 }
 
 .search-page .dropdown > select {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 25px;
+    height: 100%;
     border: none;
     background-color: white;
 }
 
 .search-page .dropdown .inputs {
+    height: 100%;
     display: flex;
+    justify-content: space-between;
 }
 
-.search-page .dropdown .inputs input {
-    flex: 1;
-    height: 25px;
+.search-page .dropdown .inputs >input {
+    width: 48%;
+    height: 100%;
     border: none;
 }
 

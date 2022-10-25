@@ -1,0 +1,44 @@
+! On categories you remove - and _, on brands just _, capitalize both
+
+SearchForm
+
+   - Search input
+        x Value remains. 
+        x Category suggestions which will set the category filter. Clicking automatically calls filteredSearch.
+        - Search value suggestions. If a keyword yields one or more default product suggestions, that keyword will  
+            come up as a suggestion. Clicking it will automatically call filteredSearch.
+        x Your own search value. To search for it, click the search button.
+    x Location input    
+        x Clicking on a city/county automatically calls filteredSearch.
+    - Distance input   
+        - Setting it automatically calls filteredSearch.
+
+Filters
+
+    x Category
+    x Brand
+    x Price range
+    x Sort by (price, date uploaded)
+
+Results
+
+    - Priority: 
+        - Location > rating > promoted
+
+    - Location priotiy:
+        - If location input, city > county > nf neighboring counties > nf no location
+        - If location input and distance input: city > county > everything else within the distance
+        - If just distance input: if your ip is within Romania, use that as the center and go outwards. Else no location. 
+
+Issues
+
+x url Category -> Categorie
+x url Brand -> Firma
+x url Location -> Locatie
+x Replace all _ - * where needed
+x search input value remains
+- location dropdown needed
+x if search identical to category, remove search
+- brand suggestions     
+- 404 if false search term
+

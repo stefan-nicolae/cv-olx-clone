@@ -1,4 +1,4 @@
-FUNCTIONALITATE
+x FUNCTIONALITATE
 
     x Whenever you load the page, scan window.location.href. 
         x /oferta/""
@@ -9,11 +9,11 @@ FUNCTIONALITATE
     x TO EACH PRODUCT ASSIGN A FAKE DATE UPLOADED 
 
 
-PAGINA PRINCIPALA 
+- PAGINA PRINCIPALA 
 
-    - Header
-        - Heart leads to FAV PAGE
-        - Everything else requires login
+    x Header
+        - (OPT) Heart leads to FAV PAGE 
+        - (OPT) Everything else requires login
 
     - Search input:
         x Main input: dropdown matching by category, title (max 10, newest, goto oferta/"")
@@ -30,17 +30,13 @@ PAGINA PRINCIPALA
 
     x Categorii principale (down): go to /search ? categorie=""
 
+- SEARCH PAGE 
 
-SEARCH PAGE - TODO
-
-FAV PAGE - TODO
-
-OFFER PAGE - TODO 
-
+x OFFER PAGE 
     x dont 4get anunturi promovate
     x NAVBAR: category in same country; category in same city
     x MAP
 
-/404 - TODO
+x /404 
 
-LOGIN PAGE, ADD PRODUCT PAGE, PROFILE PAGE (maybe)
+(OPT) LOGIN PAGE, ADD PRODUCT PAGE, PROFILE PAGE, FAV PAGE 
