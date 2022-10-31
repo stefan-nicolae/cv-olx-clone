@@ -118,12 +118,36 @@
         cursor: pointer;
     }
 
+    .search-form .form-wrapper .input-search-dropdown hr {
+        width: 96%;
+        margin: auto;
+        opacity: 0.1;
+    }
+
     .search-form .form-wrapper .input-search-dropdown .suggestion:hover {
         background-color: var(--dark-green);
         color: white;
     }
 
     .search-form .form-wrapper .input-search-dropdown .product-suggestions .suggestion:hover span {
+        color: white;
+    }
+
+            /* brand suggestions */
+    .search-form .form-wrapper .input-search-dropdown .brand-suggestions {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .search-form .form-wrapper .input-search-dropdown .brand-suggestions .suggestion {
+        display: flex;
+        flex-direction: column;
+        text-decoration: none;
+        color: var(--dark-green);
+        text-transform: capitalize;
+    }
+
+    .search-form .form-wrapper .input-search-dropdown .brand-suggestions .suggestion:hover {
         color: white;
     }
 
@@ -145,8 +169,8 @@
         color: gray;
     }
 
-    .search-form .form-wrapper .input-search-dropdown .product-suggestions .suggestion > span span {
-    }
+    /* .search-form .form-wrapper .input-search-dropdown .product-suggestions .suggestion > span span {
+    } */
 
     .search-form .form-wrapper .input-search-dropdown .product-suggestions .suggestion:last-of-type {
         margin-bottom: 15px;

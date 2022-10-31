@@ -1,6 +1,7 @@
 import "./search-page.css"
 import SearchForm from "../main/search"
 import Filters from "./filters"
+import Results from "./results"
 
 export default function SearchPage (props) {
     const searchParams = props.paramObj
@@ -42,6 +43,6 @@ export default function SearchPage (props) {
         <SearchForm locationDefaultValue={value_location} inputDefaultValue={value_input} data={props.data} 
             filters={true} gotoSearch={() => "#"} filteredSearch={filteredSearch} gotoOffer={props.gotoOffer}/>
         <Filters data={props.data} searchParams={searchParams} filteredSearch={filteredSearch}/>
-        {/* load after 500ms */}
+        <Results data={props.data} searchParams={searchParams} gotoOffer={props.gotoOffer}/>
     </div>)
 }

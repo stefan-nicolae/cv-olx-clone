@@ -1,16 +1,14 @@
-! On categories you remove - and _, on brands just _, capitalize both
-
 SearchForm
 
-   - Search input
+   x Search input
         x Value remains. 
-        x Category suggestions which will set the category filter. Clicking automatically calls filteredSearch.
-        - Search value suggestions. If a keyword yields one or more default product suggestions, that keyword will  
-            come up as a suggestion. Clicking it will automatically call filteredSearch.
+        x Category suggestions which will set the category filter.
+        x (SEARCH ONLY) Search value suggestions instead of product suggestions.
+        x Brand suggestions. 
         x Your own search value. To search for it, click the search button.
     x Location input    
         x Clicking on a city/county automatically calls filteredSearch.
-    - Distance input   
+    - (SEARCH ONLY) Distance input   
         - Setting it automatically calls filteredSearch.
 
 Filters
@@ -26,19 +24,27 @@ Results
         - Location > rating > promoted
 
     - Location priotiy:
-        - If location input, city > county > nf neighboring counties > nf no location
+        nf = if previous not found, then...
+        - If location input, city > county > nf neighboring counties > nf no location (with warning)
         - If location input and distance input: city > county > everything else within the distance
-        - If just distance input: if your ip is within Romania, use that as the center and go outwards. Else no location. 
+        - If just distance input: if your ip is within Romania, use that as the center and go outwards. Else no location (with warning)
 
-Issues
+TODO
 
-x url Category -> Categorie
-x url Brand -> Firma
-x url Location -> Locatie
-x Replace all _ - * where needed
-x search input value remains
-- location dropdown needed
-x if search identical to category, remove search
-- brand suggestions     
-- 404 if false search term
-
+    x On categories you remove - and _, on brands just _, capitalize both
+    x url Category -> Categorie
+    x url Brand -> Firma
+    x url Location -> Locatie
+    x Replace all _ - * where needed
+    x search input value remains
+    x if search identical to category, remove search
+    x (That's fine) Form open new tab doesnt save variable D:
+    x Suggestions: category > brand > product/keyword 
+        x For product suggestions, make a long string out of title, brand, description, category.
+            The more keywords are found in the giant string, the higher the suggestion. Also add its category to categorySuggestions and brand to brand suggestions
+        x For category, brand suggestions, the same thing, except you're only searching the category title. 
+        x For keyword suggestions (SEARCH ONLY, instead of product), the params that led to the product 
+            suggestions are recommended instead of the products 
+    - location dropdown needed
+    - 404 if false search terms in url
+    - check if Form selected brand matches category

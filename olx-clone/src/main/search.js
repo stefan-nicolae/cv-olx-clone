@@ -4,7 +4,7 @@ import InputLocationDropdownArray from "./input-location-dropdown-array"
 import { capitalize } from "../container/container"
 
 export default function SearchForm (props) {
-    const [searchSuggestions, setSearchSuggestions] = useState([[], []])
+    const [searchSuggestions, setSearchSuggestions] = useState([[], [], []])
     const [countiesVisible, setCountiesVisible] = useState(false)
     const [chosenLocation, setChosenLocation] = useState() //<county>;<city>
     const lastChosenLocation = useRef()
@@ -35,84 +35,96 @@ export default function SearchForm (props) {
             document.querySelector(".input-location").classList.remove("bold-placeholder")
         }
     }
+
     const handleSearch = event => {
         const value = event.currentTarget.value.toLowerCase()
         if(!value.length) window.sessionStorage.setItem("searchFormInputValue", "")
-
         if(value.length < 3) {
-            setSearchSuggestions([[],[]])
+            setSearchSuggestions([[],[],[]])
             return
         }
-        const searchParams = [value].length > 1 ? [value].concat(value.split(" ")) : [value]
+        const searchParams = [...new Set(value.split(" "))]
         const suggestions = []
+        // category > brand > product/keyword 
 
-        //category suggestions
+
+
         const categorySuggestions = []
-        let index = 0
         Object.keys(props.data.categories).forEach(category => {
-            if(index === 5) return
             let pushed = false
-            searchParams.forEach(param => {
-                if(param === "" || param.length < 3 || pushed) return
-
-                if(category.toLowerCase().startsWith(param)) {
-                    categorySuggestions.unshift(category)
-                    pushed = true
-                }
-                else if(category.toLowerCase().includes(param)) { 
+            searchParams.forEach((param) => {
+                if(param.length < 3 || pushed) return
+                else if (category.includes(param)) {
                     categorySuggestions.push(category)
                     pushed = true
                 }
             })
-            if(pushed) index++
         })
-        suggestions.push(categorySuggestions)
-        //category suggestions end
-        
-        //product suggestions
-        const productSuggestions = []
-        const productsSorted = props.data.products.products
-        productsSorted.sort((a, b) => -(a.rating - b.rating))
-        index = 0
-        productsSorted.forEach(product => {
-            if(index === 5) return
-            const title = product.title
-            const description = product.description
-            const category = product.category
-            const id = product.id
-            const productSuggestion = [title, category, id]
-            let pushed = false
-            
-            categorySuggestions.forEach(category => {
-                if(pushed) return
-                if(product.category.toLowerCase() == category.toLowerCase()) {
-                    productSuggestions.unshift(productSuggestion)
-                    pushed = true
-                }
-            })
-            if(!pushed) searchParams.forEach(param => {
-                if(param === "" || param.length < 3 || pushed) return
-                //if it fits the category
-                if(title.toLowerCase().startsWith(param)) {
-                    productSuggestions.unshift(productSuggestion)
-                    pushed = true
-                } 
-                else if (title.toLowerCase().includes(param)) {
-                    productSuggestions.push(productSuggestion)
-                    pushed = true
-                }
-                else if(description.toLowerCase().includes(param)) {
-                    productSuggestions.push(productSuggestion)
-                    pushed = true
-                }
-            })
-            if(pushed) index++
-        })
-        suggestions.push(productSuggestions)
-        //product suggestions end
 
+        
+
+        const brandSuggestions = []
+        JSON.parse(window.localStorage.getItem("allBrands")).forEach(brand => {
+            let pushed = false
+            searchParams.forEach((param) => {
+                if(param.length < 3 || pushed) return
+                else if (brand.includes(param)) {
+                    brandSuggestions.push(brand)
+                    pushed = true
+                }
+            })
+        })
+
+
+        let productSuggestions = []
+        const paramObj = {}
+        const keywordObj = {}
+        const alreadyAdded = {}
+        const productsSortedByRating = props.data.products.products.sort((a, b) => -(a.rating - b.rating))
+        productsSortedByRating.forEach(productObj => {
+            let searchString = 
+            productObj.title + " " + 
+            productObj.category + " " + 
+            productObj.description + " " + 
+            productObj.county + " " + 
+            productObj.city.City
+            searchString = searchString.replaceAll("-", " ").replaceAll("_", " ").toLowerCase().replaceAll("'", "")
+            searchParams.forEach(param => {
+                if(param.length < 3) return
+                if(searchString.includes(param)) {
+                    //name category id
+                    productSuggestions.push([productObj.title, productObj.category, productObj.id])
+                    categorySuggestions.push(productObj.category)
+                    brandSuggestions.push(productObj.brand)
+                    
+                    if(keywordObj[productObj.title] === undefined) keywordObj[productObj.title] = 0
+                    keywordObj[productObj.title]++
+
+                    if(paramObj[param] === undefined) paramObj[param] = 0
+                    paramObj[param]++
+                }
+            })
+        })
+        productSuggestions = productSuggestions.sort(  (a,b) => -(keywordObj[a[0]] - keywordObj[b[0]])  )
+        productSuggestions = productSuggestions.filter(suggestion => {
+            if(alreadyAdded[suggestion[2]] === true) return false
+            else {
+                alreadyAdded[suggestion[2]] = true
+                return true
+            }
+        })
+        
+        suggestions.push([...new Set(categorySuggestions)].splice(0, 5))
+        suggestions.push([...new Set(brandSuggestions)].splice(0, 5))
+        suggestions.push(
+            props.filters == true ? paramObj : productSuggestions.splice(0, 10) 
+        )
+
+        // console.log(suggestions)
         setSearchSuggestions(suggestions)
-    }
+    }   
+
+
 
     
     const getLocationPlaceholder = () => {
@@ -190,24 +202,56 @@ export default function SearchForm (props) {
                 <div className="input-search-dropdown">
                     <div className="category-suggestions">
                         {
-                                searchSuggestions[0].map(suggestion => {
-                                    return(<a onClick={() => {
+                            searchSuggestions[0].map(suggestion => {
+                                return(<a 
+
+                                    onClick={() => {
                                         window.sessionStorage.setItem("searchFormInputValue", capitalize(suggestion.replaceAll("-", " ")))
-                                    }} href={props.filters !== true ? props.gotoSearch({categorie: suggestion, 
-                                        location: (chosenLocation ? (chosenLocation.startsWith("Toata Romania") ? 
-                                        "undefined" : chosenLocation) : undefined) }) : 
-                                        props.filteredSearch({categorie: suggestion, cautare: undefined}, false)} 
-                                    className="suggestion" key={key++} >{suggestion.replaceAll("-"," ")}</a>) 
-                                }) 
+                                    }} 
+
+                                    href={props.filters !== true ? props.gotoSearch({categorie: suggestion, 
+                                    location: (chosenLocation ? (chosenLocation.startsWith("Toata Romania") ? 
+                                    "undefined" : chosenLocation) : undefined) }) : 
+                                    props.filteredSearch({categorie: suggestion, cautare: undefined}, false)} 
+
+                                className="suggestion" key={key++} >Categoria {suggestion.replaceAll("-"," ")}
+                                </a>) 
+                            })
+                        } 
+
+                    </div> 
+                    <div className="brand-suggestions">
+                        {
+                            searchSuggestions[1].map(suggestion => {
+                                return(<a 
+                                    
+                                    onClick={() => {
+                                        window.sessionStorage.setItem("searchFormInputValue", capitalize(suggestion.replaceAll("-", " ")))
+                                    }} 
+
+                                    href={props.filters !== true ? props.gotoSearch({firma: suggestion, 
+                                    location: (chosenLocation ? (chosenLocation.startsWith("Toata Romania") ? 
+                                    "undefined" : chosenLocation) : undefined) }) : 
+                                    props.filteredSearch({firma: suggestion, cautare: undefined}, false)} 
+                                    
+                                    key={key++} className="suggestion"><span>Firma {suggestion}</span></a>)
+                            }) 
                         }
+
                     </div>
                     <div className="product-suggestions">             
                         {
-                                searchSuggestions[1].map(suggestion => {
-                                    return (<a href={props.gotoOffer(suggestion[2])} className="suggestion" 
-                                        key={key++}>{suggestion[0]}<span>in categoria <span>
-                                        {suggestion[1].replaceAll("-", " ")}</span></span></a>) 
+                             props.filters == true ?
+                                Object.keys(searchSuggestions[2]).map(suggestion => {
+                                    return (
+                                        <a className="suggestion" href={props.filteredSearch({cautare: suggestion}, false)} key={key++} >{suggestion}</a>
+                                    )
                                 })
+                             
+                             : searchSuggestions[2].map(suggestion => {
+                                return(<a href={props.gotoOffer(suggestion[2])} key={key++} className="suggestion">{suggestion[0]}<span>in categoria <span>
+                                    { capitalize(suggestion[1].replaceAll("-", " "))}</span></span></a>)
+                            }) 
                         }
                     </div>
                 </div>  
