@@ -121,8 +121,8 @@ export default function Filters (props) {
             }
             <div className="dropdown"><span>Limita pret</span>
                 <div className="inputs">
-                    <input defaultValue={selected["minim"]} onChange={(e) => {handlePriceInputChange(e) }} onKeyDown={(e) => {handlePriceInputKeys(e)}} name="minim" placeholder="Minim"></input>
-                    <input defaultValue={selected["maxim"]} onChange={(e) => {handlePriceInputChange(e) }} onKeyDown={(e) => {handlePriceInputKeys(e)}} name="maxim" placeholder="Maxim"></input>
+                    <input defaultValue={selected["minim"]} onChange={(e) => {handlePriceInputChange(e) }} onKeyUp={(e) => {handlePriceInputKeys(e)}} name="minim" placeholder="Minim"></input>
+                    <input defaultValue={selected["maxim"]} onChange={(e) => {handlePriceInputChange(e) }} onKeyUp={(e) => {handlePriceInputKeys(e)}} name="maxim" placeholder="Maxim"></input>
                 </div>
             </div>
         </form>

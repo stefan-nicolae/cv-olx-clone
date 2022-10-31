@@ -9,19 +9,19 @@ x FUNCTIONALITATE
     x TO EACH PRODUCT ASSIGN A FAKE DATE UPLOADED 
 
 
-- PAGINA PRINCIPALA 
+x PAGINA PRINCIPALA 
 
     x Header
-        - (OPT) Heart leads to FAV PAGE 
-        - (OPT) Everything else requires login
+        (OPT) Heart leads to FAV PAGE 
+        (OPT) Everything else requires login
 
-    - Search input:
+    x Search input:
         x Main input: dropdown matching by category, title (max 10, newest, goto oferta/"")
             x FIX THE LINKS ON IT 
         x Toata Romania: dropdown search by county, city
         x /search?categorie=""?judet=""?oras=""
-        - DO NOT FORGET THE CLOSE and the click away 
-        - Location dropdown
+        x DO NOT FORGET THE CLOSE and the click away 
+        x Location dropdown
         
 
     x Categorii principale: each item should open a dropdown sorted by brand, which should then go to /search ? categorie="" ( ? firma="")

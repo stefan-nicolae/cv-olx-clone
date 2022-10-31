@@ -302,6 +302,34 @@
         text-decoration: none;
     }
 
+    .search-form .form-wrapper .input-location-dropdown-tiny {
+        position: absolute;
+        right : 0;
+        top: 75px; 
+        width: 254px;
+        right: 161px;
+        min-height: 50px;
+        background-color: white;
+        box-shadow: 1px 1px 12px rgb(207, 207, 207);
+        z-index: 5;
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .search-form .form-wrapper .input-location-dropdown-tiny > .suggestion {
+        color: var(--dark-green);
+        border-bottom: 1px solid var(--light-gray);
+        cursor: pointer;
+        padding: 5px;
+        text-decoration: none;
+    }
+
+    .search-form .form-wrapper .input-location-dropdown-tiny > .suggestion:hover {
+        background-color: var(--dark-green);
+        color: white;
+    }
+
         /* city menu */
     .search-form .city-menu .counties-title {
         display: flex;

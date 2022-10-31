@@ -45,6 +45,10 @@ TODO
         x For category, brand suggestions, the same thing, except you're only searching the category title. 
         x For keyword suggestions (SEARCH ONLY, instead of product), the params that led to the product 
             suggestions are recommended instead of the products 
-    - location dropdown needed
+    x location dropdown needed
+    x search input by location exclude diacritics
+    x Make sure all suggestions can be opened in new tab. Both search and location
+    x check if Form selected brand matches category
+    x Brand duplicates (e.g. Firma apple)
     - 404 if false search terms in url
-    - check if Form selected brand matches category
+    - Tolowercase the url to make sure its not case sensitive

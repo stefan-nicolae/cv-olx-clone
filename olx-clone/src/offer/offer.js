@@ -190,7 +190,7 @@ export default function Offer (props) {
                 </div>
 
 
-                <a className="more" href={props.gotoSearch({userId: user.id})}>Mai 
+                <a className="more" href="#">Mai 
                     multe anunturi ale acestui vanzator<iconify-icon icon="akar-icons:chevron-right"></iconify-icon></a>
 
 

@@ -13,6 +13,15 @@ import SearchPage from "../search-page/search-page";
 export function randomNumber (min, max) { 
 	return Math.floor(Math.random() * (max+1 - min) + min)
 } 
+ 
+export function replaceDiacritics(string) {
+	return string
+		.replaceAll("ă", "a")
+		.replaceAll("â", "a")
+		.replaceAll("î", "i")
+		.replaceAll("ș", "s")
+		.replaceAll("ț", "t")
+}
 
 export function capitalize (string) {
 	let newString = ""

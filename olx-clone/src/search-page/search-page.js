@@ -22,7 +22,16 @@ export default function SearchPage (props) {
     //Takes parameters, fuses them with what is already in the URL, and goes to the new search page
     const filteredSearch = (newParams, open=true) => {
         // console.log(newParams.search)   
+        const brands = []
 
+        if(searchParams.categorie && newParams.firma) {
+            props.data.categories[searchParams.categorie].forEach(product => {
+                brands.push(product.brand.toLowerCase().replaceAll("_", " "))
+            }) 
+            console.log(brands)
+            if(!brands.includes(newParams.firma.toLowerCase().replaceAll("_", " "))) newParams.categorie = undefined
+        }
+        // newParams.categorie = undefined
         if(newParams.locatie && newParams.locatie.startsWith("Toata Romania"))  {
             newParams.locatie = ""
             window.sessionStorage.setItem("location", "")
@@ -35,6 +44,7 @@ export default function SearchPage (props) {
             window.location.href = props.gotoSearch({...searchParams, ...newParams})
             return -1
         }
+        
         return props.gotoSearch({...searchParams, ...newParams})
     }
 

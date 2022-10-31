@@ -92,6 +92,7 @@ export default function Data (props) {
     const counties = useRef()
     const users = useRef()
     const categories = useRef()
+    const cities = useRef([])
 
     useEffect(() => {
         fetchData("products", 100).then(fetchedProducts => {
@@ -99,11 +100,16 @@ export default function Data (props) {
                 addPropertiesToUsersAndProducts(fetchedUsers, fetchedProducts).then(res => {
                     products.current = res[0]
                     counties.current = res[1]
+                    Object.keys(counties.current).forEach(county => {
+                        counties.current[county].forEach(city => {
+                            cities.current.push(city)
+                        })
+                    })
                     users.current = res[2]
                     categories.current = indexProductsByCategories(products.current)
                     products.current.products.sort((a, b) => -(a.dateAdded.getTime() - b.dateAdded.getTime()))
                     props.setData({products:products.current, categories:categories.current, 
-                        counties:counties.current, users:users.current})
+                        counties:counties.current, users:users.current, cities:cities.current})
                 })
             })
         })

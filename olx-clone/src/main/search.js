@@ -1,12 +1,13 @@
 import "./main.css"
 import {useEffect, useState, useRef } from "react"
 import InputLocationDropdownArray from "./input-location-dropdown-array"
-import { capitalize } from "../container/container"
+import { capitalize, replaceDiacritics } from "../container/container"
 
 export default function SearchForm (props) {
     const [searchSuggestions, setSearchSuggestions] = useState([[], [], []])
     const [countiesVisible, setCountiesVisible] = useState(false)
     const [chosenLocation, setChosenLocation] = useState() //<county>;<city>
+    const [locSearchResults, setLocSearchResults] = useState([[],[],{}])
     const lastChosenLocation = useRef()
 
     let defaultLocationValue = "Toata Romania"
@@ -69,7 +70,7 @@ export default function SearchForm (props) {
             searchParams.forEach((param) => {
                 if(param.length < 3 || pushed) return
                 else if (brand.includes(param)) {
-                    brandSuggestions.push(brand)
+                    brandSuggestions.push(brand.toLowerCase())
                     pushed = true
                 }
             })
@@ -86,8 +87,8 @@ export default function SearchForm (props) {
             productObj.title + " " + 
             productObj.category + " " + 
             productObj.description + " " + 
-            productObj.county + " " + 
-            productObj.city.City
+            replaceDiacritics(productObj.county) + " " + 
+            replaceDiacritics(productObj.city.City)
             searchString = searchString.replaceAll("-", " ").replaceAll("_", " ").toLowerCase().replaceAll("'", "")
             searchParams.forEach(param => {
                 if(param.length < 3) return
@@ -95,7 +96,7 @@ export default function SearchForm (props) {
                     //name category id
                     productSuggestions.push([productObj.title, productObj.category, productObj.id])
                     categorySuggestions.push(productObj.category)
-                    brandSuggestions.push(productObj.brand)
+                    brandSuggestions.push(productObj.brand.toLowerCase())
                     
                     if(keywordObj[productObj.title] === undefined) keywordObj[productObj.title] = 0
                     keywordObj[productObj.title]++
@@ -124,9 +125,6 @@ export default function SearchForm (props) {
         setSearchSuggestions(suggestions)
     }   
 
-
-
-    
     const getLocationPlaceholder = () => {
         if(chosenLocation) {
             if(chosenLocation.startsWith("Toata Romania")) return "Toata Romania"
@@ -143,19 +141,75 @@ export default function SearchForm (props) {
         }
     }
     
+    const handleLocationInput = e => {
+        if(e.target.value.length) setCountiesVisible(false) 
+        else setCountiesVisible(true) 
+    
+
+        const params = [...new Set(e.target.value.split(" "))]
+        const countySuggestions = []
+        const citySuggestions = []
+        const dictionary = {}
+        //if matching object is a county, return its cities, if its a city return its county 
+
+        //DO CITY SUGGESTIONS AND COUNTY SUGGESTIONS
+        const counties = props.data.counties
+        Object.keys(counties).forEach(county => {
+            let pushed = false
+            params.forEach(param => {
+                if(pushed || param.length < 3 || param.startsWith(" ")) return
+                if(replaceDiacritics(county).toLowerCase().includes(param.toLowerCase())) {
+                    countySuggestions.push(county)
+                    pushed = true
+                    counties[county].forEach(cityObj => {
+                        citySuggestions.push(cityObj.City)
+                        dictionary[cityObj.City] = cityObj.County
+
+                    }) 
+                }
+            })
+        })
+        props.data.cities.forEach(city => {
+            let pushed = false
+            params.forEach(param => {
+                if(pushed || param.length < 3 || param.startsWith(" ")) return
+                if(replaceDiacritics(city.City).toLowerCase().includes(param.toLowerCase())) {
+                    countySuggestions.push(city.County)
+                    citySuggestions.push(city.City)
+                    dictionary[city.City] = city.County
+                    pushed = true
+                }
+            })
+        })
+        const resultArray = []
+        resultArray.push([...new Set(countySuggestions)].splice(0, 5))
+        resultArray.push([...new Set(citySuggestions)].splice(0, 10))
+        resultArray.push(dictionary)
+
+        setLocSearchResults(resultArray)
+    }
+ 
+
     useEffect(() => {
         window.addEventListener('click', function(e){  
             if(e.target === document.getElementsByClassName("input-location")[0])  {
-                setCountiesVisible(true)
+               if(!document.getElementsByClassName("input-location")[0].value.length) setCountiesVisible(true)
             } else {
                 const position = document.getElementsByClassName("input-location-dropdown")[0].getBoundingClientRect()
-                if(e.clientX >= position.left && e.clientX <= position.right && e.clientY >= 
-                    position.top && e.clientY <= position.bottom) {
-        
-                } else {
-                    setCountiesVisible(false)
-                }
+                if(!(e.clientX >= position.left && e.clientX <= position.right && e.clientY >= 
+                    position.top && e.clientY <= position.bottom)) {
+                        setLocSearchResults([[],[],{}])
+                        setCountiesVisible(false)
+                    } 
             }
+
+            if(e.target !== document.getElementsByClassName("input-search")[0]) {
+                setSearchSuggestions([[],[],[]])
+            } else {
+                handleSearch({currentTarget: document.getElementsByClassName("input-search")[0]})
+            }
+
+
         });
     }, [])
     
@@ -184,8 +238,8 @@ export default function SearchForm (props) {
         }
     }
 
-
-    let key = 0;
+    let key = 0
+    let key2 = 0
     return(
         <form className="search-form" onSubmit={submitForm}>
             <div style={!props.warningVisible ? {"display" :"none"} : {}} className="banner">
@@ -224,13 +278,12 @@ export default function SearchForm (props) {
                         {
                             searchSuggestions[1].map(suggestion => {
                                 return(<a 
-                                    
                                     onClick={() => {
                                         window.sessionStorage.setItem("searchFormInputValue", capitalize(suggestion.replaceAll("-", " ")))
                                     }} 
 
                                     href={props.filters !== true ? props.gotoSearch({firma: suggestion, 
-                                    location: (chosenLocation ? (chosenLocation.startsWith("Toata Romania") ? 
+                                    locatie: (chosenLocation ? (chosenLocation.startsWith("Toata Romania") ? 
                                     "undefined" : chosenLocation) : undefined) }) : 
                                     props.filteredSearch({firma: suggestion, cautare: undefined}, false)} 
                                     
@@ -241,15 +294,15 @@ export default function SearchForm (props) {
                     </div>
                     <div className="product-suggestions">             
                         {
-                             props.filters == true ?
+                             props.filters === true ?
                                 Object.keys(searchSuggestions[2]).map(suggestion => {
                                     return (
-                                        <a className="suggestion" href={props.filteredSearch({cautare: suggestion}, false)} key={key++} >{suggestion}</a>
+                                        <a  className="suggestion" href={props.filteredSearch({cautare: suggestion}, false)} key={key++} >{suggestion}</a>
                                     )
                                 })
                              
                              : searchSuggestions[2].map(suggestion => {
-                                return(<a href={props.gotoOffer(suggestion[2])} key={key++} className="suggestion">{suggestion[0]}<span>in categoria <span>
+                                return(<a  href={props.gotoOffer(suggestion[2])} key={key++} className="suggestion">{suggestion[0]}<span>in categoria <span>
                                     { capitalize(suggestion[1].replaceAll("-", " "))}</span></span></a>)
                             }) 
                         }
@@ -258,7 +311,24 @@ export default function SearchForm (props) {
                   
                 <span></span>
                 <iconify-icon className="location-icon" icon="akar-icons:location"></iconify-icon>
-                <input className="input-location" type="text"></input>
+                <input onClick={(e) => handleLocationInput(e)} onKeyUp={(e) => handleLocationInput(e)} className="input-location" type="text"></input>
+                <div style={locSearchResults[0].length ? {} : {display: "none"}} className="input-location-dropdown-tiny">
+                    {
+                        locSearchResults[0].map(county => {
+                            return(<a href={
+                                props.filters === true ? props.filteredSearch({locatie: county}, false) : props.gotoSearch({locatie: county})
+                            } key={key2++} className="county-suggestion suggestion">{county}</a>)
+                        })
+                    }
+                    {
+                        locSearchResults[1].map(city=> {
+                            return(<a href={
+                                props.filters === true ? props.filteredSearch({locatie: (locSearchResults[2][city] + ";" + city.replaceAll("*", ""))}, false) : props.gotoSearch({locatie: (locSearchResults[2][city] + ";" + city.replaceAll("*", ""))})
+                            } key={key2++} 
+                            className="city-suggestion suggestion">{city.replaceAll("*", "")}</a>)
+                        })
+                    }
+                </div>
                 <div className="input-location-dropdown" style={countiesVisible ? {"display": "unset"} : {}}>
                     <InputLocationDropdownArray chosenLocation={chosenLocation} setChosenLocation={setChosenLocation} 
                         data={props.data}/>
