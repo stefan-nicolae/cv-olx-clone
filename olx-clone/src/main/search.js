@@ -240,6 +240,9 @@ export default function SearchForm (props) {
 
     let key = 0
     let key2 = 0
+    let key3=0
+    const distOptions = [0, 2, 5, 10, 15, 30, 50, 75, 100]
+
     return(
         <form className="search-form" onSubmit={submitForm}>
             <div style={!props.warningVisible ? {"display" :"none"} : {}} className="banner">
@@ -251,6 +254,16 @@ export default function SearchForm (props) {
             </div>
             <div className="form-wrapper">
                 <iconify-icon className="search-icon-1" icon="bi:search"></iconify-icon>
+
+                <iconify-icon onClick={() => {
+                    document.querySelector(".input-search").value = ""
+                }} style={{
+                    position: "absolute",
+                    left: props.filters !== true ? "675px" : "660px",
+                    cursor: "pointer",
+                    display:  document.querySelector(".input-search") ? document.querySelector(".input-search").value.length ? "" : "none" : "none"
+                }} icon="bytesize:close"></iconify-icon>
+
                 <input onKeyUp={handleSearch} className="input-search" type="text" defaultValue={props.filters ? props.inputDefaultValue : ""} 
                     placeholder={`${Object.keys(props.data.products.products).length} anunturi din apropierea ta`}></input>
                 <div className="input-search-dropdown">
@@ -258,7 +271,6 @@ export default function SearchForm (props) {
                         {
                             searchSuggestions[0].map(suggestion => {
                                 return(<a 
-
                                     onClick={() => {
                                         window.sessionStorage.setItem("searchFormInputValue", capitalize(suggestion.replaceAll("-", " ")))
                                     }} 
@@ -302,15 +314,25 @@ export default function SearchForm (props) {
                                 })
                              
                              : searchSuggestions[2].map(suggestion => {
-                                return(<a  href={props.gotoOffer(suggestion[2])} key={key++} className="suggestion">{suggestion[0]}<span>in categoria <span>
+                                return(<a href={props.gotoOffer(suggestion[2])} key={key++} className="suggestion">{suggestion[0]}<span>in categoria <span>
                                     { capitalize(suggestion[1].replaceAll("-", " "))}</span></span></a>)
                             }) 
                         }
                     </div>
                 </div>  
-                  
+                   
                 <span></span>
                 <iconify-icon className="location-icon" icon="akar-icons:location"></iconify-icon>
+
+                <iconify-icon onClick={() => {
+                    document.querySelector(".input-location").value = ""
+                }} style={{
+                    position: "absolute",
+                    right: props.filters === true? "245px": "170px",
+                    cursor: "pointer",
+                    display: document.querySelector(".input-location") ? document.querySelector(".input-location").value.length ? "" : "none" : "none",
+                }}  className="location-close" icon="bytesize:close"></iconify-icon>
+
                 <input onClick={(e) => handleLocationInput(e)} onKeyUp={(e) => handleLocationInput(e)} className="input-location" type="text"></input>
                 <div style={locSearchResults[0].length ? {} : {display: "none"}} className="input-location-dropdown-tiny">
                     {
@@ -333,8 +355,21 @@ export default function SearchForm (props) {
                     <InputLocationDropdownArray chosenLocation={chosenLocation} setChosenLocation={setChosenLocation} 
                         data={props.data}/>
                 </div>
+                
+                <div className="input-distance" style={props.filters === true ? {} : {display: "none"}}>
+                    <select defaultValue={props.defaultDistance} id="distance">
+                        {
+                            distOptions.map((dist) => {
+                                return(<option key={key3++} onClick={() => {
+                                    props.filteredSearch({distanta: dist}) 
+                                }} value={dist}>{`+${dist} km`}</option>)
+                            })
+                        }
+                    </select>
+                </div>
+
                 <button id="search">Cauta acum <iconify-icon className="search-icon-2" icon="bi:search"></iconify-icon>
-                    </button>
+                </button>
                
             </div>
         </form>

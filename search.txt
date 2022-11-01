@@ -8,8 +8,8 @@ SearchForm
         x Your own search value. To search for it, click the search button.
     x Location input    
         x Clicking on a city/county automatically calls filteredSearch.
-    - (SEARCH ONLY) Distance input   
-        - Setting it automatically calls filteredSearch.
+    x (SEARCH ONLY) Distance input   
+        x Setting it automatically calls filteredSearch.
 
 Filters
 
@@ -21,7 +21,7 @@ Filters
 Results
 
     - Priority: 
-        - Location > rating > promoted
+        - Location  (10000 points for each right match )> rating(1000 points) > promoted (100 points)
 
     - Location priotiy:
         nf = if previous not found, then...
@@ -52,3 +52,4 @@ TODO
     x Brand duplicates (e.g. Firma apple)
     - 404 if false search terms in url
     - Tolowercase the url to make sure its not case sensitive
+    - make all the document selectors very specific 

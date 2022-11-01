@@ -40,6 +40,8 @@ export default function SearchPage (props) {
         if(searchParams.categorie && newParams.cautare && searchParams.categorie.toLowerCase().replaceAll("-", "").replaceAll("_","").replaceAll(" ", "") ==
         newParams.cautare.toLowerCase().replaceAll("-", "").replaceAll("_","").replaceAll(" ", "")) newParams.cautare = undefined
 
+        if(newParams.distanta === 0) newParams.distanta = undefined
+
         if(open) { 
             window.location.href = props.gotoSearch({...searchParams, ...newParams})
             return -1
@@ -51,7 +53,7 @@ export default function SearchPage (props) {
     if(value_location === undefined || value_location === "undefined") value_location = ""
     return(<div className="search-page">
         <SearchForm locationDefaultValue={value_location} inputDefaultValue={value_input} data={props.data} 
-            filters={true} gotoSearch={() => "#"} filteredSearch={filteredSearch} gotoOffer={props.gotoOffer}/>
+            filters={true} gotoSearch={() => "#"} filteredSearch={filteredSearch} gotoOffer={props.gotoOffer} defaultDistance={props.paramObj.distanta === undefined ? 0 : props.paramObj.distanta}/>
         <Filters data={props.data} searchParams={searchParams} filteredSearch={filteredSearch}/>
         <Results data={props.data} searchParams={searchParams} gotoOffer={props.gotoOffer}/>
     </div>)

@@ -84,6 +84,7 @@
     }
 
     .search-form .form-wrapper .input-location {
+        padding-right: 5px;
         flex: 1;
     }
 
@@ -93,7 +94,7 @@
     }
 
     .search-form .form-wrapper .input-search {
-        width: 60%;
+        width: 670px;
     }
 
     /* dropdowns */
@@ -306,8 +307,8 @@
         position: absolute;
         right : 0;
         top: 75px; 
-        width: 254px;
-        right: 161px;
+        width: 200px;
+        left: 735px;
         min-height: 50px;
         background-color: white;
         box-shadow: 1px 1px 12px rgb(207, 207, 207);
@@ -329,7 +330,21 @@
         background-color: var(--dark-green);
         color: white;
     }
+    .search-form  .form-wrapper .input-distance {
+        width: 80px;
+        border-left: 1px solid var(--light-gray);
+        color: var(--dark-green);
+        height: 100%;
+        display: flex;
+        cursor: pointer;
+    }
 
+    .search-form  .form-wrapper .input-distance  > select {
+        border: none;
+        background-color: white;
+        width: 100%;
+        color: var(--dark-green);
+    }
         /* city menu */
     .search-form .city-menu .counties-title {
         display: flex;
@@ -361,6 +376,7 @@
         align-items: center;
         padding-left: 20px;
         color: var(--dark-green);
+        width: 180px;
     }
 
     .search-form .form-wrapper button:hover {
@@ -381,6 +397,7 @@
         margin-left: 20px;
         margin-right: 20px;
     }
+
 
 /* SEARCH FORM END */
 /* CATEGORIES */
