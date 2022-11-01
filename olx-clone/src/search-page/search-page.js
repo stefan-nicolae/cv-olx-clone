@@ -2,6 +2,7 @@ import "./search-page.css"
 import SearchForm from "../main/search"
 import Filters from "./filters"
 import Results from "./results"
+import Footer from "../footer/footer"
 
 export default function SearchPage (props) {
     const searchParams = props.paramObj
@@ -55,6 +56,7 @@ export default function SearchPage (props) {
         <SearchForm locationDefaultValue={value_location} inputDefaultValue={value_input} data={props.data} 
             filters={true} gotoSearch={() => "#"} filteredSearch={filteredSearch} gotoOffer={props.gotoOffer} defaultDistance={props.paramObj.distanta === undefined ? 0 : props.paramObj.distanta}/>
         <Filters data={props.data} searchParams={searchParams} filteredSearch={filteredSearch}/>
-        <Results data={props.data} searchParams={searchParams} gotoOffer={props.gotoOffer}/>
+        <Results promotedProductsArray={props.promotedProductsArray} data={props.data} searchParams={searchParams} gotoOffer={props.gotoOffer}/>
+        <Footer categories={props.data.categories} gotoSearch={props.gotoSearch} />
     </div>)
 }

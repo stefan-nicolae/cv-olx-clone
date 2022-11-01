@@ -1,7 +1,79 @@
 .search-page .results {
-    /* background-color: red; */
     width: 1200px;
     min-height: 100px;
     margin: auto;
     margin-top: 100px;
+    color: var(--dark-green);
+}
+
+.search-page .results > h1 {
+    margin-bottom: 15px;
+}
+
+.search-page .result {
+    background-color: white;
+    margin-bottom: 10px;
+    height: 168px;
+    padding: 10px;
+    display: flex;
+    cursor: pointer;
+    position: relative;
+}
+
+.search-page .result > span {
+    position: absolute;
+    bottom: 10px;
+    background-color:  #23E5DB; 
+    padding: 5px;
+    font-weight: bold;
+}
+
+.search-page .result > a {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin-top: -10px;
+    margin-left: -10px;
+    z-index: 3;
+}
+
+.search-page .result .image-wrapper {
+    height: 100%;
+    width: 216px;
+    overflow: hidden;
+}   
+
+.search-page .result img {
+    width: 100%;
+}
+
+.search-page .result section {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-page .result section > div {
+    flex: 1;
+}
+.search-page .result section > h1 {
+    width: fit-content;
+}
+.search-page .result section > h1:hover {
+    background-color: var(--dark-green);
+    color: white;
+}
+
+.search-page .result aside {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex: 1;
+}
+
+.search-page .result aside iconify-icon {
+    font-size: 20px;
+
 }

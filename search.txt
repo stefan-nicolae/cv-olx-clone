@@ -20,14 +20,8 @@ Filters
 
 Results
 
-    - Priority: 
-        - Location  (10000 points for each right match )> rating(1000 points) > promoted (100 points)
+    - Priority
 
-    - Location priotiy:
-        nf = if previous not found, then...
-        - If location input, city > county > nf neighboring counties > nf no location (with warning)
-        - If location input and distance input: city > county > everything else within the distance
-        - If just distance input: if your ip is within Romania, use that as the center and go outwards. Else no location (with warning)
 
 TODO
 
@@ -50,6 +44,15 @@ TODO
     x Make sure all suggestions can be opened in new tab. Both search and location
     x check if Form selected brand matches category
     x Brand duplicates (e.g. Firma apple)
-    - 404 if false search terms in url
+    - Errors
+        - if unexisting search terms, ignore
+        - if false existing search terms, ignore
+        - if unexisting offer, 404
+        - if unexisting path, 404
     - Tolowercase the url to make sure its not case sensitive
     - make all the document selectors very specific 
+    - Make sure every link on the site works
+    - Turn the distance suggestions into <a>
+    - promovat not promoted
+    - Location placeholder sticks
+    - Posts are since 2019 not 2010

@@ -160,7 +160,7 @@ export default function Container () {
 			return(
 			<div className="container">
 				<Header/>
-				<SearchPage paramObj={paramObj} data={data} gotoSearch={gotoSearch} gotoOffer={gotoOffer}/>
+				<SearchPage promotedProductsArray={promotedProductsArray} paramObj={paramObj} data={data} gotoSearch={gotoSearch} gotoOffer={gotoOffer}/>
 			</div>
 		)
 	}
