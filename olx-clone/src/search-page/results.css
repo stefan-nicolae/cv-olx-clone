@@ -35,7 +35,7 @@
     height: 100%;
     margin-top: -10px;
     margin-left: -10px;
-    z-index: 3;
+    z-index: 1;
 }
 
 .search-page .result .image-wrapper {

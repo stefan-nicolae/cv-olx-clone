@@ -48,7 +48,7 @@ async function addPropertiesToUsersAndProducts(fetchedUsers, fetchedProducts) {
 
             const user = fetchedUser
             user.address = address
-            user.dateJoined = randomDate(new Date(2010, 0, 1), new Date(), 0, 23)
+            user.dateJoined = randomDate(new Date(2019, 0, 1), new Date(), 0, 23)
             user.rating = (randomNumber(1, 10) ===1) ? randomNumber(1,2) : randomNumber(3, 5)
             users.push(user)
         })

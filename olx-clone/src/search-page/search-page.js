@@ -11,7 +11,7 @@ export default function SearchPage (props) {
     //this is for the values/placeholders
     let value_input = props.paramObj.cautare ? props.paramObj.cautare.replaceAll("_", " ") : storedFormInputValue
     let value_location = props.paramObj.locatie ? props.paramObj.locatie.replaceAll("_", " ") : ""
-    if(value_location === "") value_location = window.sessionStorage.getItem("location")
+    // if(value_location === "") value_location = window.sessionStorage.getItem("location")
     window.sessionStorage.setItem("location", props.paramObj.locatie)
 
     Object.keys(searchParams).forEach(param => {
@@ -50,8 +50,11 @@ export default function SearchPage (props) {
         
         return props.gotoSearch({...searchParams, ...newParams})
     }
+    if(!value_location || value_location === undefined || value_location === "undefined") {
+        window.sessionStorage.setItem("location", "")
+        value_location = ""
+    } 
 
-    if(value_location === undefined || value_location === "undefined") value_location = ""
     return(<div className="search-page">
         <SearchForm locationDefaultValue={value_location} inputDefaultValue={value_input} data={props.data} 
             filters={true} gotoSearch={() => "#"} filteredSearch={filteredSearch} gotoOffer={props.gotoOffer} defaultDistance={props.paramObj.distanta === undefined ? 0 : props.paramObj.distanta}/>

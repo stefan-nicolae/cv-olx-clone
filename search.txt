@@ -20,30 +20,10 @@ Filters
 
 Results
 
-    - Priority
+    x Priority
 
 
 TODO
-
-    x On categories you remove - and _, on brands just _, capitalize both
-    x url Category -> Categorie
-    x url Brand -> Firma
-    x url Location -> Locatie
-    x Replace all _ - * where needed
-    x search input value remains
-    x if search identical to category, remove search
-    x (That's fine) Form open new tab doesnt save variable D:
-    x Suggestions: category > brand > product/keyword 
-        x For product suggestions, make a long string out of title, brand, description, category.
-            The more keywords are found in the giant string, the higher the suggestion. Also add its category to categorySuggestions and brand to brand suggestions
-        x For category, brand suggestions, the same thing, except you're only searching the category title. 
-        x For keyword suggestions (SEARCH ONLY, instead of product), the params that led to the product 
-            suggestions are recommended instead of the products 
-    x location dropdown needed
-    x search input by location exclude diacritics
-    x Make sure all suggestions can be opened in new tab. Both search and location
-    x check if Form selected brand matches category
-    x Brand duplicates (e.g. Firma apple)
     - Errors
         - if unexisting search terms, ignore
         - if false existing search terms, ignore
@@ -51,8 +31,10 @@ TODO
         - if unexisting path, 404
     - Tolowercase the url to make sure its not case sensitive
     - make all the document selectors very specific 
-    - Make sure every link on the site works
+    - Make sure every link on the site works and can be opened in new tab 
     - Turn the distance suggestions into <a>
-    - promovat not promoted
-    - Location placeholder sticks
-    - Posts are since 2019 not 2010
+    - keep the warning closed with sessionstorage
+    - Bucuresti-Ilfov not a county, fix it
+    - Max 20 results on page
+    - Font
+    - Result page warnings
