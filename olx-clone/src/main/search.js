@@ -3,6 +3,7 @@ import {useEffect, useState, useRef } from "react"
 import InputLocationDropdownArray from "./input-location-dropdown-array"
 import { capitalize, replaceDiacritics } from "../container/container"
 
+
 export default function SearchForm (props) {
     const [searchSuggestions, setSearchSuggestions] = useState([[], [], []])
     const [countiesVisible, setCountiesVisible] = useState(false)
@@ -89,7 +90,7 @@ export default function SearchForm (props) {
             productObj.description + " " + 
             replaceDiacritics(productObj.county) + " " + 
             replaceDiacritics(productObj.city.City)
-            searchString = searchString.replaceAll("-", " ").replaceAll("_", " ").toLowerCase().replaceAll("'", "")
+            searchString = searchString.replaceAll("-", " ").replaceAll("_", " ").toLowerCase()
             searchParams.forEach(param => {
                 if(param.length < 3) return
                 if(searchString.includes(param)) {
@@ -214,7 +215,7 @@ export default function SearchForm (props) {
     }, [])
     
     useEffect(() => {
-        document.querySelector(".input-location").placeholder = props.filters === true ? defaultLocationValue : getLocationPlaceholder()
+        document.querySelector(".input-location").placeholder = capitalize(props.filters === true ? defaultLocationValue : getLocationPlaceholder())
     })
 
     const submitForm = (e) => {
@@ -296,7 +297,7 @@ export default function SearchForm (props) {
 
                                     href={props.filters !== true ? props.gotoSearch({firma: suggestion, 
                                     locatie: (chosenLocation ? (chosenLocation.startsWith("Toata Romania") ? 
-                                    "undefined" : chosenLocation) : undefined) }) : 
+                                    undefined : chosenLocation) : undefined) }) : 
                                     props.filteredSearch({firma: suggestion, cautare: undefined}, false)} 
                                     
                                     key={key++} className="suggestion"><span>Firma {suggestion}</span></a>)

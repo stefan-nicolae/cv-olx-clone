@@ -8,7 +8,6 @@ export default function InputLocationDropdownArray(props) {
 
     if(!chosenCounty) {
         const countyArr = Object.keys(props.data.counties)
-        countyArr.push("Bucuresti - Ilfov")
         countyArr.sort()
     
         let index = 0
@@ -18,22 +17,14 @@ export default function InputLocationDropdownArray(props) {
                 let pushed = false
                 while(!pushed) {
                     const county = countyArr[index++]
-                    if(county !== "Ilfov" && county !== "Bucuresti") {
+               
                         column.push(county)
                         pushed = true
-                    } 
+                    
                 }
             }
             columns.push(column)
         }
-    }
-    else if(chosenCounty === "Bucuresti - Ilfov") {
-        columns = [
-            ["Bucuresti"],
-            ["Ilfov"],
-            [],
-            []
-        ]
     }
     else {
         const chosenCountyArray = props.data.counties[chosenCounty]
@@ -72,7 +63,7 @@ export default function InputLocationDropdownArray(props) {
                                             onClick={() => !chosenCounty ? setChosenCounty(county) : 
                                                 props.setChosenLocation(chosenCounty + ";" + county)} 
                                             key={key_county++} 
-                                            className={"county" + (county === "Bucuresti - Ilfov" ? " bucuresti" : "") } 
+                                            className={"county"} 
                                         >
                                             <span>{county}</span>
                                             {!chosenCounty ? <iconify-icon icon="akar-icons:chevron-right"></iconify-icon> 

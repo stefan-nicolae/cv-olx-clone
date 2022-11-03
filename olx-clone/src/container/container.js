@@ -13,6 +13,10 @@ import SearchPage from "../search-page/search-page";
 export function randomNumber (min, max) { 
 	return Math.floor(Math.random() * (max+1 - min) + min)
 } 
+
+export function makeSureItOnlyHasNumbers (val) {
+	return !(/^\d+$/.test(val))
+}
  
 export function replaceDiacritics(string) {
 	return string
@@ -30,6 +34,16 @@ export function capitalize (string) {
 		word = word[0].toUpperCase() + word.slice(1)
 		newString += word + " "
 	})
+
+	string = newString
+	newString = ""
+	string.split("-").forEach((word) => {
+		if(!word) return
+
+		word = word[0].toUpperCase() + word.slice(1)
+		newString += word + "-"
+	})
+	if(newString.endsWith("-")) newString = newString.slice(0, -1)
 	return newString
 }
 
@@ -44,9 +58,13 @@ function getNewTitle(title) {
 export default function Container () {
 	let storedData = window.localStorage.getItem("data")
 	const [data, setData] = useState(storedData ? JSON.parse(storedData) : undefined) 
-	const [warningVisible, setWarningVisible] = useState(true)
+	const storedWarningVisible = window.sessionStorage.getItem("warningVisible") 
+	const [warningVisible, setWarningVisible] = useState(storedWarningVisible ? false : true)
 	const pathname = window.location.pathname
 
+	window.sessionStorage.setItem("warningVisible", "anything") 
+	
+	
 	console.log(data)
 	//update URL_HISTORY
 	const URL_HISTORY = window.sessionStorage.getItem("URL_HISTORY")
@@ -97,15 +115,14 @@ export default function Container () {
 	const gotoSearch=(parametersObj) => {
 		let paramList = ""
 		Object.keys(parametersObj).forEach(key => {
-			if(parametersObj[key] === undefined || parametersObj[key] === "undefined") return
+			if(parametersObj[key] === undefined) return
 			paramList += key + "=" + `${parametersObj[key]}`.replaceAll(" ", "_") + "&"
 		})
-		const newPath = "search?" + paramList
+		const newPath = "/search?" + paramList
 		return newPath.slice(0, newPath.length-1)
 	}
 		
 	const gotoOffer = (id) => {
-		// console.log("go to " + id)
 		let url = "/404"
 		data.products.products.forEach((product => 
 			{
@@ -117,6 +134,15 @@ export default function Container () {
 			}
 		))
 		return url
+	}
+
+
+	if(pathname.startsWith("/404")) {
+		return(
+			<div className="container page404">
+				<h1>404 not found</h1>
+			</div>
+		)
 	}
 
 	//should run just once, as storedData doesn't update instantly 
@@ -164,6 +190,10 @@ export default function Container () {
 			</div>
 		)
 	}
+
+	if(pathname !== "/") {
+		window.location.pathname = "/404"
+	} 
 	return data ? 
 		<div className="container">
 			{/* header element */}

@@ -1,12 +1,12 @@
-import { capitalize } from "../container/container"
+import { capitalize, makeSureItOnlyHasNumbers } from "../container/container"
 import "./filters.css"
 
 export default function Filters (props) {
     //category brand pricerange sortby (price dateuploaded)
     const selected = {} 
     selected["categorie"] = props.searchParams.categorie ? decodeURIComponent(props.searchParams.categorie) : undefined
-    selected["firma"] = props.searchParams.firma ? decodeURIComponent(props.searchParams.firma).replaceAll("+", " ").replaceAll("_", " ").toLowerCase() : undefined
-    selected["sorteaza"] = props.searchParams.sorteaza 
+    selected["firma"] = props.searchParams.firma ? decodeURIComponent(props.searchParams.firma.replaceAll("_", " ")) :  undefined
+    selected["sorteaza"] = props.searchParams.sorteaza ? capitalize(props.searchParams.sorteaza).replaceAll(" ", "") : undefined
     selected["minim"] = props.searchParams.minim
     selected["maxim"] = props.searchParams.maxim
 
@@ -43,8 +43,11 @@ export default function Filters (props) {
     })()
 
     const categories = Object.keys(props.data.categories).sort()
-    dropdowns.push(["categorie", categories], ["firma", brands], ["sorteaza", ["Scumpe", "Ieftine", "Noi"]])
+    dropdowns.push(["categorie", categories], ["firma", brands], ["sorteaza", ["scumpe", "ieftine", "noi"]])
     
+    Object.keys(selected).forEach(filter => {
+       if(selected[filter]) selected[filter] = selected[filter].toLowerCase()
+    })
 
     console.log(selected)
     
@@ -59,7 +62,7 @@ export default function Filters (props) {
     const handlePriceInputChange = (e) => {
         const current = e.target
         const other = document.querySelector(`input[name="${current.name !== "maxim" ? "maxim" : "minim"}"]`)
-        if(current.value !== "" && isNaN(parseFloat(current.value))) current.value = "" 
+        if(current.value !== "" && makeSureItOnlyHasNumbers(current.value)) current.value = "" 
 
         if(current.value !== "" && other.value !== "") {
             if(current.name === "minim" && current.value > other.value) other.value = current.value

@@ -22,19 +22,21 @@ Results
 
     x Priority
 
-
 TODO
-    - Errors
-        - if unexisting search terms, ignore
-        - if false existing search terms, ignore
-        - if unexisting offer, 404
-        - if unexisting path, 404
-    - Tolowercase the url to make sure its not case sensitive
-    - make all the document selectors very specific 
-    - Make sure every link on the site works and can be opened in new tab 
-    - Turn the distance suggestions into <a>
-    - keep the warning closed with sessionstorage
-    - Bucuresti-Ilfov not a county, fix it
-    - Max 20 results on page
-    - Font
-    - Result page warnings
+    x Forgot to put in unit when calculating distance
+    x Tolowercase the url to make sure its not case sensitive
+    x The "undefined" problem
+    x No need to save location in the local var
+    x Result page warnings
+    x Max 20 results on page
+    x Fix the < > search page
+    x isNaN does not work
+    x Errors
+        x if unexisting search terms, ignore
+        x if false existing search terms, ignore
+        x if unexisting offer, 404
+        x if unexisting path, 404
+    x Make sure every link on the site works and can be opened in new tab 
+    x keep the warning closed with sessionstorage
+    x Make sure an # at the end isn't counted as param
+    x Bucuresti-Ilfov not a county, fix it

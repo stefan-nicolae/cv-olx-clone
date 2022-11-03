@@ -13,7 +13,7 @@ export default function Results (props) {
             productObj.description + " " + 
             replaceDiacritics(productObj.county) + " " + 
             replaceDiacritics(productObj.city.City)
-            searchString = searchString.replaceAll("-", " ").replaceAll("_", " ").toLowerCase().replaceAll("'", "")
+            searchString = searchString.replaceAll("-", " ").replaceAll("_", " ").toLowerCase()
             
             const params = props.searchParams.cautare.split("_")
             let pushed = false
@@ -43,13 +43,13 @@ export default function Results (props) {
     
     //now that we have the results, we have to set the priorities
     
-    let location = decodeURIComponent(props.searchParams.locatie)
-    let county = location.split(';')[0]
-    let city = location.split(';')[1]
+    let location, county, city
+    if(props.searchParams.locatie) {
+        location = decodeURIComponent(props.searchParams.locatie)
+        county = location.split(';')[0]
+        city = location.split(';')[1]
+    }
     const distance = props.searchParams.distanta
-    if(!location.length) location = undefined
-    if(city && !city.length) city = undefined
-    if(county && !county.length) county = undefined
     
     const locationCompare = string => {
         const result = replaceDiacritics(string).toLowerCase().replaceAll("-", "").replaceAll("_", "").replaceAll("*", "").replaceAll(" ", "")
@@ -57,37 +57,39 @@ export default function Results (props) {
     }
 
     const locationCompareDist = string => {
-        const result = string.replaceAll(" ", "-").replaceAll("*", "")
+        const result = string.replaceAll(" ", "-").replaceAll("*", "").replaceAll("_", "-")
         return result
     }
 
     // if just location input, city > county
     // if location and distance input, city > county > within the distance
     // if just dist input, do nothing
-    let noCity = true, noCounty = true
-    const PRIO_RESULTS = []
+    let noCity = true, noCounty = true, noDist = true
+    let PRIO_RESULTS = []
 
     RESULTS.forEach(result => {
         result.prio = 0
 
         //if distance input and also location
         if(distance) {
-            if(location && location !== "undefined") { 
+            if(location) { 
                 if(locationCompareDist(county) !== locationCompareDist(result.city.City)) {
-                    if(city && city !== "undefined") {
+                    if(city) {
                         if(locationCompareDist(county) === locationCompareDist(result.county)) {}
-                        else if(distCityCity[locationCompareDist(city)][locationCompareDist(result.city.City)] > distance) return
+                        else if(distCityCity[locationCompareDist(city)][locationCompareDist(result.city.City)]* 1.609344 > distance) return
                         else {
                             result.pass = true
                             result.prio += 10000
+                            noDist = false
                         }
                     }
-                    else if(county && county !== "undefined") {
+                    else if(county) {
                         if(locationCompareDist(county) === locationCompareDist(result.county)) {}
-                        else if(distCountyCity[locationCompareDist(county)][locationCompareDist(result.city.City)] > distance) return
+                        else if(distCountyCity[locationCompareDist(county)][locationCompareDist(result.city.City)]* 1.609344 > distance) return
                         else {
                             result.pass = true
                             result.prio += 10000
+                            noDist = false
                         }
                     }
                 }
@@ -95,9 +97,9 @@ export default function Results (props) {
         }   
 
         //if location input
-        if(location && location !== "undefined") {
+        if(location) {
             //if city, limit to city and county
-            if(city && city !== "undefined") {
+            if(city) {
                 if(locationCompare(city) === locationCompare(result.city.City)) {
                     result.prio += 1000000
                     noCity = false
@@ -111,7 +113,7 @@ export default function Results (props) {
             }
             
             // //if county, limit to county
-            else if(county && county !== "undefined") {
+            else if(county) {
                 if(locationCompare(county) === locationCompare(result.county)) 
                 {
                     noCounty = false
@@ -132,7 +134,6 @@ export default function Results (props) {
         PRIO_RESULTS.push(result)
     })
     
-    console.log(props.searchParams.sorteaza)
     if(props.searchParams.sorteaza) {
         switch(props.searchParams.sorteaza.toLowerCase()) {
             case "noi": 
@@ -150,13 +151,49 @@ export default function Results (props) {
     }
     else PRIO_RESULTS.sort((a, b) => -(a.prio - b.prio))
     
+        
+    const pageNumber = Math.ceil(PRIO_RESULTS.length/20)
+    const pages = []
+    for(let i = 1; i <= pageNumber; i++) {
+        pages.push(i)
+    }
+
+    let RENDERED_RESULTS = []
+    if(props.searchParams.pagina) {
+        if(props.searchParams.pagina > pageNumber) props.searchParams.pagina = pageNumber
+        RENDERED_RESULTS = PRIO_RESULTS.slice(
+            20 + (20 * (props.searchParams.pagina-2)),
+            40 + (20 * (props.searchParams.pagina-2)) 
+        )
+    } else {
+        RENDERED_RESULTS = PRIO_RESULTS.slice(0, 20)
+    }
+
+
+    let searchWarning 
+
+    if(location && noCity) searchWarning = "Nu am gasit rezultate in orasul ales. Iata anunturile din judet" + (distance ? " si din perimetrul ales." : ":")
+    if(location && noCounty && !distance) searchWarning = "Nu am gasit rezultate in judetul ales."
+    if(distance) {
+        if(location) {
+            if(noCounty && noDist) searchWarning = "Nu am gasit rezultate in perimetrul ales:"
+        } else {
+            searchWarning = "Setarea de distanta nu functioneaza fara a alege o locatie."
+        }
+    }
+
+    
     let key = 0
+    let key2 = 0
+
     return (
         <div className="results">
+
             <h1>Am gasit {PRIO_RESULTS.length} rezultate:</h1>
+            <div style={searchWarning ? {} : {display: "none"}}className="search-warning">{searchWarning}</div>
             <div className="results-wrapper">
                 {
-                    PRIO_RESULTS.map(result => {
+                    RENDERED_RESULTS.map(result => {
                         return(
                             <div key={key++} className="result">
                                 <a href={props.gotoOffer(result.id)}></a>
@@ -178,6 +215,20 @@ export default function Results (props) {
                         )
                     })
                 }
+            </div>
+            
+            <div style={{width: pageNumber * 50 + "px", display: (!parseInt(pageNumber) ? "none" : "")}} className="pages">
+                <span onClick={() => {props.searchParams.pagina ? props.filteredSearch({pagina: props.searchParams.pagina-1}) : {}}}><iconify-icon icon="akar-icons:chevron-left"></iconify-icon></span>
+                {
+                    pages.map(pageNumber => {
+                        return(
+                            <a href={props.filteredSearch({pagina: pageNumber == 1 ? undefined : pageNumber}, false)} className={"page-option "
+                                + ((!props.searchParams.pagina && 1 == pageNumber) ? " selected" : (props.searchParams.pagina == pageNumber ? " selected" : ""))
+                            } key={key2++}>{pageNumber}</a>
+                        )
+                    })
+                }
+                <span onClick={() => {props.filteredSearch({pagina: props.searchParams.pagina ? parseFloat(props.searchParams.pagina)+1 : 2})}}><iconify-icon icon="akar-icons:chevron-right"></iconify-icon></span>
             </div>
         </div>
     )

@@ -445,6 +445,7 @@ section.bottom-div > h1{
     margin-bottom: 20px;
 }
 
+
 section.bottom-div .swiper-slide .wrapper { 
     display: flex;
     flex-direction: column;
@@ -469,6 +470,14 @@ section.bottom-div .swiper-slide .img-div {
     overflow: hidden;
     background-color: white;
     position: relative;
+}
+
+section.bottom-div .swiper-slide > a {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 200%;
+    z-index: 2;
 }
 
 section.bottom-div .swiper-slide .img-div > span{

@@ -29,7 +29,8 @@ export default function SwiperBottom (props) {
       <SwiperSlide>Slide 4</SwiperSlide> */}
       {props.products.map(product => {
         if(product.id !== props.openedID)
-        return(<SwiperSlide onClick={() => {window.location.pathname = props.gotoOffer(product.id)}} key={key++}>
+        return(<SwiperSlide key={key++}>
+            <a href={props.gotoOffer(product.id)}></a>
             <div className='wrapper'>
                 <div className='img-div'>
                     <img src={product.images[0]}></img>

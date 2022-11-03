@@ -17,6 +17,12 @@
     overflow-x: hidden;
 }
 
+.container.page404 {
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+}
+
 .green-button {
     background-color: white;
     border: none;

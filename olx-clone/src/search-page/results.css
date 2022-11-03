@@ -75,5 +75,42 @@
 
 .search-page .result aside iconify-icon {
     font-size: 20px;
+}
 
+.search-page .results .pages {
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.search-page .results .pages span,
+.search-page .results .pages a {
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    height: 30px;
+    width: 30px;
+    justify-content: center;
+    border-radius: 20px;
+    text-decoration: none;
+    color: var(--dark-green);
+}
+
+.search-page .results .pages a:hover {
+    background-color: #d8d8d8;
+
+}
+
+.search-page .results .page-option.selected {
+    background-color: #d8d8d8;
+}
+
+.search-page .results .search-warning {
+    background-color: #97f4ef;
+    padding: 5px 10px;
+    margin-bottom: 20px;
+    width: fit-content;
+    border-radius: 5px;
 }
