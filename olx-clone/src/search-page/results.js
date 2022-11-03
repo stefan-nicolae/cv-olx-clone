@@ -1,5 +1,5 @@
 import "./results.css"
-import { replaceDiacritics } from "../container/container"
+import { capitalize, replaceDiacritics } from "../container/container"
 import distCityCity from "./dist-city-city.json"
 import distCountyCity from "./dist-county-city.json"
 
@@ -57,10 +57,10 @@ export default function Results (props) {
         const result = replaceDiacritics(string).toLowerCase().replaceAll("-", "").replaceAll("_", "").replaceAll("*", "").replaceAll(" ", "")
         return result
     }
-
+    
     const locationCompareDist = string => {
-        const result = string.replaceAll(" ", "-").replaceAll("*", "").replaceAll("_", "-")
-        return result
+        const result = capitalize(string.replaceAll(" ", "-").replaceAll("*", "").replaceAll("_", "-"))
+        return result 
     }
 
     // if just location input, city > county
@@ -75,10 +75,10 @@ export default function Results (props) {
         //if distance input and also location
         if(distance) {
             if(location) { 
-                if(locationCompareDist(county) !== locationCompareDist(result.city.City)) {
+                if(locationCompare(city) !== locationCompare(result.city.City)) {
                     if(city) {
-                        if(locationCompareDist(county) === locationCompareDist(result.county)) {}
-                        else if(distCityCity[locationCompareDist(city)][locationCompareDist(result.city.City)]* 1.609344 > distance) return
+                        if(locationCompare(county) === locationCompare(result.county)) {}
+                        else if(distCityCity[locationCompareDist(city)][locationCompareDist(result.city.City)] * 1.609344 > distance) return
                         else {
                             result.pass = true
                             result.prio += 10000
@@ -86,7 +86,7 @@ export default function Results (props) {
                         }
                     }
                     else if(county) {
-                        if(locationCompareDist(county) === locationCompareDist(result.county)) {}
+                        if(locationCompare(county) === locationCompare(result.county)) {}
                         else if(distCountyCity[locationCompareDist(county)][locationCompareDist(result.city.City)]* 1.609344 > distance) return
                         else {
                             result.pass = true
@@ -219,7 +219,7 @@ export default function Results (props) {
                 }
             </div>
             
-            <div style={{width: pageNumber * 50 + "px", display: (!parseInt(pageNumber) ? "none" : "")}} className="pages">
+            <div style={{width: pageNumber * 50 + "px", display: (pageNumber == 1 ? "none" : "")}} className="pages">
                 <span onClick={() => {props.searchParams.pagina ? props.filteredSearch({pagina: props.searchParams.pagina-1}) : {}}}><iconify-icon icon="akar-icons:chevron-left"></iconify-icon></span>
                 {
                     pages.map(pageNumber => {

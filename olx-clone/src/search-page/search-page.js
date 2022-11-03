@@ -105,6 +105,7 @@ export default function SearchPage (props) {
     if(searchParams.firma) searchParams.firma = decodeURIComponent(searchParams.firma)
 
 
+    console.log(searchParams)
     
     const storedFormInputValue = window.sessionStorage.getItem("searchFormInputValue")
     //this is for the values/placeholders

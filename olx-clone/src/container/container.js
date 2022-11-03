@@ -44,6 +44,7 @@ export function capitalize (string) {
 		newString += word + "-"
 	})
 	if(newString.endsWith("-")) newString = newString.slice(0, -1)
+	if(newString.endsWith(" ")) newString = newString.slice(0, -1)
 	return newString
 }
 
