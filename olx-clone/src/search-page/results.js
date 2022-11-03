@@ -11,10 +11,12 @@ export default function Results (props) {
             productObj.title + " " + 
             productObj.category + " " + 
             productObj.description + " " + 
+            productObj.brand + " " + 
             replaceDiacritics(productObj.county) + " " + 
-            replaceDiacritics(productObj.city.City)
+            replaceDiacritics(productObj.city.City.replaceAll("*", ""))
             searchString = searchString.replaceAll("-", " ").replaceAll("_", " ").toLowerCase()
-            
+
+            console.log(searchString)
             const params = props.searchParams.cautare.split("_")
             let pushed = false
             params.forEach(param => {

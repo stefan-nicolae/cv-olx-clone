@@ -88,9 +88,11 @@ export default function SearchForm (props) {
             productObj.title + " " + 
             productObj.category + " " + 
             productObj.description + " " + 
+            productObj.brand + " " + 
             replaceDiacritics(productObj.county) + " " + 
-            replaceDiacritics(productObj.city.City)
+            replaceDiacritics(productObj.city.City.replaceAll("*", ""))
             searchString = searchString.replaceAll("-", " ").replaceAll("_", " ").toLowerCase()
+            console.log(searchString)
             searchParams.forEach(param => {
                 if(param.length < 3) return
                 if(searchString.includes(param)) {
