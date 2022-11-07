@@ -40,3 +40,4 @@ TODO
     x keep the warning closed with sessionstorage
     x Make sure an # at the end isn't counted as param
     x Bucuresti-Ilfov not a county, fix it
+    x FIX URL HISTORY

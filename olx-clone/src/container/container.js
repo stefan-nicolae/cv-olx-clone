@@ -48,6 +48,24 @@ export function capitalize (string) {
 	return newString
 }
 
+function nth_occurrence (string, char, nth) {
+    var first_index = string.indexOf(char);
+    var length_up_to_first_index = first_index + 1;
+
+    if (nth == 1) {
+        return first_index;
+    } else {
+        var string_after_first_occurrence = string.slice(length_up_to_first_index);
+        var next_occurrence = nth_occurrence(string_after_first_occurrence, char, nth - 1);
+
+        if (next_occurrence === -1) {
+            return -1;
+        } else {
+            return length_up_to_first_index + next_occurrence;  
+        }
+    }
+}
+
 
 function getNewTitle(title) {
 	return title.replaceAll(" ", "-")
@@ -61,20 +79,31 @@ export default function Container () {
 	const [data, setData] = useState(storedData ? JSON.parse(storedData) : undefined) 
 	const storedWarningVisible = window.sessionStorage.getItem("warningVisible") 
 	const [warningVisible, setWarningVisible] = useState(storedWarningVisible ? false : true)
-	const pathname = window.location.pathname
 
+
+	const thirdSlashIndex = nth_occurrence(window.location.href, "/", 3)
+	const pathname = window.location.href.slice(thirdSlashIndex)
+	
 	window.sessionStorage.setItem("warningVisible", "anything") 
 	
 	
 	console.log(data)
 	//update URL_HISTORY
 	const URL_HISTORY = window.sessionStorage.getItem("URL_HISTORY")
+
 	// console.log(URL_HISTORY)
 	if(!URL_HISTORY) window.sessionStorage.setItem("URL_HISTORY", JSON.stringify([pathname]))
-	else {
-		const newURL_HISTORY = JSON.parse(URL_HISTORY).concat([pathname])
-		window.sessionStorage.setItem("URL_HISTORY", JSON.stringify(newURL_HISTORY))
+	if(URL_HISTORY) {
+		const array = JSON.parse(URL_HISTORY)
+		const lastURL = array[array.length - 1]
+		if(pathname !== lastURL) {
+			const newURL_HISTORY = JSON.parse(URL_HISTORY).concat([pathname])
+			window.sessionStorage.setItem("URL_HISTORY", JSON.stringify(newURL_HISTORY))
+		}
 	}
+	
+
+	console.log(window.sessionStorage.getItem("URL_HISTORY"))
 
 	//data will be updated through the setData still
 	if(data && (!storedData || (storedData && JSON.parse(storedData) !== data))) {

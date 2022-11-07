@@ -28,9 +28,8 @@ export default function Offer (props) {
                 if(URL_HISTORY) {
                     const array = JSON.parse(URL_HISTORY)
                     const lastURL = array[array.length - 2]
-                    const arrayWithoutLastURL = array.slice(0, array[array.length-2])
+                    const arrayWithoutLastURL = array.slice(0, array.length-1)
                     window.sessionStorage.setItem("URL_HISTORY", JSON.stringify(arrayWithoutLastURL))
-                    console.log(lastURL)
                     window.location.pathname = lastURL
                     if(lastURL === undefined) window.location.pathname = "/"
                 } 
