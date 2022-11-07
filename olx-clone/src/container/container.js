@@ -171,6 +171,7 @@ export default function Container () {
 		return(
 			<div className="container page404">
 				<h1>404 not found</h1>
+				<a href="/">Return to home</a>
 			</div>
 		)
 	}
