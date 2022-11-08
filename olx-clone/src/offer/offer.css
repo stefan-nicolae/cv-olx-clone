@@ -337,8 +337,13 @@
     background-color: var(--dark-green);
 }
 
+.main aside .user .buttons button span {
+    padding-top: 12px;
+}
+
 .main aside .user .buttons button:last-of-type span {
     color: white;
+    
 }
 
 .main aside .user .buttons button:last-of-type span:hover {
@@ -524,4 +529,3 @@ section.bottom-div .swiper-button-prev, section.bottom-div .swiper-button-next {
 }
 
 
-/* end main */

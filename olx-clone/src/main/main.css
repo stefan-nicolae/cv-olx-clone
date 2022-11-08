@@ -66,6 +66,10 @@
         position: relative;
     }
 
+    .search-form .form-wrapper button#search {
+        padding-left: 14px;
+    }
+
     /* inputs */
     .search-form .form-wrapper input {
         border: none;
