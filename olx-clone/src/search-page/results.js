@@ -54,6 +54,7 @@ export default function Results (props) {
     const distance = props.searchParams.distanta
     
     const locationCompare = string => {
+        console.log(string)
         const result = replaceDiacritics(string).toLowerCase().replaceAll("-", "").replaceAll("_", "").replaceAll("*", "").replaceAll(" ", "")
         return result
     }
@@ -74,9 +75,9 @@ export default function Results (props) {
 
         //if distance input and also location
         if(distance) {
-            if(location) { 
-                if(locationCompare(city) !== locationCompare(result.city.City)) {
-                    if(city) {
+            if(location) {
+                //distance input doesnt apply in the same county 
+                if(city) {
                         if(locationCompare(county) === locationCompare(result.county)) {}
                         else if(distCityCity[locationCompareDist(city)][locationCompareDist(result.city.City)] * 1.609344 > distance) return
                         else {
@@ -94,7 +95,6 @@ export default function Results (props) {
                             noDist = false
                         }
                     }
-                }
             }
         }   
 
