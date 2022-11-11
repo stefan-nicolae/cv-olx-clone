@@ -175,6 +175,7 @@ export default function Results (props) {
     let searchWarning 
 
     if(location && noCity) searchWarning = "Nu am gasit rezultate in orasul ales. Iata anunturile din judet" + (distance ? " si din perimetrul ales." : ":")
+    if(location && noCity && county) searchWarning = undefined
     if(location && noCounty && !distance) searchWarning = "Nu am gasit rezultate in judetul ales."
     if(distance) {
         if(location) {
@@ -219,7 +220,7 @@ export default function Results (props) {
                 }
             </div>
             
-            <div style={{width: pageNumber * 50 + "px", display: (pageNumber == 1 ? "none" : "")}} className="pages">
+            <div style={{width: pageNumber * 50 + "px", display: ((!pageNumber || pageNumber === 1) ? "none" : "")}} className="pages">
                 <span onClick={() => {props.searchParams.pagina ? props.filteredSearch({pagina: props.searchParams.pagina-1}) : {}}}><iconify-icon icon="akar-icons:chevron-left"></iconify-icon></span>
                 {
                     pages.map(pageNumber => {
