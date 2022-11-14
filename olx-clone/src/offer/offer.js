@@ -2,7 +2,7 @@ import "./offer.css"
 import "./map.css"
 import SwiperElement from "./swiper"
 import * as container from "../container/container"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import SwiperBottom from "./swiper-bottom"
 
 export default function Offer (props) {
@@ -13,6 +13,8 @@ export default function Offer (props) {
     const [phoneState, setPhoneState] = useState(false)
     const [mapVisible, setMapVisible] = useState(false)
 
+
+
     const stars = [];
     for(let i = 0; i<user.rating; i++) {
         stars.push(true)
@@ -22,6 +24,18 @@ export default function Offer (props) {
     }
 
     let starkey = 0
+
+    useEffect(() => {
+        if(mapVisible) {
+            document.querySelector(".container").scrollTo(0, 0)
+            document.querySelector(".container").style.overflowY = "hidden"
+        } else {
+            document.querySelector(".container").style.overflowY = "unset"
+        }
+    })
+
+     
+
     return(<div className="offer">
         <nav>
             <button onClick={() => {
