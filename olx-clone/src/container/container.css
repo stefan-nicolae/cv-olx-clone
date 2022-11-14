@@ -20,6 +20,18 @@
     filter: brightness(0.8)
 }
 
+@media (max-width: 1400px) {
+    .container {
+        transform: scale(0.7) translateX(-21.5%) translateY(-21.5%);
+        width: 143%;
+        height: 143vh;
+    }
+    
+    html {
+        overflow: hidden;
+    }
+}
+
 .container.page404 {
     display: flex;
     flex-direction: column;
