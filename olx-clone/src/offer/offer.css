@@ -323,7 +323,7 @@
 
 .main aside .user .buttons {
     display: flex;
-    margin: 20px 0;
+    margin: 15px 0;
 }
 
 .main aside .user .buttons button {
@@ -331,6 +331,7 @@
     height: 60px;
     flex: 1;
     font-size: larger;
+    margin: 5px;
 }
 
 .main aside .user .buttons button:last-of-type {
