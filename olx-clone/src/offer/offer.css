@@ -327,7 +327,7 @@
 }
 
 .main aside .user .buttons button {
-    border: 1px solid var(--dark-green);
+    border: 2px solid var(--dark-green);
     height: 60px;
     flex: 1;
     font-size: larger;
