@@ -48,7 +48,7 @@ export function capitalize (string) {
 	return newString
 }
 
-function nth_occurrence (string, char, nth) {
+export function nth_occurrence (string, char, nth) {
     var first_index = string.indexOf(char);
     var length_up_to_first_index = first_index + 1;
 

@@ -54,7 +54,7 @@ export default function Results (props) {
     const distance = props.searchParams.distanta
     
     const locationCompare = string => {
-        console.log(string)
+        // console.log(string)
         const result = replaceDiacritics(string).toLowerCase().replaceAll("-", "").replaceAll("_", "").replaceAll("*", "").replaceAll(" ", "")
         return result
     }

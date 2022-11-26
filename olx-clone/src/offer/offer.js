@@ -4,6 +4,7 @@ import SwiperElement from "./swiper"
 import * as container from "../container/container"
 import { useEffect, useState } from "react"
 import SwiperBottom from "./swiper-bottom"
+import { nth_occurrence } from "../container/container"
 
 export default function Offer (props) {
     const MapsKey = "AIzaSyAIfwB5a40jpDuAnWFffeuE7GWa9F_KS30"
@@ -44,7 +45,12 @@ export default function Offer (props) {
                     const lastURL = array[array.length - 2]
                     const arrayWithoutLastURL = array.slice(0, array.length-1)
                     window.sessionStorage.setItem("URL_HISTORY", JSON.stringify(arrayWithoutLastURL))
-                    window.location.pathname = lastURL
+                    console.log(window.location.hostname + lastURL)
+
+                    const thirdSlashIndex = nth_occurrence(window.location.href, "/", 3)
+                    const hostname = window.location.href.slice(0, thirdSlashIndex)
+
+                    window.location.href = hostname + lastURL
                     if(lastURL === undefined) window.location.pathname = "/"
                 } 
             }}><iconify-icon icon="akar-icons:chevron-left"></iconify-icon>Inapoi</button>
