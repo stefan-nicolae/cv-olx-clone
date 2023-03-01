@@ -13,20 +13,10 @@ let key = 0
 export default function SwiperBottom (props) {
   return (
     <Swiper
-      // install Swiper modules
       modules={[Navigation, Pagination, Scrollbar, A11y]}
       spaceBetween={20} 
       slidesPerView={4}
-      navigation
-    //   pagination={{ clickable: true }}
-    //   scrollbar={{ draggable: true }}
-    //   onSwiper={(swiper) => console.log(swiper)}
-    //   onSlideChange={() => console.log('slide change')}
-    >
-      {/* <SwiperSlide>Slide 1</SwiperSlide>
-      <SwiperSlide>Slide 2</SwiperSlide>
-      <SwiperSlide>Slide 3</SwiperSlide>
-      <SwiperSlide>Slide 4</SwiperSlide> */}
+      navigation >
       {props.products.map(product => {
         if(product.id !== props.openedID)
         return(<SwiperSlide key={key++}>
@@ -42,7 +32,6 @@ export default function SwiperBottom (props) {
                     <span>{product.city.City.replaceAll("*", "")}</span>
                     <span>Postat {product.dateAdded.slice(0,10)}</span>
                 </div>
-
             </div>
             </SwiperSlide>)
       })}

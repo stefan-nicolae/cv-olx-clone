@@ -3,7 +3,6 @@
     margin: auto;
 }
 
-/* NAV */
 .offer nav {
     display: flex;
     align-items: center;
@@ -30,11 +29,7 @@
     position: relative;
     text-transform: capitalize;
 }
-/* END NAV */
 
-/* main */
-
-/* .main */
 .main {
     width: 1200px;
     display: flex;
@@ -42,7 +37,6 @@
     margin-top: 50px;
 }
 
-    /* presentation */
 .main .presentation{
     margin-right: 20px;
     max-width: 740px;;
@@ -107,25 +101,21 @@
     background-color: white;
 }
 
-/* postat */
 .main .presentation .description > span:first-of-type {
     font-size: small;
 }
 
-/* titlu */
 .main .presentation .description > h1 {
     font-weight: normal;
     font-size: 30px;
     margin-top: 15px;
 }
 
-/* pret */
 .main .presentation .description > span:nth-of-type(2) {
     margin-top: 15px;
     font-size: 50px;
 }
 
-/* promoveaza/reactualizeaza */
 .main .presentation .description > div:first-of-type {
     font-size: large;
     margin-top: 15px;
@@ -141,7 +131,6 @@
     margin-right: 5px;
 }
 
-/* DESCRIERE */
 .main .presentation .description > h2 {
     margin-top: 15px;
     font-size: 30px;
@@ -175,7 +164,6 @@
     align-items: center;
 } 
 
-        /* messaging */
 .main section.messaging {
     background-color: white;
     margin-top: 20px;
@@ -259,10 +247,6 @@
     display: flex;
     align-items: center;
 }
-
-
-
-    /* presentation end*/
 
 .main aside {
     flex: 1;
@@ -430,7 +414,6 @@
     overflow: hidden;
 }
 
-
 .main aside .location .info .image > div > div {
     background-color: red;
     height: 100%;
@@ -450,7 +433,6 @@ section.bottom-div {
 section.bottom-div > h1{
     margin-bottom: 20px;
 }
-
 
 section.bottom-div .swiper-slide .wrapper { 
     display: flex;

@@ -1,4 +1,3 @@
-// green section
 import "./footer.css"
 import Image from "./flower-mouse.jpg"
 import Logo from "./reverse-olx-logo.png"

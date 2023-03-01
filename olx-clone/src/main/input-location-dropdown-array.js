@@ -1,8 +1,6 @@
 import { useState } from "react"
 
 export default function InputLocationDropdownArray(props) {
-    // const chosenCounty = props.chosenLocation ? props.chosenLocation.split(";")[0] : undefined
-    // const setChosenCounty = props.setChosenLocation
     const [chosenCounty, setChosenCounty] = useState()
     let columns = [] 
 
@@ -63,8 +61,7 @@ export default function InputLocationDropdownArray(props) {
                                             onClick={() => !chosenCounty ? setChosenCounty(county) : 
                                                 props.setChosenLocation(chosenCounty + ";" + county)} 
                                             key={key_county++} 
-                                            className={"county"} 
-                                        >
+                                            className={"county"} >
                                             <span>{county}</span>
                                             {!chosenCounty ? <iconify-icon icon="akar-icons:chevron-right"></iconify-icon> 
                                                 : <></>}

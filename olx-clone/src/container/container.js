@@ -51,7 +51,6 @@ export function capitalize (string) {
 export function nth_occurrence (string, char, nth) {
     var first_index = string.indexOf(char);
     var length_up_to_first_index = first_index + 1;
-
     if (nth == 1) {
         return first_index;
     } else {
@@ -66,7 +65,6 @@ export function nth_occurrence (string, char, nth) {
     }
 }
 
-
 function getNewTitle(title) {
 	return title.replaceAll(" ", "-")
 	.replaceAll("/", "")
@@ -79,19 +77,13 @@ export default function Container () {
 	const [data, setData] = useState(storedData ? JSON.parse(storedData) : undefined) 
 	const storedWarningVisible = window.sessionStorage.getItem("warningVisible") 
 	const [warningVisible, setWarningVisible] = useState(storedWarningVisible ? false : true)
-
-
 	const thirdSlashIndex = nth_occurrence(window.location.href, "/", 3)
 	const pathname = window.location.href.slice(thirdSlashIndex)
 	
 	window.sessionStorage.setItem("warningVisible", "anything") 
 	
-	
-	console.log(data)
-	//update URL_HISTORY
 	const URL_HISTORY = window.sessionStorage.getItem("URL_HISTORY")
 
-	// console.log(URL_HISTORY)
 	if(!URL_HISTORY) window.sessionStorage.setItem("URL_HISTORY", JSON.stringify([pathname]))
 	if(URL_HISTORY) {
 		const array = JSON.parse(URL_HISTORY)
@@ -102,10 +94,6 @@ export default function Container () {
 		}
 	}
 	
-
-	console.log(window.sessionStorage.getItem("URL_HISTORY"))
-
-	//data will be updated through the setData still
 	if(data && (!storedData || (storedData && JSON.parse(storedData) !== data))) {
 		window.localStorage.setItem("data", JSON.stringify(data))
 		const brandsArr = []
@@ -166,7 +154,6 @@ export default function Container () {
 		return url
 	}
 
-
 	if(pathname.startsWith("/404")) {
 		return(
 			<div className="container page404">
@@ -176,10 +163,10 @@ export default function Container () {
 		)
 	}
 
-	//should run just once, as storedData doesn't update instantly 
 	if(!storedData && data) {
 		storedData = JSON.stringify(data)
 	}
+
 	if(storedData && pathname.startsWith("/oferta")) {
 		const targetID = pathname.slice(pathname.lastIndexOf("ID")+3)
 		const targetTitle = pathname.slice(pathname.lastIndexOf("/")+1, pathname.lastIndexOf("_"))
@@ -204,6 +191,7 @@ export default function Container () {
 		} 
 		else window.location.pathname = "/404"
 	}
+
 	if(storedData && pathname.startsWith("/search")) {
 			let URL = window.location.href
 			const paramObj = {}
@@ -225,21 +213,16 @@ export default function Container () {
 	if(pathname !== "/") {
 		window.location.pathname = "/404"
 	} 
+	
 	return data ? 
 		<div className="container">
-			{/* header element */}
 			<Header/>
-			{/* section search + warning div */}
 			<SearchForm filteredSearch={() => {}} data={data} gotoOffer={gotoOffer} gotoSearch={gotoSearch} 
 				warningVisible={warningVisible} setWarningVisible={setWarningVisible}/>
-			{/* section categorii priniciple */}
 			<Categories data={data} categories={data.categories} gotoOffer={gotoOffer} gotoSearch={gotoSearch}/>
-			{/* section anunturi promovate */}
 			<Announcements promotedProductsArray={promotedProductsArray} gotoOffer={gotoOffer} gotoSearch={gotoSearch} 
 				data={data}/>
-			{/* section advert verde */}
 			<Advert/>
-			{/* footer */}
 			<Footer categories={data.categories} gotoOffer={gotoOffer} gotoSearch={gotoSearch}/>
 		</div> 
 		: 

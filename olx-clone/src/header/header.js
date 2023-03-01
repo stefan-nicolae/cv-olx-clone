@@ -7,7 +7,6 @@ export default function Header () {
             <div className="header-wrapper">
                 <img onClick={() => {window.location = "/"}} src={Logo}/>
                 <div className="buttons">
-                    {/* TODO ALL NEED LOGIN EXCEPT BTN-FAV WHICH IS A NEW PAGE*/}
                     <button className="btn-messages"><iconify-icon icon="bx:message-rounded"></iconify-icon>Mesaje</button> 
                     <button className="btn-fav"><iconify-icon icon="akar-icons:heart"></iconify-icon></button> 
                     <button className="btn-profile"><iconify-icon icon="bi:person"></iconify-icon>Contul tau</button>

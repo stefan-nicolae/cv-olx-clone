@@ -2,16 +2,15 @@ import { capitalize, makeSureItOnlyHasNumbers } from "../container/container"
 import "./filters.css"
 
 export default function Filters (props) {
-    //category brand pricerange sortby (price dateuploaded)
     const selected = {} 
     selected["categorie"] = props.searchParams.categorie ? decodeURIComponent(props.searchParams.categorie) : undefined
     selected["firma"] = props.searchParams.firma ? decodeURIComponent(props.searchParams.firma.replaceAll("_", " ")) :  undefined
     selected["sorteaza"] = props.searchParams.sorteaza ? capitalize(props.searchParams.sorteaza).replaceAll(" ", "") : undefined
     selected["minim"] = props.searchParams.minim
     selected["maxim"] = props.searchParams.maxim
+    let key1=0, key2=0
 
     const submitForm = (e) => {
-        console.log(e[0].value)
         const formData = {}
         for(let i = 0; i <= 2; i++) {
             formData[e[i].name] = e[i].value !== "placeholder" ? e[i].value : undefined
@@ -48,8 +47,6 @@ export default function Filters (props) {
     Object.keys(selected).forEach(filter => {
        if(selected[filter]) selected[filter] = selected[filter].toLowerCase()
     })
-
-    console.log(selected)
     
     const handlePriceInputKeys = (e) => {
         const regex=/^[0-9]+$/
@@ -73,9 +70,6 @@ export default function Filters (props) {
         }, 2000)
     }
 
-    let key1=0, key2=0
-
-
     return (
         <form className="filters">
             {
@@ -84,13 +78,10 @@ export default function Filters (props) {
                         <label htmlFor={dropdown[0]}>{capitalize(dropdown[0])}</label>
 
                         <select style={
-
-                                // !selected[dropdown[0]] ? (dropdown[0] !== "sorteaza" ? {"color": "gray"} : {}) : {}
                                 !selected[dropdown[0]] ? {color: "gray"} : {}
 
                             } defaultValue={
 
-                                // selected[dropdown[0]] ? selected[dropdown[0]] : (dropdown[0] === "sorteaza" ? "Noi" : "placeholder") 
                                 selected[dropdown[0]] ? selected[dropdown[0]] : "placeholder"
 
                             } name={dropdown[0]}>
@@ -98,15 +89,12 @@ export default function Filters (props) {
 
 
                             <option style={
-                                // dropdown[0] === "sorteaza" ? {display: "none"} : {}
                                 {}
                             } onClick={(e) => [
                                 submitForm(e.target.parentElement.parentElement.parentElement)
                             ]} value={"placeholder"}>
-                                {/* Toate */}
                                 {dropdown[0] === "sorteaza" ? "Fara sortare" : "Toate"}
                             </option>
-
                             {
                                 dropdown[1].map(option => {
                                     const optionShown = capitalize(option.replaceAll(dropdown[0] === "Firma" ? " " : "-", " ").replaceAll("_", " "))

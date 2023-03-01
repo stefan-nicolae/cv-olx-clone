@@ -7,7 +7,7 @@ function randomDate(start, end, startHour, endHour) {
     var hour = startHour + Math.random() * (endHour - startHour) | 0;
     date.setHours(hour);
     return date;
-  }
+}
 
 const randomNumber = container_func.randomNumber
 
@@ -20,14 +20,11 @@ async function fetchData (data, limit) {
 }
 
 async function addPropertiesToUsersAndProducts(fetchedUsers, fetchedProducts) {
-    //user: locations dates user_ratings
-    //products: dates
         const counties = {}
         const users = []
         const products = {}
         products.products = []
 
-        
         ORASE.forEach(cityObj => {
             if(cityObj["County"] === "—") { 
                 counties["Bucuresti"] = [cityObj]
@@ -75,7 +72,6 @@ async function addPropertiesToUsersAndProducts(fetchedUsers, fetchedProducts) {
         return [products, counties, users]
 }
 
-
 function indexProductsByCategories(products) {
     const categories = {}
         products.products.forEach(product => {
@@ -85,7 +81,6 @@ function indexProductsByCategories(products) {
     })
     return categories
 }
-
 
 export default function Data (props) {  
     const products = useRef()

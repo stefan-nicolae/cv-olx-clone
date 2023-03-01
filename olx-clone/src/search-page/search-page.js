@@ -10,7 +10,6 @@ import distCountyCity from "../search-page/dist-county-city.json"
 
 export default function SearchPage (props) {
     const searchParams = props.paramObj
-    
     const paramList = ["cautare", "locatie", "distanta", "categorie", "firma", "sorteaza", "minim", "maxim", "pagina"]
 
     Object.keys(searchParams).forEach(param => {
@@ -25,14 +24,6 @@ export default function SearchPage (props) {
         if(searchParams[param] === "placeholder") {delete searchParams[param]; return}
     }) 
 
-
-
-
-
-
-
-
-    //check locatie
     if(searchParams.locatie) {
         const location = decodeURIComponent(searchParams.locatie)
         if(location.includes(";")) {
@@ -48,21 +39,16 @@ export default function SearchPage (props) {
         }
     }
 
-
-    //check distanta
     if(searchParams.distanta) {
         if(makeSureItOnlyHasNumbers(searchParams.distanta)) delete searchParams.distanta
         if(searchParams.distanta < 0) searchParams.distanta = 0
         if(searchParams.distanta > 100) searchParams.distanta = 100
     }
 
-
-    //check categorie
     if(searchParams.categorie) {
         if(!props.data.categories [decodeURIComponent(searchParams.categorie)]) delete searchParams.categorie
     }
 
-    //check firma
     if(searchParams.firma) {
         const brands = JSON.parse(window.localStorage.getItem("allBrands"))
         let found = false
@@ -73,51 +59,34 @@ export default function SearchPage (props) {
         if(!found) delete searchParams.firma
     }
 
-
-    //check sorteaza
     if(searchParams.sorteaza) { 
         const sorteaza = searchParams.sorteaza.toLowerCase()
         if(sorteaza === "ieftine" || sorteaza === "noi" || sorteaza === "scumpe" ) {}
         else delete searchParams.sorteaza
     }
 
-
-    //check minim maxim
     if(searchParams.minim) {
         if(makeSureItOnlyHasNumbers (searchParams.minim)) delete searchParams.minim
     }
-
 
     if(searchParams.maxim) {
         if(makeSureItOnlyHasNumbers (searchParams.maxim)) delete searchParams.maxim
     }
 
-    
-    //check pagina
     if(searchParams.pagina) {
         if( makeSureItOnlyHasNumbers(searchParams.pagina) ) delete searchParams.pagina
         if(searchParams.pagina < 0) searchParams.pagina = 0
     }
 
-
     if(searchParams.categorie) searchParams.categorie = decodeURIComponent(searchParams.categorie)
     if(searchParams.cautare) searchParams.cautare = decodeURIComponent(searchParams.cautare)
     if(searchParams.firma) searchParams.firma = decodeURIComponent(searchParams.firma)
 
-
-    console.log(searchParams)
-    
     const storedFormInputValue = window.sessionStorage.getItem("searchFormInputValue")
-    //this is for the values/placeholders
     let value_input = searchParams.cautare ? searchParams.cautare.replaceAll("_", " ") : storedFormInputValue
     let value_location = searchParams.locatie ? searchParams.locatie.replaceAll("_", " ") : ""
-    // if(value_location === "") value_location = window.sessionStorage.getItem("location")
-    // window.sessionStorage.setItem("location", searchParams.locatie)
 
-    //Takes parameters, fuses them with what is already in the URL, and goes to the new search page
-    
     const filteredSearch = (newParams, open=true) => {
-  
         const brands = []
 
         if(newParams.pagina && newParams.pagina === 1) newParams.pagina = undefined
@@ -127,10 +96,8 @@ export default function SearchPage (props) {
             }) 
             if(!brands.includes(newParams.firma.toLowerCase().replaceAll("_", " "))) newParams.categorie = undefined
         }
-        // newParams.categorie = undefined
         if(newParams.locatie && newParams.locatie.startsWith("Toata Romania"))  {
             newParams.locatie = ""
-            // window.sessionStorage.setItem("location", "")
         }
 
         if(searchParams.categorie && newParams.cautare && searchParams.categorie.toLowerCase().replaceAll("-", "").replaceAll("_","").replaceAll(" ", "") ==
@@ -142,11 +109,10 @@ export default function SearchPage (props) {
             window.location.href = props.gotoSearch({...searchParams, ...newParams})
             return -1
         }
-        
         return props.gotoSearch({...searchParams, ...newParams})
     }
+    
     if(!value_location || value_location === undefined) {
-        // window.sessionStorage.setItem("location", "")
         value_location = ""
     } 
 

@@ -3,13 +3,16 @@ import {useEffect, useState, useRef } from "react"
 import InputLocationDropdownArray from "./input-location-dropdown-array"
 import { capitalize, replaceDiacritics } from "../container/container"
 
-
 export default function SearchForm (props) {
     const [searchSuggestions, setSearchSuggestions] = useState([[], [], []])
     const [countiesVisible, setCountiesVisible] = useState(false)
-    const [chosenLocation, setChosenLocation] = useState() //<county>;<city>
+    const [chosenLocation, setChosenLocation] = useState()
     const [locSearchResults, setLocSearchResults] = useState([[],[],{}])
     const lastChosenLocation = useRef()
+    let key = 0
+    let key2 = 0
+    let key3 = 0
+    const distOptions = [0, 2, 5, 10, 15, 30, 50, 75, 100]
 
     let defaultLocationValue = "Toata Romania"
     if(props.filters && props.locationDefaultValue) {
@@ -47,10 +50,6 @@ export default function SearchForm (props) {
         }
         const searchParams = [...new Set(value.split(" "))]
         const suggestions = []
-        // category > brand > product/keyword 
-
-
-
         const categorySuggestions = []
         Object.keys(props.data.categories).forEach(category => {
             let pushed = false
@@ -63,8 +62,6 @@ export default function SearchForm (props) {
             })
         })
 
-        
-
         const brandSuggestions = []
         JSON.parse(window.localStorage.getItem("allBrands")).forEach(brand => {
             let pushed = false
@@ -76,7 +73,6 @@ export default function SearchForm (props) {
                 }
             })
         })
-
 
         let productSuggestions = []
         const paramObj = {}
@@ -92,11 +88,9 @@ export default function SearchForm (props) {
             replaceDiacritics(productObj.county) + " " + 
             replaceDiacritics(productObj.city.City.replaceAll("*", ""))
             searchString = searchString.replaceAll("-", " ").replaceAll("_", " ").toLowerCase()
-            console.log(searchString)
             searchParams.forEach(param => {
                 if(param.length < 3) return
                 if(searchString.includes(param)) {
-                    //name category id
                     productSuggestions.push([productObj.title, productObj.category, productObj.id])
                     categorySuggestions.push(productObj.category)
                     brandSuggestions.push(productObj.brand.toLowerCase())
@@ -124,7 +118,6 @@ export default function SearchForm (props) {
             props.filters == true ? paramObj : productSuggestions.splice(0, 10) 
         )
 
-        // console.log(suggestions)
         setSearchSuggestions(suggestions)
     }   
 
@@ -153,9 +146,6 @@ export default function SearchForm (props) {
         const countySuggestions = []
         const citySuggestions = []
         const dictionary = {}
-        //if matching object is a county, return its cities, if its a city return its county 
-
-        //DO CITY SUGGESTIONS AND COUNTY SUGGESTIONS
         const counties = props.data.counties
         Object.keys(counties).forEach(county => {
             let pushed = false
@@ -192,7 +182,6 @@ export default function SearchForm (props) {
         setLocSearchResults(resultArray)
     }
  
-
     useEffect(() => {
         window.addEventListener('click', function(e){  
             if(e.target === document.getElementsByClassName("input-location")[0])  {
@@ -205,14 +194,11 @@ export default function SearchForm (props) {
                         setCountiesVisible(false)
                     } 
             }
-
             if(e.target !== document.getElementsByClassName("input-search")[0]) {
                 setSearchSuggestions([[],[],[]])
             } else {
                 handleSearch({currentTarget: document.getElementsByClassName("input-search")[0]})
             }
-
-
         });
     }, [])
     
@@ -240,11 +226,6 @@ export default function SearchForm (props) {
             })
         }
     }
-
-    let key = 0
-    let key2 = 0
-    let key3=0
-    const distOptions = [0, 2, 5, 10, 15, 30, 50, 75, 100]
 
     return(
         <form className="search-form" onSubmit={submitForm}>
@@ -370,10 +351,8 @@ export default function SearchForm (props) {
                         }
                     </select>
                 </div>
-
                 <button id="search">Cauta acum <iconify-icon className="search-icon-2" icon="bi:search"></iconify-icon>
                 </button>
-               
             </div>
         </form>
     )

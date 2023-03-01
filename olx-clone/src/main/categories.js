@@ -36,10 +36,6 @@ export default function Categories (props) {
     }
     let key = 0
 
-
-    //set margin bottom to selected category
-    //set coordinates of the dropdown 
-
     const openCategory = (event, category) => {
         event.preventDefault()
         category === selectedCategory ? setSelectedCategory(undefined) : setSelectedCategory(category)
