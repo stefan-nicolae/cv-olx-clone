@@ -1,4 +1,3 @@
-import "./search-page.css"
 import SearchForm from "../main/search"
 import Filters from "./filters"
 import Results from "./results"
