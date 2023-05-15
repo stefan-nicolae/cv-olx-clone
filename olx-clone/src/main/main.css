@@ -1,5 +1,3 @@
-/* SEARCH FORM */
-
     .search-form {
         display: flex;
         align-items: center;
@@ -70,7 +68,6 @@
         padding-left: 14px;
     }
 
-    /* inputs */
     .search-form .form-wrapper input {
         border: none;
         height: 100%;
@@ -101,12 +98,7 @@
         width: 670px;
     }
 
-    /* dropdowns */
-
-        /* input search dropdown */
-        
     .search-form .form-wrapper .input-search-dropdown {
-        /* display: none; */
         position: absolute;
         width: 785px;
         background-color: white;
@@ -138,7 +130,6 @@
         color: white;
     }
 
-            /* brand suggestions */
     .search-form .form-wrapper .input-search-dropdown .brand-suggestions {
         display: flex;
         flex-direction: column;
@@ -156,7 +147,6 @@
         color: white;
     }
 
-            /* product suggestions */
     .search-form .form-wrapper .input-search-dropdown .product-suggestions .suggestion {
         display: flex;
         flex-direction: column;
@@ -174,14 +164,10 @@
         color: gray;
     }
 
-    /* .search-form .form-wrapper .input-search-dropdown .product-suggestions .suggestion > span span {
-    } */
-
     .search-form .form-wrapper .input-search-dropdown .product-suggestions .suggestion:last-of-type {
         margin-bottom: 15px;
     }
 
-            /* category suggestions  */
     .search-form .form-wrapper .input-search-dropdown .category-suggestions .suggestion {
         display: block; 
         text-decoration: none;
@@ -197,7 +183,6 @@
         color: white;
     }
 
-    /* input location dropdown */
     .search-form .form-wrapper .input-location-dropdown {
         display: none;
         max-height: 421px;
@@ -218,7 +203,7 @@
         flex-direction: column;
         justify-content: space-between;
     }
-        /* title */
+
     .search-form .form-wrapper .input-location-dropdown .counties-title {
         border-bottom: gray 1px solid;
         padding-bottom: 10px;
@@ -232,9 +217,7 @@
         color: var(--dark-green);
     }
 
-        /* counties */
     .search-form .form-wrapper .input-location-dropdown .counties {
-        /* flex: 1; */
         display: flex;
         flex-direction: column;
         flex-wrap: wrap; 
@@ -252,7 +235,6 @@
         border: none;
     }
 
-        /* county */
     .search-form .form-wrapper .input-location-dropdown .county {
         height: 32px;
         cursor: pointer;
@@ -281,9 +263,7 @@
         margin-right: 0px;
         color: var(--dark-green);
     }
-    
-        /* bucuresti */
-    
+        
     .search-form .form-wrapper .input-location-dropdown .county.bucuresti > span {
         background-color: #ffe091 ;
         color: black;
@@ -349,7 +329,7 @@
         width: 100%;
         color: var(--dark-green);
     }
-        /* city menu */
+
     .search-form .city-menu .counties-title {
         display: flex;
         justify-content: space-between;
@@ -367,8 +347,6 @@
         border: none !important;
     }
 
-
-    /* button */
     .search-form .form-wrapper button {
         background-color: unset;
         border: unset;
@@ -389,22 +367,17 @@
         color: white;
     }
 
-    /* span */
     .search-form .form-wrapper > span {
         height: 100%;
         border-left: 1px solid var(--light-gray);
     }
 
-    /* icons */
     .search-form .form-wrapper iconify-icon {
         font-size: 25px;
         margin-left: 20px;
         margin-right: 20px;
     }
 
-
-/* SEARCH FORM END */
-/* CATEGORIES */
     .categories-wrapper {
         background-color: white;
         display: flex;
@@ -425,12 +398,9 @@
 
     .categories {
         background-color: white;
-        
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-start;
-        /* position: relative; */
-
         width: 1233px;
     }
 
@@ -440,11 +410,9 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-
         height: 137px;
         width: 107px;
         margin: 15px 15px;
-
         cursor: pointer;
     }
     
@@ -473,7 +441,6 @@
         color: white;
     }
 
-    /* category-dropdown */
     .categories .category-dropdown {
         display: none;
         width: 1200px;
@@ -529,8 +496,7 @@
         background-color: var(--dark-green);
         color: white;
     }
-/* CATEGORIES END */
-/* ANNOUNCEMENTS */
+
     .announcements {
         width: 100%;
         text-align: center;
@@ -538,7 +504,6 @@
         padding: 30px;
         background-color: var(--light-gray);
         color: var(--dark-green);
-
     }
 
     .announcements h1 {
@@ -574,7 +539,6 @@
         justify-content: center;
         align-content: center;
         cursor: pointer;
-        
     }
 
     .announcements img {
@@ -589,9 +553,11 @@
         text-decoration: none;
         color: var(--dark-green)
     }
+
     .announcements .title span {
         padding: 3px 0;
     }
+
     .announcements .title span:hover {
         cursor: pointer;
         background-color: var(--dark-green);
@@ -629,13 +595,11 @@
 
      .announcements .description span {
         display: block;
-
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
-        -webkit-line-clamp: 4; /* number of lines to show */
-                line-clamp: 4; 
+        -webkit-line-clamp: 4;
+        line-clamp: 4; 
         -webkit-box-orient: vertical;
     }
 
-/* ANNOUNCEMENTS END */
