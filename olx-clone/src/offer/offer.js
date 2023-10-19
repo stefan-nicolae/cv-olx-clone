@@ -7,7 +7,7 @@ import SwiperBottom from "./swiper-bottom"
 import { nth_occurrence } from "../container/container"
 
 export default function Offer (props) {
-    const MapsKey = "AIzaSyAIfwB5a40jpDuAnWFffeuE7GWa9F_KS30"
+    const MapsKey = process.env.MapsKey
     const productObject = props.product
     const URL_HISTORY = window.sessionStorage.getItem("URL_HISTORY")
     const user = props.data.users[productObject.userID-1]
