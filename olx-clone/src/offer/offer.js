@@ -61,7 +61,7 @@ export default function Offer (props) {
             </a><span>/</span>
 
             <a href={props.gotoSearch({categorie: productObject.category, locatie: productObject.county + ";" + 
-                productObject.city.City})}>
+                productObject.city.City.replaceAll("*", "")})}>
                 {productObject.category.replaceAll("-", " ")} - {productObject.city.City.replaceAll("*", "")}
             </a><span>/</span>
 
@@ -74,7 +74,7 @@ export default function Offer (props) {
             </a><span>/</span>       
 
             <a href={props.gotoSearch({firma: productObject.brand, locatie: productObject.county+ ";" + 
-                productObject.city.City})}>
+                productObject.city.City.replaceAll("*", "")})}>
                 {productObject.brand} - {productObject.city.City.replaceAll("*", "")}
             </a>
         </nav>
