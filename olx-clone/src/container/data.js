@@ -52,6 +52,7 @@ async function addPropertiesToUsersAndProducts(fetchedUsers, fetchedProducts) {
 
         fetchedProducts.products.forEach(fetchedProduct => {
             const product = fetchedProduct
+            product.brand ??= "Generic"
             const userIndex = randomNumber(0, users.length-1)
             const user = users[userIndex]
             product.userID = user.id
