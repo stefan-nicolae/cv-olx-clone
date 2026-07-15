@@ -78,7 +78,7 @@ export default function SearchForm (props) {
         const paramObj = {}
         const keywordObj = {}
         const alreadyAdded = {}
-        const productsSortedByRating = props.data.products.products.sort((a, b) => -(a.rating - b.rating))
+        const productsSortedByRating = [...props.data.products.products.sort]((a, b) => -(a.rating - b.rating))
         productsSortedByRating.forEach(productObj => {
             let searchString = 
             productObj.title + " " + 

@@ -65,6 +65,12 @@ export default function Results (props) {
     RESULTS.forEach(result => {
         result.prio = 0
 
+        const result = {
+            ...product,
+            prio:0,
+            pass:false,
+        }
+
         if(distance) {
             if(location) {
                 if(city) {
