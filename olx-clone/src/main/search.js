@@ -8,7 +8,12 @@ export default function SearchForm (props) {
     const [countiesVisible, setCountiesVisible] = useState(false)
     const [chosenLocation, setChosenLocation] = useState()
     const [locSearchResults, setLocSearchResults] = useState([[],[],{}])
-    const lastChosenLocation = useRef()
+    const [searchValue, setSearchValue] = useState(props.filters ? props.inputDefaultValue || "" : "")
+    const [locationValue, setLocationValue] = useState("")
+    const searchInputRef = useRef()
+    const locationInputRef = useRef()
+    const searchDropdownRef = useRef()
+    const locationDropdownRef = useRef()
     let key = 0
     let key2 = 0
     let key3 = 0
@@ -20,35 +25,27 @@ export default function SearchForm (props) {
         if(props.locationDefaultValue !== "") 
         if(locationArr.length === 1) defaultLocationValue = locationArr[0]
         else defaultLocationValue = locationArr[1] +", Judet " + locationArr[0]
-        setTimeout(() => {
-            document.querySelector(".input-location").classList.add("bold-placeholder")
-        }, 100) 
     }
 
-    if(chosenLocation !== lastChosenLocation.current) {
-        lastChosenLocation.current = chosenLocation
+    useEffect(() => {
+        if(chosenLocation === undefined) return
         setCountiesVisible(false)
-        setTimeout(() => {
-            if(props.filters === true) props.filteredSearch({locatie: chosenLocation})
-        }, 100) 
-    }
+        if(props.filters !== true) return
 
-    if(chosenLocation) {
-        if(!chosenLocation.startsWith("Toata Romania")) {
-            document.querySelector(".input-location").classList.add("bold-placeholder")
-        } else {
-            document.querySelector(".input-location").classList.remove("bold-placeholder")
-        }
-    }
+        const timer = setTimeout(() => {
+            props.filteredSearch({locatie: chosenLocation})
+        }, 100)
+        return () => clearTimeout(timer)
+    }, [chosenLocation])
 
-    const handleSearch = event => {
-        const value = event.currentTarget.value.toLowerCase()
-        if(!value.length) window.sessionStorage.setItem("searchFormInputValue", "")
-        if(value.length < 3) {
+    const handleSearch = value => {
+        const normalizedValue = value.toLowerCase()
+        if(!normalizedValue.length) window.sessionStorage.setItem("searchFormInputValue", "")
+        if(normalizedValue.length < 3) {
             setSearchSuggestions([[],[],[]])
             return
         }
-        const searchParams = [...new Set(value.split(" "))]
+        const searchParams = [...new Set(normalizedValue.split(" "))]
         const suggestions = []
         const categorySuggestions = []
         Object.keys(props.data.categories).forEach(category => {
@@ -78,7 +75,7 @@ export default function SearchForm (props) {
         const paramObj = {}
         const keywordObj = {}
         const alreadyAdded = {}
-        const productsSortedByRating = [...props.data.products.products.sort]((a, b) => -(a.rating - b.rating))
+        const productsSortedByRating = [...props.data.products.products].sort((a, b) => -(a.rating - b.rating))
         productsSortedByRating.forEach(productObj => {
             let searchString = 
             productObj.title + " " + 
@@ -137,12 +134,12 @@ export default function SearchForm (props) {
         }
     }
     
-    const handleLocationInput = e => {
-        if(e.target.value.length) setCountiesVisible(false) 
+    const handleLocationInput = value => {
+        if(value.length) setCountiesVisible(false) 
         else setCountiesVisible(true) 
     
 
-        const params = [...new Set(e.target.value.split(" "))]
+        const params = [...new Set(value.split(" "))]
         const countySuggestions = []
         const citySuggestions = []
         const dictionary = {}
@@ -183,45 +180,36 @@ export default function SearchForm (props) {
     }
  
     useEffect(() => {
-        window.addEventListener('click', function(e){  
-            if(e.target === document.getElementsByClassName("input-location")[0])  {
-               if(!document.getElementsByClassName("input-location")[0].value.length) setCountiesVisible(true)
-            } else {
-                const position = document.getElementsByClassName("input-location-dropdown")[0].getBoundingClientRect()
-                if(!(e.clientX >= position.left && e.clientX <= position.right && e.clientY >= 
-                    position.top && e.clientY <= position.bottom)) {
-                        setLocSearchResults([[],[],{}])
-                        setCountiesVisible(false)
-                    } 
-            }
-            if(e.target !== document.getElementsByClassName("input-search")[0]) {
+        const closeDropdowns = event => {
+            if(!searchInputRef.current?.contains(event.target) && !searchDropdownRef.current?.contains(event.target)) {
                 setSearchSuggestions([[],[],[]])
-            } else {
-                handleSearch({currentTarget: document.getElementsByClassName("input-search")[0]})
             }
-        });
+            if(!locationInputRef.current?.contains(event.target) && !locationDropdownRef.current?.contains(event.target)) {
+                setLocSearchResults([[],[],{}])
+                setCountiesVisible(false)
+            }
+        }
+
+        window.addEventListener('click', closeDropdowns)
+        return () => window.removeEventListener('click', closeDropdowns)
     }, [])
-    
-    useEffect(() => {
-        document.querySelector(".input-location").placeholder = capitalize(props.filters === true ? defaultLocationValue : getLocationPlaceholder())
-    })
 
     const submitForm = (e) => {
         e.preventDefault()
         if(e.nativeEvent.submitter.id !== "search") return
-        let searchValue = e.target[2].value
-        if(searchValue.length < 3) searchValue = undefined
+        let submittedSearchValue = searchValue
+        if(submittedSearchValue.length < 3) submittedSearchValue = undefined
         let location = chosenLocation ? (chosenLocation.startsWith("Toata Romania") ? 
             undefined : chosenLocation) : undefined
         if(props.filters === true) {
             if(!location && props.locationDefaultValue) location = props.locationDefaultValue
             props.filteredSearch ({
-                "cautare": searchValue,
+                "cautare": submittedSearchValue,
                 "locatie": location
             })
         } else {
             window.location.href = props.gotoSearch ({
-                "cautare": searchValue,
+                "cautare": submittedSearchValue,
                 "locatie": location
             })
         }
@@ -240,17 +228,21 @@ export default function SearchForm (props) {
                 <iconify-icon className="search-icon-1" icon="bi:search"></iconify-icon>
 
                 <iconify-icon onClick={() => {
-                    document.querySelector(".input-search").value = ""
+                    setSearchValue("")
+                    setSearchSuggestions([[],[],[]])
                 }} style={{
                     position: "absolute",
                     left: props.filters !== true ? "675px" : "660px",
                     cursor: "pointer",
-                    display:  document.querySelector(".input-search") ? document.querySelector(".input-search").value.length ? "" : "none" : "none"
+                    display: searchValue.length ? "" : "none"
                 }} icon="bytesize:close"></iconify-icon>
 
-                <input onKeyUp={handleSearch} className="input-search" type="text" defaultValue={props.filters ? props.inputDefaultValue : ""} 
+                <input ref={searchInputRef} onChange={event => {
+                    setSearchValue(event.target.value)
+                    handleSearch(event.target.value)
+                }} className="input-search" type="text" value={searchValue}
                     placeholder={`${Object.keys(props.data.products.products).length} anunturi din apropierea ta`}></input>
-                <div className="input-search-dropdown">
+                <div ref={searchDropdownRef} className="input-search-dropdown">
                     <div className="category-suggestions">
                         {
                             searchSuggestions[0].map(suggestion => {
@@ -309,15 +301,22 @@ export default function SearchForm (props) {
                 <iconify-icon className="location-icon" icon="akar-icons:location"></iconify-icon>
 
                 <iconify-icon onClick={() => {
-                    document.querySelector(".input-location").value = ""
+                    setLocationValue("")
+                    setLocSearchResults([[],[],{}])
                 }} style={{
                     position: "absolute",
                     right: props.filters === true? "245px": "170px",
                     cursor: "pointer",
-                    display: document.querySelector(".input-location") ? document.querySelector(".input-location").value.length ? "" : "none" : "none",
+                    display: locationValue.length ? "" : "none",
                 }}  className="location-close" icon="bytesize:close"></iconify-icon>
 
-                <input onClick={(e) => handleLocationInput(e)} onKeyUp={(e) => handleLocationInput(e)} className="input-location" type="text"></input>
+                <input ref={locationInputRef} onFocus={() => {
+                    if(!locationValue.length) setCountiesVisible(true)
+                }} onChange={event => {
+                    setLocationValue(event.target.value)
+                    handleLocationInput(event.target.value)
+                }} className={`input-location ${(chosenLocation && !chosenLocation.startsWith("Toata Romania")) || (props.filters && props.locationDefaultValue) ? "bold-placeholder" : ""}`} type="text" value={locationValue}
+                    placeholder={capitalize(props.filters === true ? defaultLocationValue : getLocationPlaceholder())}></input>
                 <div style={locSearchResults[0].length ? {} : {display: "none"}} className="input-location-dropdown-tiny">
                     {
                         locSearchResults[0].map(county => {
@@ -335,7 +334,7 @@ export default function SearchForm (props) {
                         })
                     }
                 </div>
-                <div className="input-location-dropdown" style={countiesVisible ? {"display": "unset"} : {}}>
+                <div ref={locationDropdownRef} className="input-location-dropdown" style={countiesVisible ? {"display": "unset"} : {}}>
                     <InputLocationDropdownArray chosenLocation={chosenLocation} setChosenLocation={setChosenLocation} 
                         data={props.data}/>
                 </div>

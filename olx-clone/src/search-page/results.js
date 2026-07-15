@@ -62,13 +62,11 @@ export default function Results (props) {
     let noCity = true, noCounty = true, noDist = true
     let PRIO_RESULTS = []
 
-    RESULTS.forEach(result => {
-        result.prio = 0
-
+    RESULTS.forEach(product => {
         const result = {
             ...product,
-            prio:0,
-            pass:false,
+            prio: 0,
+            pass: false,
         }
 
         if(distance) {

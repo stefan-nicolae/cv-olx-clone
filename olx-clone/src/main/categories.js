@@ -1,39 +1,23 @@
 import CategoryDropdown from "./category-dropdown"
-import { useState, useRef } from "react"
+import { useLayoutEffect, useRef, useState } from "react"
 
 export default function Categories (props) {
     const [selectedCategory, setSelectedCategory] = useState()
-    const lastSelectedCategoryElement = useRef()
     const categoriesWrapper = useRef()
-    let categoryDropdownStyle = {
-        "display": "none"
-    }
-    if(selectedCategory) {
-        if(lastSelectedCategoryElement.current) {
-            lastSelectedCategoryElement.current.style.marginBottom = "unset"
-            lastSelectedCategoryElement.current.style.textDecoration = "unset"
-        }
-        let categoryBottom = 0, categoriesWrapperTop= 0
-        document.querySelectorAll(".category").forEach(category => {
-            if(category.dataset.category === selectedCategory) {
-                categoryBottom = category.getBoundingClientRect().bottom
-                categoriesWrapperTop= categoriesWrapper.current.getBoundingClientRect().top
-                category.style.marginBottom = "200px"
-                category.style.textDecoration = "underline"
-                lastSelectedCategoryElement.current = category
-                return
-            }
-        })
-        categoryDropdownStyle = {
-            "display": "unset",
-            "top": categoryBottom - categoriesWrapperTop,
-        }
-    } else {
-        if(lastSelectedCategoryElement.current) {
-            lastSelectedCategoryElement.current.style.marginBottom = "unset"
-            lastSelectedCategoryElement.current.style.textDecoration = "unset"
-        }
-    }
+    const selectedCategoryElement = useRef()
+    const [dropdownTop, setDropdownTop] = useState(0)
+
+    useLayoutEffect(() => {
+        if(!selectedCategory || !categoriesWrapper.current || !selectedCategoryElement.current) return
+        const categoryBottom = selectedCategoryElement.current.getBoundingClientRect().bottom
+        const categoriesWrapperTop = categoriesWrapper.current.getBoundingClientRect().top
+        setDropdownTop(categoryBottom - categoriesWrapperTop)
+    }, [selectedCategory])
+
+    const categoryDropdownStyle = selectedCategory ? {
+        display: "unset",
+        top: dropdownTop,
+    } : { display: "none" }
     let key = 0
 
     const openCategory = (event, category) => {
@@ -47,8 +31,10 @@ export default function Categories (props) {
             <div className="categories">
             { 
                 Object.keys(props.categories).map(category => {
-                    return(<a href={props.gotoSearch({categorie: category})} data-category={category} 
-                        onClick={(event) => openCategory(event, category) } key={key++} className="category">
+                    return(<a href={props.gotoSearch({categorie: category})}
+                        ref={selectedCategory === category ? selectedCategoryElement : undefined}
+                        onClick={(event) => openCategory(event, category) } key={key++}
+                        className={`category ${selectedCategory === category ? "selected" : ""}`}>
                         <div className="category-img"><img src={props.categories[category][0].images[0]}></img></div>
                         <div className="category-name">{category.replaceAll("-", " ")}</div>
                     </a>)

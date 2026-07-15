@@ -441,6 +441,11 @@
         color: white;
     }
 
+    .category.selected {
+        margin-bottom: 200px;
+        text-decoration: underline;
+    }
+
     .categories .category-dropdown {
         display: none;
         width: 1200px;

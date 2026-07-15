@@ -2,7 +2,7 @@ import "./offer.css"
 import "./map.css"
 import SwiperElement from "./swiper"
 import * as container from "../container/container"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import SwiperBottom from "./swiper-bottom"
 import { nth_occurrence } from "../container/container"
 
@@ -22,15 +22,6 @@ export default function Offer (props) {
     for(let i = 0; i<5-user.rating; i++) {
         stars.push(false)
     }
-
-    useEffect(() => {
-        if(mapVisible) {
-            document.querySelector(".container").scrollTo(0, 0)
-            document.querySelector(".container").style.overflowY = "hidden"
-        } else {
-            document.querySelector(".container").style.overflowY = "unset"
-        }
-    })
 
     return(<div className="offer">
         <nav>
